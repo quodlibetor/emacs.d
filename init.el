@@ -3,17 +3,20 @@
 
 (load "customize/defuns")
 
-;; language modes
+;; language/file modes
 (load "customize/elisp")
 (load "customize/org")
 (load "customize/python")
 (load "customize/markdown")
 (load "customize/confluence")
+
+;; special modes
 (load "customize/magit")
+(load "customize/ibuffer")
+(load "customize/dired")
 
 ;; general emacs config
 (load "customize/package")
-(load "customize/dired")
 (load "customize/find-file")
 (load "customize/ui")
 (load "customize/keybindings")
