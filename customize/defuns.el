@@ -1,6 +1,14 @@
 (defalias 'nuke 'delete-trailing-whitespace)
 (defalias 'll 'longlines-mode)
 
+(defun unfly ()
+  (interactive)
+  (flymake-mode 0))
+
+(defun dont-show-trailing-whitespace ()
+  (interactive)
+  (set (make-local-variable 'show-trailing-whitespace) nil))
+
 ; from http://blog.urth.org/2011/06/flymake-versus-the-catalyst-restarter.html
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking
