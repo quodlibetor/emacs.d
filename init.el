@@ -1,3 +1,6 @@
+(require 'package)
+(package-initialize)
+
 (add-to-list 'load-path "/home/bwm/.emacs.d")
 (add-to-list 'load-path "/home/bwm/.emacs.d/packages")
 
