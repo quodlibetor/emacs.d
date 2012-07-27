@@ -3,7 +3,8 @@
       confluence-save-credentials t
       confluence-default-space-alist (list
 				      (cons confluence-url "services")
-				      (cons confluence-url "~bmaister")))
+				      (cons confluence-url "~bmaister")
+				      (cons confluence-url "tech")))
 (add-hook 'confluence-mode-hook
           (lambda ()
 	    (local-set-key (kbd "\C-c") confluence-prefix-map)
