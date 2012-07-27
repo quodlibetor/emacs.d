@@ -12,6 +12,7 @@
 (load "customize/python")
 (load "customize/markdown")
 (load "customize/confluence")
+(load "customize/text")
 
 ;; special modes
 (load "customize/magit")
