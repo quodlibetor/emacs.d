@@ -6,7 +6,10 @@
       confluence-default-space-alist (list
 				      (cons confluence-url "services")
 				      (cons confluence-url "~bmaister")
-				      (cons confluence-url "tech")))
+				      (cons confluence-url "tech"))
+      confluence-auto-save-dir temporary-file-directory
+      )
+
 (add-hook 'confluence-mode-hook
           (lambda ()
 	    (local-set-key (kbd "\C-c") confluence-prefix-map)
