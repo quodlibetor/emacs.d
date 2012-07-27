@@ -1,4 +1,6 @@
-(require 'confluence)
+(let ((load-path (cons "~/.emacs.d/packages/confluence-1.6beta" load-path)))
+  (require 'xml-rpc)
+  (require 'confluence))
 (setq confluence-url "https://wiki.advance.net/rpc/xmlrpc"
       confluence-save-credentials t
       confluence-default-space-alist (list
