@@ -120,6 +120,8 @@ class PylintRunner(LintRunner):
         "R0904",  # Too many public methods
         "R0903",  # Too few public methods
         "R0201",  # Method could be a function
+        "R0902",  # Too many instance attributes
+        "W0201",  # Attribute defined outside of __init__
         ])
 
     fixup_map = {'E': 'error', 'C': 'info', None: 'warning'}
