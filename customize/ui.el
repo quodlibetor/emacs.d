@@ -7,6 +7,7 @@
 (column-number-mode 1)
 (electric-pair-mode)
 (put 'dired-find-alternate-file 'disabled nil)
+(setq-default indent-tabs-mode nil)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
