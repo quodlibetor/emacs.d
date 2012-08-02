@@ -4,6 +4,10 @@
 (global-set-key (kbd "C-c w") 'fixup-whitespace)
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "M-%") 'query-replace-regexp)
 
 ;; misc commands
 (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
