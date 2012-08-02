@@ -8,6 +8,7 @@
 (electric-pair-mode)
 (put 'dired-find-alternate-file 'disabled nil)
 (setq-default indent-tabs-mode nil)
+(setq set-mark-command-repeat-pop t)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
