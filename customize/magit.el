@@ -1,3 +1,5 @@
+(require 'magit-svn)
+
 (add-hook 'magit-log-edit-mode-hook
 	  (lambda ()
 	    (set (make-local-variable 'fill-column) 72)
@@ -11,3 +13,8 @@
 	       ;; all others are 72 chars
 	       ("^[^\n]\\{72\\}\\(.*\\)$" 1 font-lock-warning-face t))
 	     )))
+
+(add-hook 'magit-mode-hook
+	  (lambda ()
+	    (when (magit-get "svn-remote" "svn" "url")
+	      (magit-svn-mode 1))))
