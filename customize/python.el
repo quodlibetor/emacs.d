@@ -4,6 +4,8 @@
 
 ; the pyflakes stuff is all from https://github.com/akaihola/flymake-python
 
+(require 'virtualenv)
+
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
