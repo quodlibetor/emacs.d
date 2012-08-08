@@ -4,7 +4,9 @@
       org-clock-into-drawer t
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE")
 			  (sequence "|" "NEXT(n)" "|")
-			  (sequence "BUG(b)" "|" "FIXED" "WONTFIX")))
+			  (sequence "BUG(b)" "|" "FIXED" "WONTFIX"))
+      org-use-speed-commands t
+      )
 
 (add-hook 'org-mode-hook
 	  (lambda ()
