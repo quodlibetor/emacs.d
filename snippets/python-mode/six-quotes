@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: six quotes
+# key: "6
+# binding: C-c '
+# --
+"""
+$0
+"""

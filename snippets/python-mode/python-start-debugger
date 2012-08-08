@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: python start debugger
+# key: dbg
+# --
+$0import pdb; pdb.set_trace() # DEBUG
