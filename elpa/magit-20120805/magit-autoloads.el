@@ -3,7 +3,7 @@
 ;;; Code:
 
 
-;;;### (autoloads (magit-status) "magit" "magit.el" (20498 61545))
+;;;### (autoloads (magit-status) "magit" "magit.el" (20514 31924))
 ;;; Generated autoloads from magit.el
 
 (autoload 'magit-status "magit" "\
@@ -21,7 +21,7 @@ user input.
 ;;;***
 
 ;;;### (autoloads (magit-blame-mode) "magit-blame" "magit-blame.el"
-;;;;;;  (20498 61544))
+;;;;;;  (20514 31924))
 ;;; Generated autoloads from magit-blame.el
 
 (autoload 'magit-blame-mode "magit-blame" "\
@@ -32,7 +32,7 @@ Display blame information inline.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-stgit magit-stgit-mode) "magit-stgit"
-;;;;;;  "magit-stgit.el" (20498 61545))
+;;;;;;  "magit-stgit.el" (20514 31924))
 ;;; Generated autoloads from magit-stgit.el
 
 (autoload 'magit-stgit-mode "magit-stgit" "\
@@ -48,7 +48,7 @@ Unconditionally turn on `magit-stgit-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-svn magit-svn-mode) "magit-svn"
-;;;;;;  "magit-svn.el" (20498 61545))
+;;;;;;  "magit-svn.el" (20514 31924))
 ;;; Generated autoloads from magit-svn.el
 
 (autoload 'magit-svn-mode "magit-svn" "\
@@ -64,7 +64,7 @@ Unconditionally turn on `magit-svn-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-topgit magit-topgit-mode) "magit-topgit"
-;;;;;;  "magit-topgit.el" (20498 61545))
+;;;;;;  "magit-topgit.el" (20514 31924))
 ;;; Generated autoloads from magit-topgit.el
 
 (autoload 'magit-topgit-mode "magit-topgit" "\
@@ -79,8 +79,58 @@ Unconditionally turn on `magit-topgit-mode'.
 
 ;;;***
 
-;;;### (autoloads (rebase-mode) "rebase-mode" "rebase-mode.el" (20498
-;;;;;;  61545))
+;;;### (autoloads (global-magit-wip-save-mode magit-wip-save-mode
+;;;;;;  magit-wip-mode) "magit-wip" "magit-wip.el" (20514 31924))
+;;; Generated autoloads from magit-wip.el
+
+(defvar magit-wip-mode nil "\
+Non-nil if Magit-Wip mode is enabled.
+See the command `magit-wip-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `magit-wip-mode'.")
+
+(custom-autoload 'magit-wip-mode "magit-wip" nil)
+
+(autoload 'magit-wip-mode "magit-wip" "\
+In Magit log buffers; give wip refs a special appearance.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'magit-wip-save-mode "magit-wip" "\
+Magit support for committing to a work-in-progress ref.
+
+When this minor mode is turned on and a file is saved inside a writable
+git repository then it is also committed to a special work-in-progress
+ref.
+
+\(fn &optional ARG)" t nil)
+
+(defvar global-magit-wip-save-mode nil "\
+Non-nil if Global-Magit-Wip-Save mode is enabled.
+See the command `global-magit-wip-save-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `global-magit-wip-save-mode'.")
+
+(custom-autoload 'global-magit-wip-save-mode "magit-wip" nil)
+
+(autoload 'global-magit-wip-save-mode "magit-wip" "\
+Toggle Magit-Wip-Save mode in all buffers.
+With prefix ARG, enable Global-Magit-Wip-Save mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Magit-Wip-Save mode is enabled in all buffers where
+`turn-on-magit-wip-save' would do it.
+See `magit-wip-save-mode' for more information on Magit-Wip-Save mode.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (rebase-mode) "rebase-mode" "rebase-mode.el" (20514
+;;;;;;  31924))
 ;;; Generated autoloads from rebase-mode.el
 
 (autoload 'rebase-mode "rebase-mode" "\
@@ -98,7 +148,7 @@ running 'man git-rebase' at the command line) for details.
 ;;;***
 
 ;;;### (autoloads nil nil ("magit-bisect.el" "magit-key-mode.el"
-;;;;;;  "magit-pkg.el" "magit-wip.el") (20498 61545 247955))
+;;;;;;  "magit-pkg.el") (20514 31924 836994))
 
 ;;;***
 
