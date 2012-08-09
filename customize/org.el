@@ -1,5 +1,5 @@
 (setq org-hide-leading-stars t
-      org-agenda-files '("~/work.org" "~/projects/subman/subman.org")
+      org-agenda-files (append '("~/work.org" "~/life.org") (file-expand-wildcards "~/projects/*/*.org"))
       org-columns-default-format "%35ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM(Time Spent) %TODO %3PRIORITY %TAGS"
       org-clock-into-drawer t
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE")
