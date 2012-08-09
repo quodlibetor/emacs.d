@@ -6,6 +6,7 @@
 			  (sequence "|" "NEXT(n)" "|")
 			  (sequence "BUG(b)" "|" "FIXED" "WONTFIX"))
       org-use-speed-commands t
+      org-clock-out-remove-zero-time-clocks t
       )
 
 (add-hook 'org-mode-hook
