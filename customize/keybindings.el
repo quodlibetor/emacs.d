@@ -8,6 +8,8 @@
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "M-%") 'query-replace-regexp)
+(global-set-key (kbd "C-c d c") 'desktop-change-dir)
+(global-set-key (kbd "C-c d s") 'desktop-save)
 
 ;; misc commands
 (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
