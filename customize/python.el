@@ -4,7 +4,11 @@
 
 ; the pyflakes stuff is all from https://github.com/akaihola/flymake-python
 
-(require 'virtualenv)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (require 'nose)
+            (require 'virtualenv)
+            ))
 
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
