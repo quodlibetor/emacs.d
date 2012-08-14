@@ -13,6 +13,7 @@
 (load "customize/markdown")
 (load "customize/confluence")
 (load "customize/text")
+(load "customize/yaml")
 
 ;; special modes
 (load "customize/magit")
