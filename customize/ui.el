@@ -36,3 +36,8 @@
 (load-theme 'tango-dark)
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+(defadvice split-window-right (after split-and-rebalance-windows ())
+  "I prefer windows to auto-balance when I open new ones"
+  (balance-windows))
+(ad-activate 'split-window-right)
