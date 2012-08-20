@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Requires:
+# key: req
+# --
+Requires: python%{pyver}-$0
