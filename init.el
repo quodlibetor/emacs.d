@@ -43,4 +43,5 @@
  '(magit-diff-del ((t (:inherit diff-removed :foreground "IndianRed1"))))
  '(magit-item-highlight ((t (:inherit highlight :background "light sea green"))))
  '(org-column ((t (:background "grey10" :strike-through nil :underline nil :slant normal :weight normal :height 105 :family "Ubuntu Mono"))))
+ '(org-scheduled ((t (:background "#232323" :foreground "light goldenrod"))))
  '(rst-level-1-face ((t (:background "grey10"))) t))
