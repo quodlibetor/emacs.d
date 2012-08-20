@@ -6,8 +6,15 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (require 'nose)
             (require 'virtualenv)
+            (require 'nose)
+            (set (make-local-variable 'nose-use-verbose) nil)
+            (local-set-key (kbd "C-c n a") 'nosetests-all)
+            (local-set-key (kbd "C-c n m") 'nosetests-module)
+            (local-set-key (kbd "C-c n o") 'nosetests-one)
+            (local-set-key (kbd "C-c n p a") 'nosetests-pdb-all)
+            (local-set-key (kbd "C-c n p m") 'nosetests-pdb-module)
+            (local-set-key (kbd "C-c n p o") 'nosetests-pdb-one)
             ))
 
 (when (load "flymake" t)
