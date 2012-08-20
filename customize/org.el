@@ -3,7 +3,7 @@
       org-columns-default-format "%35ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM(Time Spent) %TODO %3PRIORITY %TAGS"
       org-clock-into-drawer t
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")
-			  (sequence "|" "NEXT(n)" "|")
+			  (sequence "NEXT(n)" "|")
 			  (sequence "BUG(b)" "|" "FIXED(f)" "WONTFIX(w)"))
       org-log-done 'time
       org-use-speed-commands t
