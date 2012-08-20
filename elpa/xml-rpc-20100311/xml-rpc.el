@@ -8,13 +8,13 @@
 
 ;; Author: Mark A. Hershberger <mah@everybody.org>
 ;; Original Author: Daniel Lundin <daniel@codefactory.se>
-;; Version: 1.6.8
+;; Version: 1.6.9a
 ;; Created: May 13 2001
 ;; Keywords: xml rpc network
 ;; URL: http://launchpad.net/xml-rpc-el
-;; Last Modified: <2010-03-05 13:41:20 mah>
+;; Last Modified: <2010-03-11 01:50:35 mah>
 
-(defconst xml-rpc-version "1.6.8"
+(defconst xml-rpc-version "1.6.9a"
   "Current version of xml-rpc.el")
 
 ;; This file is NOT (yet) part of GNU Emacs.
@@ -382,6 +382,8 @@ functions in xml.el."
    ((xml-rpc-value-datetimep value)
     `((value nil (dateTime.iso8601 nil ,(xml-rpc-datetime-to-string value)))))
    ;; list
+   ((vectorp value)
+    (xml-rpc-value-to-xml-list (append value nil)))
    ((xml-rpc-value-arrayp value)
     (let ((result nil)
           (xmlval nil))
