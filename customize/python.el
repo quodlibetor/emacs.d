@@ -25,7 +25,8 @@
                         temp-file
                         (file-name-directory buffer-file-name))))
       ;;     check path
-      (list "~/.local/bin/pyflymake.py" (list local-file))))
+      (list "~/.local/bin/pyflymake.py" (list "--source-file" buffer-file-name
+                                              local-file))))
 
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))

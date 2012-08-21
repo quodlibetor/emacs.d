@@ -329,13 +329,17 @@ def main():
                       action='store_true',
                       dest="debug",
                       help="print debugging on stderr")
+    parser.add_option("-s", "--source-file",
+                      help="An alternate file to use as source. "
+                      "Useful if you are running flymake with a temp dir")
     options, args = parser.parse_args()
 
     logging.basicConfig(
         level=options.debug and logging.DEBUG or logging.WARNING,
         format='%(levelname)-8s %(message)s')
 
-    config = find_config(os.path.realpath(args[0]), options.trigger_type)
+    source_file = options.source_file or args[0]
+    config = find_config(os.path.realpath(source_file), options.trigger_type)
     for key, value in DEFAULT_CONFIG.items():
         if not hasattr(config, key):
             setattr(config, key, value)
