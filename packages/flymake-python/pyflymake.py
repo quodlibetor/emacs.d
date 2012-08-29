@@ -16,6 +16,7 @@ class LintRunner(object):
           python code checkers. """
 
     sane_default_ignore_codes = set([])
+    ignored_ignore_codes = set([])
     command = None
     output_matcher = None
 
@@ -39,7 +40,8 @@ class LintRunner(object):
     @property
     def operative_ignore_codes(self):
         if self.config.USE_SANE_DEFAULTS:
-            return self.config.IGNORE_CODES ^ self.sane_default_ignore_codes
+            return ((self.config.IGNORE_CODES ^ self.sane_default_ignore_codes)
+                    - self.ignored_ignore_codes)
         else:
             return self.config.IGNORE_CODES
 
@@ -123,6 +125,10 @@ class PylintRunner(LintRunner):
         "R0902",  # Too many instance attributes
         "W0201",  # Attribute defined outside of __init__
         ])
+
+    ignored_ignore_codes = set([
+            'E221', # pep8 "multiple spaces before operator"
+            ])
 
     fixup_map = {'E': 'error', 'C': 'info', None: 'warning'}
 
