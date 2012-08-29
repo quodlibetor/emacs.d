@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: base-html
+# key: all
+# --
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <title>$1</title>
+  </head>
+
+  <body>
+    $0
+  </body>
+</html>
