@@ -15,7 +15,7 @@
       uniquify-strip-common-suffix t)
 
 (require 'yasnippet)
-(yas/global-mode)
+(yas-global-mode)
 
 (setq-default show-trailing-whitespace t
 	      default-indicate-empty-lines t
