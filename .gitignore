@@ -3,3 +3,7 @@ bookmarks
 .org*
 elpa/*archive*
 tramp
+# pylookup
+packages/pylookup/*docs*
+packages/pylookup/*.db
+packages/pylookup/.buildinfo
