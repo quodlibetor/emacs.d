@@ -24,6 +24,7 @@
 (load "customize/package")
 (load "customize/find-file")
 (load "customize/ui")
+(load "customize/ido")
 (load "customize/keybindings")
 
 (custom-set-variables
