@@ -15,6 +15,7 @@
             (local-set-key (kbd "C-c n p a") 'nosetests-pdb-all)
             (local-set-key (kbd "C-c n p m") 'nosetests-pdb-module)
             (local-set-key (kbd "C-c n p o") 'nosetests-pdb-one)
+            (local-set-key (kbd "C-c h") 'pylookup-lookup)
             ))
 
 (when (load "flymake" t)
@@ -31,3 +32,19 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
+
+;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
+(setq pylookup-dir "~/.emacs.d/packages/pylookup")
+(add-to-list 'load-path pylookup-dir)
+;; load pylookup when compile time
+(eval-when-compile (require 'pylookup))
+
+;; set executable file and db file
+(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
+(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
+
+;; to speedup, just load it on demand
+(autoload 'pylookup-lookup "pylookup"
+  "Lookup SEARCH-TERM in the Python HTML indexes." t)
+(autoload 'pylookup-update "pylookup" 
+  "Run pylookup-update and create the database at `pylookup-db-file'." t)
