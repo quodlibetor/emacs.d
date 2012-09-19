@@ -1,5 +1,8 @@
 (defalias 'nuke 'delete-trailing-whitespace)
 (defalias 'll 'longlines-mode)
+(defalias 'mkdir 'make-directory)
+(defalias 'deactivate 'virtualenv-deactivate)
+(defalias 'workon 'virtualenv-workon)
 
 (defun unfly ()
   (interactive)
