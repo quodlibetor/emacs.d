@@ -19,6 +19,7 @@
 (load "customize/magit")
 (load "customize/ibuffer")
 (load "customize/dired")
+(load "customize/outline")
 
 ;; general emacs config
 (load "customize/package")
