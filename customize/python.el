@@ -4,6 +4,11 @@
 
 ; the pyflakes stuff is all from https://github.com/akaihola/flymake-python
 
+(add-to-list 'auto-mode-alist
+             '("pyflymakerc$" . python-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.wsgi$" . python-mode))
+
 (add-hook 'python-mode-hook
           (lambda ()
             (require 'virtualenv)
