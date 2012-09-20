@@ -1,4 +1,5 @@
 (require 'bookmark)
+(require 'ido)
 
 (defun my-ido-bookmark-jump ()
   "Jump to bookmark using ido"
@@ -32,4 +33,7 @@
       (setq ido-exit 'refresh)
       (exit-minibuffer))))
 
-(define-key ido-file-dir-completion-map (kbd "$") 'my-ido-use-bookmark-dir)
+(add-hook 'ido-minibuffer-setup-hook
+          (lambda ()
+            (define-key ido-file-dir-completion-map (kbd "$")
+              'my-ido-use-bookmark-dir)))
