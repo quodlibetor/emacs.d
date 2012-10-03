@@ -14,6 +14,7 @@
 (load "customize/confluence")
 (load "customize/text")
 (load "customize/yaml")
+(load "customize/html")
 
 ;; special modes
 (load "customize/magit")
