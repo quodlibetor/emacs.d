@@ -3,7 +3,9 @@
 # key: parseargs
 # --
 def parse_args():
-    parser = argparse.ArgumentParser(description="$1")
-    parser.add_argument($0)
-
+    parser = argparse.ArgumentParser(
+        description="$1")
+    parser.add_argument("$2",
+                        help="$3")
+    $0
     return parser.parse_args()
