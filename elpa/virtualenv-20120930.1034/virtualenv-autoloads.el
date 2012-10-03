@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (virtualenv-minor-mode virtualenv-deactivate virtualenv-workon)
-;;;;;;  "virtualenv" "virtualenv.el" (20570 1883))
+;;;;;;  "virtualenv" "virtualenv.el" (20588 38354))
 ;;; Generated autoloads from virtualenv.el
 
 (autoload 'virtualenv-workon "virtualenv" "\
@@ -30,7 +30,7 @@ the mode if ARG is omitted or nil, and toggle it if ARG is `toggle'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("virtualenv-pkg.el") (20570 1884 82458))
+;;;### (autoloads nil nil ("virtualenv-pkg.el") (20588 38354 647840))
 
 ;;;***
 
