@@ -37,7 +37,9 @@
                                               local-file))))
 
   (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
+               '("\\.py\\'" flymake-pylint-init))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("scripts/" flymake-pylint-init)))
 
 
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
