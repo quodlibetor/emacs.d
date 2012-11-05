@@ -164,10 +164,10 @@
      `(dired-flagged ((,class (:foreground ,red))))
      `(dired-header ((,class (:foreground ,solarized-bg :background ,blue))))
      `(dired-ignored ((,class (:inherit shadow))))
-     `(dired-mark ((,class (:foreground ,yellow :weigth bold))))
-     `(dired-marked ((,class (:foreground ,magenta :weigth bold))))
+     `(dired-mark ((,class (:foreground ,yellow :weight bold))))
+     `(dired-marked ((,class (:foreground ,magenta :weight bold))))
      `(dired-perm-write ((,class (:foreground ,solarized-fg :underline t))))
-     `(dired-symlink ((,class (:foreground ,cyan :weigth normal :slant italic))))
+     `(dired-symlink ((,class (:foreground ,cyan :weight normal :slant italic))))
      `(dired-warning ((,class (:foreground ,orange :underline t))))
 
      ;; grep
@@ -289,7 +289,7 @@
      `(erc-input-face ((,class (:foreground ,yellow))))
      `(erc-keyword-face ((,class (:foreground ,blue :weight bold))))
      `(erc-nick-default-face ((,class (:foreground ,yellow :weight bold))))
-     `(erc-my-nick-face ((,class (:foreground ,red :weigth bold))))
+     `(erc-my-nick-face ((,class (:foreground ,red :weight bold))))
      `(erc-nick-msg-face ((,class (:inherit erc-default))))
      `(erc-notice-face ((,class (:foreground ,green))))
      `(erc-pal-face ((,class (:foreground ,orange :weight bold))))
@@ -370,7 +370,8 @@
      `(helm-bookmark-w3m ((,class (:foreground ,yellow))))
      `(helm-bookmarks-su ((,class (:foreground ,orange))))
      `(helm-buffer-not-saved ((,class (:foreground ,orange))))
-     `(helm-buffer-saved-out ((,class (:foreground ,solarized-bg :background ,red))))
+     `(helm-buffer-saved-out ((,class (:foreground ,red :background ,solarized-bg
+                                                   :inverse-video t))))
      `(helm-buffer-size ((,class (:foreground ,solarized-comments))))
      `(helm-candidate-number ((,class (:background ,solarized-hl :foreground ,solarized-emph
                                                    :bold t))))
@@ -418,7 +419,8 @@
      `(highlight-changes-delete ((,class (:foreground ,red :underline t))))
 
      ;; hl-line-mode
-     `(hl-line-face ((,class (:background ,solarized-bg))))
+     `(hl-line ((,class (:background ,solarized-hl))))
+     `(hl-line-face ((,class (:background ,solarized-hl))))
 
      ;; ido-mode
      `(ido-first-match ((,class (:foreground ,green :weight bold))))
@@ -434,6 +436,7 @@
      ;; magit
      `(magit-section-title ((,class (:foreground ,yellow :weight bold))))
      `(magit-branch ((,class (:foreground ,orange :weight bold))))
+     `(magit-item-highlight ((,class (:background ,solarized-hl))))
      `(magit-log-graph ((,class (:foreground ,solarized-comments))))
      `(magit-log-head-label-bisect-bad ((,class (:background ,red-hc :foreground ,red-lc :box 1))))
      `(magit-log-head-label-bisect-good ((,class (:background ,green-hc :foreground ,green-lc
@@ -446,17 +449,16 @@
      `(magit-log-sha1 ((,class (:foreground ,yellow))))
 
      ;; message-mode
-     `(message-cited-text-face ((,class (:inherit font-lock-comment))))
-     `(message-header-name-face ((,class (:foreground ,green))))
-     `(message-header-other-face ((,class (:foreground ,green))))
-     `(message-header-to-face ((,class (:foreground ,yellow :weight bold))))
-     `(message-header-from-face ((,class (:foreground ,yellow :weight bold))))
-     `(message-header-cc-face ((,class (:foreground ,yellow :weight bold))))
-     `(message-header-newsgroups-face ((,class (:foreground ,yellow :weight bold))))
-     `(message-header-subject-face ((,class (:foreground ,orange :weight bold))))
-     `(message-header-xheader-face ((,class (:foreground ,green))))
-     `(message-mml-face ((,class (:foreground ,yellow :weight bold))))
-     `(message-separator-face ((,class (:inherit font-lock-comment))))
+     `(message-cited-text ((,class (:foreground ,solarized-comments))))
+     `(message-header-name ((,class (:foreground ,green))))
+     `(message-header-other ((,class (:foreground ,green))))
+     `(message-header-to ((,class (:foreground ,yellow :weight bold))))
+     `(message-header-cc ((,class (:foreground ,orange :weight bold))))
+     `(message-header-newsgroups ((,class (:foreground ,yellow :weight bold))))
+     `(message-header-subject ((,class (:foreground ,orange))))
+     `(message-header-xheader ((,class (:foreground ,cyan))))
+     `(message-mml ((,class (:foreground ,yellow :weight bold))))
+     `(message-separator ((,class (:foreground ,solarized-comments :slant italic))))
 
      ;; mew
      `(mew-face-header-subject ((,class (:foreground ,orange))))
@@ -497,15 +499,27 @@
      ;; moccur
      `(moccur-current-line-face ((,class (:underline t))))
      `(moccur-edit-done-face ((,class
-			       (:foreground ,solarized-comments
-					    :background ,solarized-bg
-					    :slant italic))))
+                               (:foreground ,solarized-comments
+                                            :background ,solarized-bg
+                                            :slant italic))))
      `(moccur-edit-face
        ((,class (:background ,yellow :foreground ,solarized-bg))))
      `(moccur-edit-file-face ((,class (:background ,solarized-hl))))
      `(moccur-edit-reject-face ((,class (:foreground ,red))))
      `(moccur-face ((,class (:background ,solarized-hl :foreground ,solarized-emph
-					 :weight bold))))
+                                         :weight bold))))
+
+     ;; mu4e
+     `(mu4e-cited-1-face ((,class (:foreground ,green :slant italic :weight normal))))
+     `(mu4e-cited-2-face ((,class (:foreground ,blue :slant italic :weight normal))))
+     `(mu4e-cited-3-face ((,class (:foreground ,orange :slant italic :weight normal))))
+     `(mu4e-cited-4-face ((,class (:foreground ,yellow :slant italic :weight normal))))
+     `(mu4e-cited-5-face ((,class (:foreground ,cyan :slant italic :weight normal))))
+     `(mu4e-cited-6-face ((,class (:foreground ,green :slant italic :weight normal))))
+     `(mu4e-cited-7-face ((,class (:foreground ,blue :slant italic :weight normal))))
+     `(mu4e-flagged-face ((,class (:foreground ,magenta :weight bold))))
+     `(mu4e-view-url-number-face ((,class (:foreground ,orange :weight bold))))
+     `(mu4e-warning-face ((,class (:foreground ,red :slant normal :weight bold))))
 
      ;; mumamo
      `(mumamo-background-chunk-submode1 ((,class (:background ,solarized-hl))))
@@ -554,7 +568,7 @@
      `(org-link ((,class (:foreground ,yellow :underline t))))
      `(org-sexp-date ((,class (:foreground ,violet))))
      `(org-scheduled ((,class (:foreground ,green))))
-     `(org-scheduled-previously ((,class (:foreground ,orange))))
+     `(org-scheduled-previously ((,class (:foreground ,yellow))))
      `(org-scheduled-today ((,class (:foreground ,blue :weight bold))))
      `(org-special-keyword ((,class (:foreground ,solarized-comments :weight bold))))
      `(org-table ((,class (:foreground ,green))))
@@ -685,7 +699,7 @@
      `(sr-alt-marked-file-face ((,class (:background ,magenta :foreground ,solarized-bg
                                                      :weight bold))))
      ;; sunrise commander fstat
-     `(sr-directory-face ((,class (:inherit dired-directory :weigth normal))))
+     `(sr-directory-face ((,class (:inherit dired-directory :weight normal))))
      `(sr-symlink-directory-face ((,class (:inherit dired-directory :slant italic :weight normal))))
      `(sr-symlink-face ((,class (:inherit dired-symlink :slant italic :weight normal))))
      `(sr-broken-link-face ((,class (:inherit dired-warning :slant italic :weight normal))))
@@ -720,7 +734,7 @@
        ((,class (:foreground ,solarized-comments :background ,solarized-bg))))
      `(undo-tree-visualizer-current-face ((,class (:foreground ,cyan :inverse-video t))))
      `(undo-tree-visualizer-active-branch-face
-       ((,class (:foreground ,solarized-emph :background ,solarized-bg :weigth bold))))
+       ((,class (:foreground ,solarized-emph :background ,solarized-bg :weight bold))))
      `(undo-tree-visualizer-register-face ((,class (:foreground ,yellow))))
 
      ;; volatile highlights

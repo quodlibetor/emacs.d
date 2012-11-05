@@ -93,6 +93,10 @@
   (interactive)
   (nosetests-all debug t))
 
+(defun nosetests-pdb-failed ()
+  (interactive)
+  (nosetests-all t t))
+
 (defun nosetests-pdb-all ()
   (interactive)
   (nosetests-all t))
