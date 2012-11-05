@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: test before commiting
+# key: testprecommit
+# --
+#!/bin/bash
+#
+if [ -f /home/bwm/.virtualenvs/${1:virtualenv}/bin/setup-python-env ] ; then
+    source /home/bwm/.virtualenvs/$1/bin/setup-python-env
+fi
+/home/bwm/.virtualenvs/$1/bin/nosetests -v
