@@ -2,7 +2,12 @@
 # name: parseargs
 # key: parseargs
 # --
-def parse_args():
+`(save-excursion
+    (goto-char 0)
+    (re-search-forward "\n\n")
+    (backward-char)
+    (insert "import argparse\n"))
+`def parse_args():
     parser = argparse.ArgumentParser(
         description="$1")
     parser.add_argument("$2",
