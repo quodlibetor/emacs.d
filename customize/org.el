@@ -12,7 +12,7 @@
 
 (defun set-agenda-files ()
   (setq org-agenda-files
-        (append '("~/work.org" "~/life.org")
+        (append '("~/work.org" "~/life.org" "~/SVC.org")
                 ;; elisp doesn't have filter? daaaaaamn
                 (delq nil
                       (mapcar (lambda (filename)
@@ -23,6 +23,11 @@
 (defadvice org-agenda (before refresh-agenda-files activate)
   "make sure that all agenda files are included"
   (set-agenda-files))
+
+(setq jiralib-url "https://jira2.advance.net/")
+
+(let ((load-path (cons "packages/org-jira" load-path)))
+  (require 'org-jira "packages/org-jira/org-jira"))
 
 (add-hook 'org-mode-hook
 	  (lambda ()
