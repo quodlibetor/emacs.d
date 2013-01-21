@@ -127,7 +127,10 @@ class PylintRunner(LintRunner):
         ])
 
     ignored_ignore_codes = set([
-            'E221', # pep8 "multiple spaces before operator"
+            'E221',  # pep8 "multiple spaces before operator"
+            'E501',  # pep8 line too long
+            'E123',  # pep8 closing thing does not match opening indentation
+            'E128',  # pep8 under-indented visual indent
             ])
 
     fixup_map = {'E': 'error', 'C': 'info', None: 'warning'}
@@ -217,9 +220,13 @@ class Pep8Runner(LintRunner):
       spiders/structs.py:51:9: E301 expected 1 blank line, found 0 """
 
     command = 'pep8'
-    # sane_default_ignore_codes = set([
-    #     'RW29', 'W391',
-    #     'W291', 'WO232'])
+    sane_default_ignore_codes = set([
+        'RW29', 'W391',
+        'W291', 'WO232',
+        'E501',  # pep8 line too long
+        'E123',  # pep8 closing thing does not match opening indentation
+        'E128',
+        ])
 
     output_matcher = re.compile(
         r'(?P<filename>.+):'
