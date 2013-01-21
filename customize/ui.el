@@ -42,3 +42,6 @@
   "I prefer windows to auto-balance when I open new ones"
   (balance-windows))
 (ad-activate 'split-window-right)
+
+(add-to-list 'auto-mode-alist
+             '("bashrc" . shell-script-mode))
