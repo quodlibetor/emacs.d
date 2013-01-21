@@ -12,6 +12,9 @@
   (interactive)
   (set (make-local-variable 'show-trailing-whitespace) nil))
 
+(require 'git-tools "packages/git-tools/git-tools.el")
+(defalias 'ggrep 'git-tools-grep)
+
 ; from http://blog.urth.org/2011/06/flymake-versus-the-catalyst-restarter.html
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking
