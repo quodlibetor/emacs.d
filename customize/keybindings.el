@@ -10,6 +10,8 @@
 (global-set-key (kbd "M-%") 'query-replace-regexp)
 (global-set-key (kbd "C-c d c") 'desktop-change-dir)
 (global-set-key (kbd "C-c d s") 'desktop-save)
+(winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
+                ;; layouts
 
 ;; misc commands
 (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
@@ -19,6 +21,10 @@
 ;; org-mode
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c ol") 'org-store-link)
+(global-set-key (kbd "C-c oa") 'org-agenda)
+(global-set-key (kbd "C-c oc") 'org-capture)
+(global-set-key (kbd "C-c oj") 'org-clock-goto)
 
 ;; confluence wiki
 (global-set-key (kbd "C-c cf") 'confluence-get-page)
@@ -71,8 +77,6 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)
           (setq i (1+ i))))))))
-
-(global-set-key (kbd "C-c o") 'rotate-windows)
 
 (defun find-alternative-file-with-sudo ()
   (interactive)
