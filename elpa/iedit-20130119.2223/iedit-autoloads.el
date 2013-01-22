@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (iedit-mode-toggle-on-function iedit-mode) "iedit"
-;;;;;;  "iedit.el" (20632 9660))
+;;;;;;  "iedit.el" (20733 30856))
 ;;; Generated autoloads from iedit.el
 
 (autoload 'iedit-mode "iedit" "\
@@ -70,7 +70,7 @@ Toggle Iedit mode on current function.
 ;;;***
 
 ;;;### (autoloads (iedit-rectangle-mode) "iedit-rect" "iedit-rect.el"
-;;;;;;  (20632 9660))
+;;;;;;  (20733 30856))
 ;;; Generated autoloads from iedit-rect.el
 
 (autoload 'iedit-rectangle-mode "iedit-rect" "\
@@ -83,12 +83,12 @@ Iedit mechanism.
 Commands:
 \\{iedit-rect-keymap}
 
-\(fn)" t nil)
+\(fn &optional BEG END)" t nil)
 
 ;;;***
 
 ;;;### (autoloads nil nil ("iedit-lib.el" "iedit-pkg.el" "iedit-tests.el")
-;;;;;;  (20632 9660 470286))
+;;;;;;  (20733 30856 861332))
 
 ;;;***
 

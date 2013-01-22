@@ -4,20 +4,19 @@
 
 
 ;;;### (autoloads (yas-global-mode yas-minor-mode) "yasnippet" "yasnippet.el"
-;;;;;;  (20588 38325))
+;;;;;;  (20733 30727))
 ;;; Generated autoloads from yasnippet.el
 
 (autoload 'yas-minor-mode "yasnippet" "\
 Toggle YASnippet mode.
 
-When YASnippet mode is enabled, the `yas-trigger-key' key expands
-snippets of code depending on the major mode.
+When YASnippet mode is enabled, `yas-expand', normally bound to
+the TAB key, expands snippets of code depending on the major
+mode.
 
 With no argument, this command toggles the mode.
 positive prefix argument turns on the mode.
 Negative prefix argument turns off the mode.
-
-You can customize the key through `yas-trigger-key'.
 
 Key bindings:
 \\{yas-minor-mode-map}
@@ -47,8 +46,8 @@ See `yas-minor-mode' for more information on Yas minor mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("dropdown-list.el" "yasnippet-debug.el"
-;;;;;;  "yasnippet-pkg.el" "yasnippet-tests.el") (20588 38352 702600))
+;;;### (autoloads nil nil ("dropdown-list.el" "yasnippet-pkg.el")
+;;;;;;  (20733 30756 353901))
 
 ;;;***
 

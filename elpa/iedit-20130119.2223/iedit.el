@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2010, 2011, 2012 Victor Ren
 
-;; Time-stamp: <2012-10-22 14:14:53 Victor Ren>
+;; Time-stamp: <2013-01-02 23:21:38 Victor Ren>
 ;; Author: Victor Ren <victorhge@gmail.com>
 ;; Keywords: occurrence region simultaneous refactoring
 ;; Version: 0.97
@@ -33,7 +33,7 @@
 ;;
 ;; Normal scenario of iedit-mode is like:
 ;;
-;; - Highlight certain contents - by press C-;
+;; - Highlight certain contents - by press C-; (The default binding)
 ;;   All occurrences of a symbol, string in the buffer or a region may be
 ;;   highlighted corresponding to current mark, point and prefix argument.
 ;;   Refer to the document of `iedit-mode' for details.
@@ -223,6 +223,7 @@ This is like `describe-bindings', but displays only Iedit keys."
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map iedit-occurrence-keymap-default)
     (define-key map (kbd "M-H") 'iedit-restrict-function)
+    (define-key map (kbd "M-G") 'iedit-apply-global-modification)
     (define-key map (kbd "M-C") 'iedit-toggle-case-sensitive)
     map)
   "Keymap used within overlays in Iedit mode.")
@@ -233,6 +234,7 @@ This is like `describe-bindings', but displays only Iedit keys."
     (define-key map (char-to-string help-char) iedit-help-map)
     (define-key map [help] iedit-help-map)
     (define-key map [f1] iedit-help-map)
+    (define-key map (kbd "M-;") 'iedit-toggle-selection)
     map)
   "Keymap used while Iedit mode is enabled.")
 
@@ -356,15 +358,18 @@ Keymap used within overlays:
   (if (or isearch-regexp isearch-word)
       nil
     (setq iedit-initial-string-local isearch-string))
-  (isearch-exit)
-  (setq mark-active nil)
-  (run-hooks 'deactivate-mark-hook)
-  (iedit-start regexp (point-min) (point-max))
-  ;; TODO: reconsider how to avoid the loop in iedit-same-length
-  (if (iedit-same-length)
-      nil
-    (iedit-done)
-    (message "Matches are not the same length.")))
+  (let ((iedit-case-sensitive (not isearch-case-fold-search)))
+    (isearch-exit)
+    (setq mark-active nil)
+    (run-hooks 'deactivate-mark-hook)
+    (iedit-start regexp (point-min) (point-max))
+    ;; TODO: reconsider how to avoid the loop in iedit-same-length
+    (cond ((not iedit-occurrences-overlays) 
+           (message "No matches found")
+           (iedit-done))
+          ((not (iedit-same-length))
+           (message "Matches are not the same length.")
+           (iedit-done)))))
 
 (defun iedit-start (occurrence-regexp beg end)
   "Start Iedit mode for the `occurrence-regexp' in the current buffer."
@@ -422,8 +427,7 @@ the initial string globally."
             (end (region-end)))
         (if (null (iedit-find-overlay beg end 'iedit-occurrence-overlay-name arg))
             (iedit-done)
-          (iedit-restrict-region beg end arg)
-          (iedit-first-occurrence)))
+          (iedit-restrict-region beg end arg)))
     (iedit-done)))
 
 
@@ -462,6 +466,22 @@ the initial string globally."
       (iedit-replace-occurrences iedit-last-occurrence-global)
     (message "No global modification available.")))
 
+(defun iedit-toggle-selection ()
+  "Select or deselect the occurrence under point."
+  (interactive)
+  (iedit-barf-if-buffering)
+  (let ((ov (iedit-find-current-occurrence-overlay)))
+    (if ov
+        (iedit-restrict-region (overlay-start ov) (overlay-end ov) t)
+      (goto-char (if (> (point)(length iedit-initial-string-local))
+                     ( - (point) (length iedit-initial-string-local))
+                   (point-min)))
+      (iedit-add-next-occurrence-overlay (iedit-regexp-quote iedit-initial-string-local))
+      (setq iedit-mode (propertize
+                    (concat " Iedit:" (number-to-string
+                                       (length iedit-occurrences-overlays)))
+                    'face 'font-lock-warning-face))
+      (force-mode-line-update))))
 
 (defun iedit-restrict-function(&optional arg)
   "Restricting Iedit mode in current function."
@@ -490,8 +510,7 @@ the initial string globally."
   (force-mode-line-update))
 
 (defun iedit-toggle-case-sensitive ()
-  "Toggle case-sensitive matching occurrences.
-Todo: how about region"
+  "Toggle case-sensitive matching occurrences. "
   (interactive)
   (setq iedit-case-sensitive (not iedit-case-sensitive))
   (if iedit-buffering

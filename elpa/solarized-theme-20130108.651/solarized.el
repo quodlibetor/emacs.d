@@ -98,6 +98,9 @@
 
          ;; Light/Dark adaptive higher/lower contrast accented colors
          ;; Only use these in exceptional cirmumstances!
+         (solarized-fg-hc (if (eq variant 'light) base3 base03))
+         (solarized-fg-lc (if (eq variant 'light) base03 base3))
+
          (yellow-hc (if (eq variant 'light) yellow-d yellow-l))
          (yellow-lc (if (eq variant 'light) yellow-l yellow-d))
          (orange-hc (if (eq variant 'light) orange-d orange-l))
@@ -147,6 +150,10 @@
      `(compilation-leave-directory-face ((,class (:foreground ,green))))
      `(compilation-line-face ((,class (:foreground ,yellow))))
      `(compilation-line-number ((,class (:foreground ,yellow))))
+     `(compilation-mode-line-exit
+       ((,class (:inherit compilation-info :foreground ,green :weight bold))))
+     `(compilation-mode-line-fail
+       ((,class (:inherit compilation-error :foreground ,red :weight bold))))
      `(compilation-message-face ((,class (:foreground ,blue))))
      `(compilation-warning-face ((,class (:foreground ,yellow :weight bold :underline t))))
 
@@ -170,6 +177,10 @@
      `(dired-symlink ((,class (:foreground ,cyan :weight normal :slant italic))))
      `(dired-warning ((,class (:foreground ,orange :underline t))))
 
+     ;; dropdown
+     `(dropdown-list-face ((,class (:background ,solarized-hl :foreground ,cyan))))
+     `(dropdown-list-selection-face ((,class (:background ,cyan-lc :foreground ,cyan-hc))))
+
      ;; grep
      `(grep-context-face ((,class (:foreground ,solarized-fg))))
      `(grep-error-face ((,class (:foreground ,red :weight bold :underline t))))
@@ -179,6 +190,11 @@
      ;; faces used by isearch
      `(isearch ((,class (:foreground ,yellow :background ,solarized-hl :bold t))))
      `(isearch-fail ((,class (:foreground ,red :background ,solarized-bg :bold t))))
+
+     ;; man
+     `(Man-overstrike ((,class (:foreground ,blue :weight bold))))
+     `(Man-reverse ((,class (:foreground ,orange))))
+     `(Man-underline ((,class (:foreground ,green :underline t))))
 
      ;; misc faces
      `(menu ((,class (:foreground ,solarized-fg :background ,solarized-bg))))
@@ -223,6 +239,16 @@
      `(ace-jump-face-foreground
        ((,class (:foreground ,red :background ,solarized-bg :inverse-video nil))))
 
+     ;; auto-complete
+     `(ac-candidate-face ((,class (:background ,solarized-hl :foreground ,cyan))))
+     `(ac-selection-face ((,class (:background ,cyan-lc :foreground ,cyan-hc))))
+     `(ac-candidate-mouse-face ((,class (:background ,cyan-hc :foreground ,cyan-lc))))
+     `(ac-completion-face ((,class (:foreground ,solarized-emph :underline t))))
+     `(ac-gtags-candidate-face ((,class (:background ,solarized-hl :foreground ,blue))))
+     `(ac-gtags-selection-face ((,class (:background ,blue-lc :foreground ,blue-hc))))
+     `(ac-yasnippet-candidate-face ((,class (:background ,solarized-hl :foreground ,yellow))))
+     `(ac-yasnippet-selection-face ((,class (:background ,yellow-lc :foreground ,yellow-hc))))
+
      ;; auto highlight symbol
      `(ahs-definition-face ((,class (:foreground ,solarized-bg :background ,blue :underline t))))
      `(ahs-edit-mode-face ((,class (:foreground ,solarized-bg :background ,yellow))))
@@ -232,11 +258,48 @@
      `(ahs-plugin-whole-buffer-face ((,class (:foreground ,solarized-bg :background ,green))))
      `(ahs-warning-face ((,class (:foreground ,red :weight bold))))
 
+     ;; android mode
+     `(android-mode-debug-face ((,class (:foreground ,green))))
+     `(android-mode-error-face ((,class (:foreground ,orange :weight bold))))
+     `(android-mode-info-face ((,class (:foreground ,solarized-fg))))
+     `(android-mode-verbose-face ((,class (:foreground ,solarized-comments))))
+     `(android-mode-warning-face ((,class (:foreground ,yellow))))
+
      ;; bm
      `(bm-face ((,class (:background ,yellow-lc :foreground ,solarized-bg))))
      `(bm-fringe-face ((,class (:background ,yellow-lc :foreground ,solarized-bg))))
      `(bm-fringe-persistent-face ((,class (:background ,green-lc :foreground ,solarized-bg))))
      `(bm-persistent-face ((,class (:background ,green-lc :foreground ,solarized-bg))))
+
+     ;; calfw
+     `(cfw:face-day-title ((,class (:background ,solarized-hl))))
+     `(cfw:face-annotation ((,class (:inherit cfw:face-day-title :foreground ,yellow))))
+     `(cfw:face-default-content ((,class (:foreground ,green))))
+     `(cfw:face-default-day ((,class (:inherit cfw:face-day-title :weight bold))))
+     `(cfw:face-disable ((,class (:inherit cfw:face-day-title :foreground ,solarized-comments))))
+     `(cfw:face-grid ((,class (:foreground ,solarized-comments))))
+     `(cfw:face-header ((,class (:foreground ,blue-hc :background ,blue-lc :weight bold))))
+     `(cfw:face-holiday ((,class (:background nil :foreground ,red :weight bold))))
+     `(cfw:face-periods ((,class (:foreground ,magenta))))
+     `(cfw:face-select ((,class (:background ,magenta-lc :foreground ,magenta-hc))))
+     `(cfw:face-saturday ((,class (:foreground ,cyan-hc :background ,cyan-lc))))
+     `(cfw:face-sunday ((,class (:foreground ,red-hc :background ,red-lc :weight bold))))
+     `(cfw:face-title ((,class (:inherit variable-pitch :foreground ,yellow :weight bold :height 2.0))))
+     `(cfw:face-today ((,class (:weight bold :background ,solarized-hl :foreground nil))))
+     `(cfw:face-today-title ((,class (:background ,yellow-lc :foreground ,yellow-hc :weight bold))))
+     `(cfw:face-toolbar ((,class (:background ,solarized-hl :foreground ,solarized-fg))))
+     `(cfw:face-toolbar-button-off ((,class (:background ,yellow-lc :foreground ,yellow-hc :weight bold))))
+     `(cfw:face-toolbar-button-on ((,class (:background ,yellow-hc :foreground ,yellow-lc :weight bold))))
+
+     ;; clojure-test-mode
+     `(clojure-test-failure-face ((t (:foreground ,orange :weight bold :underline t))))
+     `(clojure-test-error-face ((t (:foreground ,red :weight bold :underline t))))
+     `(clojure-test-success-face ((t (:foreground ,green :weight bold :underline t))))
+
+     ;; ctable
+     `(ctbl:face-cell-select ((,class (:background ,blue :foreground ,solarized-bg))))
+     `(ctbl:face-continue-bar ((,class (:background ,solarized-hl :foreground ,solarized-bg))))
+     `(ctbl:face-row-select ((,class (:background ,cyan :foreground ,solarized-bg))))
 
      ;; custom
      `(custom-variable-tag ((,class (:foreground ,cyan))))
@@ -245,12 +308,23 @@
      `(custom-state ((,class (:foreground ,green))))
 
      ;; diff
-     `(diff-added ((,class (:foreground ,green))))
-     `(diff-changed ((,class (:foreground ,yellow))))
-     `(diff-removed ((,class (:foreground ,red))))
+     `(diff-added ((,class (:foreground ,green :background ,solarized-bg))))
+     `(diff-changed ((,class (:foreground ,yellow :background ,solarized-bg))))
+     `(diff-removed ((,class (:foreground ,red :background ,solarized-bg))))
      `(diff-header ((,class (:background ,solarized-bg))))
      `(diff-file-header
        ((,class (:background ,solarized-bg :foreground ,solarized-fg :weight bold))))
+
+     ;; ediff
+     `(ediff-fine-diff-A ((,class (:background ,orange-lc))))
+     `(ediff-fine-diff-B ((,class (:background ,green-lc))))
+     `(ediff-even-diff-A ((,class (:background ,solarized-comments :foreground ,solarized-fg-lc ))))
+     `(ediff-odd-diff-A ((,class (:background ,solarized-comments :foreground ,solarized-fg-hc ))))
+     `(ediff-even-diff-B ((,class (:background ,solarized-comments :foreground ,solarized-fg-hc ))))
+     `(ediff-odd-diff-B ((,class (:background ,solarized-comments :foreground ,solarized-fg-lc ))))
+
+     ;; epc
+     `(epc:face-title ((,class (:foreground ,magenta :weight bold))))
 
      ;; eshell
      `(eshell-prompt ((,class (:foreground ,yellow :weight bold))))
@@ -270,6 +344,12 @@
        ((,class (:foreground ,red-hc :background ,red-lc :weight bold :underline t))))
      `(flymake-infoline ((,class (:foreground ,green-hc :background ,green-lc))))
      `(flymake-warnline
+       ((,class (:foreground ,yellow-hc :background ,yellow-lc :weight bold :underline t))))
+
+     ;; flycheck
+     `(flycheck-error-face
+       ((,class (:foreground ,red-hc :background ,red-lc :weight bold :underline t))))
+     `(flycheck-warning-face
        ((,class (:foreground ,yellow-hc :background ,yellow-lc :weight bold :underline t))))
 
      ;; flyspell
@@ -392,6 +472,7 @@
      `(helm-lisp-show-completion ((,class (:foreground ,yellow  :background ,solarized-hl
                                                        :bold t))))
      `(helm-M-x-key ((,class (:foreground ,orange :underline t))))
+     `(helm-moccur-buffer ((,class (:foreground ,cyan :underline t))))
      `(helm-match ((,class (:inherit match))))
      `(helm-selection ((,class (:background ,solarized-hl :underline t))))
      `(helm-selection-line ((,class (:background ,solarized-hl :foreground ,solarized-emph
@@ -429,6 +510,24 @@
      `(ido-incomplete-regexp ((,class (:foreground ,red :weight bold ))))
      `(ido-indicator ((,class (:background ,red :foreground ,solarized-bg :width condensed))))
      `(ido-virtual ((,class (:foreground ,cyan))))
+
+     ;; js2-mode colors
+     `(js2-error-face ((,class (:foreground ,red))))
+     `(js2-external-variable-face ((,class (:foreground ,orange))))
+     `(js2-function-param-face ((,class (:foreground ,green))))
+     `(js2-instance-member-face ((,class (:foreground ,magenta))))
+     `(js2-jsdoc-html-tag-delimiter-face ((,class (:foreground ,cyan))))
+     `(js2-jsdoc-html-tag-name-face ((,class (:foreground ,orange))))
+     `(js2-jsdoc-tag-face ((,class (:foreground ,cyan))))
+     `(js2-jsdoc-type-face ((,class (:foreground ,blue))))
+     `(js2-jsdoc-value-face ((,class (:foreground ,violet))))
+     `(js2-magic-paren-face ((,class (:underline t))))
+     `(js2-private-function-call-face ((,class (:foreground ,yellow))))
+     `(js2-private-member-face ((,class (:foreground ,blue))))
+     `(js2-warning-face ((,class (:underline ,orange))))
+
+     ;; jedi
+     `(jedi:highlight-function-argument ((,class (:inherit bold))))
 
      ;; linum-mode
      `(linum ((,class (:foreground ,solarized-fg :background ,solarized-bg))))
@@ -614,6 +713,16 @@
      ;; pretty-mode
      `(pretty-mode-symbol-face  ((,class (:foreground ,green))))
 
+     ;; popup
+     `(popup-face ((,class (:background ,solarized-hl :foreground ,solarized-fg))))
+     `(popup-isearch-match ((,class (:background ,yellow :foreground ,solarized-bg))))
+     `(popup-menu-face ((,class (:background ,solarized-hl :foreground ,solarized-fg))))
+     `(popup-menu-mouse-face ((,class (:background ,blue :foreground ,solarized-fg))))
+     `(popup-menu-selection-face ((,class (:background ,magenta :foreground ,solarized-bg))))
+     `(popup-scroll-bar-background-face ((,class (:background ,solarized-comments))))
+     `(popup-scroll-bar-foreground-face ((,class (:background ,solarized-emph))))
+     `(popup-tip-face ((,class (:background ,solarized-hl :foreground ,solarized-fg))))
+
      ;; rainbow-delimiters
      `(rainbow-delimiters-depth-1-face ((,class (:foreground ,cyan))))
      `(rainbow-delimiters-depth-2-face ((,class (:foreground ,yellow))))
@@ -653,6 +762,11 @@
      `(sh-quoted-exec ((,class (:foreground ,violet :weight bold))))
      `(sh-escaped-newline ((,class (:foreground ,yellow :weight bold))))
      `(sh-heredoc ((,class (:foreground ,yellow :weight bold))))
+
+     ;; smartparens
+     `(sp-pair-overlay-face ((,class (:background ,solarized-hl))))
+     `(sp-wrap-overlay-face ((,class (:background ,solarized-hl))))
+     `(sp-wrap-tag-overlay-face ((,class (:background ,solarized-hl))))
 
      ;; show-paren
      `(show-paren-match
@@ -732,7 +846,8 @@
      ;; undo-tree
      `(undo-tree-visualizer-default-face
        ((,class (:foreground ,solarized-comments :background ,solarized-bg))))
-     `(undo-tree-visualizer-current-face ((,class (:foreground ,cyan :inverse-video t))))
+     `(undo-tree-visualizer-unmodified-face ((,class (:foreground ,green))))
+     `(undo-tree-visualizer-current-face ((,class (:foreground ,blue :inverse-video t))))
      `(undo-tree-visualizer-active-branch-face
        ((,class (:foreground ,solarized-emph :background ,solarized-bg :weight bold))))
      `(undo-tree-visualizer-register-face ((,class (:foreground ,yellow))))
@@ -752,6 +867,27 @@
      `(w3m-lnum-minibuffer-prompt ((,class (:foreground ,solarized-emph))))
      `(w3m-lnum-match ((,class (:background ,solarized-hl))))
      `(w3m-lnum ((,class (:underline nil :bold nil :foreground ,red))))
+
+     ;; web-mode
+     `(web-mode-builtin-face ((,class (:foreground ,red))))
+     `(web-mode-comment-face ((,class (:foreground ,solarized-comments))))
+     `(web-mode-constant-face ((,class (:foreground ,blue :weight bold))))
+     `(web-mode-css-at-rule-face ((,class (:foreground ,violet :slant italic))))
+     `(web-mode-css-prop-face ((,class (:foreground ,violet))))
+     `(web-mode-css-pseudo-class-face ((,class (:foreground ,green :slant italic))))
+     `(web-mode-css-rule-face ((,class (:foreground ,blue))))
+     `(web-mode-doctype-face ((,class (:foreground ,solarized-comments
+                                                   :slant italic :weight bold))))
+     `(web-mode-folded-face ((,class (:underline t))))
+     `(web-mode-function-name-face ((,class (:foreground ,blue))))
+     `(web-mode-html-attr-name-face ((,class (:foreground ,blue :slant normal))))
+     `(web-mode-html-attr-value-face ((,class (:foreground ,cyan :slant italic))))
+     `(web-mode-html-tag-face ((,class (:foreground ,green))))
+     `(web-mode-keyword-face ((,class (:foreground ,yellow :weight bold))))
+     `(web-mode-preprocessor-face ((,class (:foreground ,yellow  :slant italic :weight bold))))
+     `(web-mode-string-face ((,class (:foreground ,cyan))))
+     `(web-mode-type-face ((,class (:foreground ,yellow))))
+     `(web-mode-variable-name-face ((,class (:foreground ,blue))))
 
      ;; whitespace-mode
      `(whitespace-space ((,class (:background ,solarized-bg :foreground ,yellow-lc
@@ -823,7 +959,7 @@
      theme-name
      `(ansi-color-names-vector [,solarized-bg ,red ,green ,yellow
                                              ,blue ,magenta ,cyan ,solarized-fg])
-     `(ansi-term-color-vector [unspecific ,base01 ,red ,green ,yellow ,blue ,magenta ,cyan ,base03])
+     `(ansi-term-color-vector [,base01 ,red ,green ,yellow ,blue ,magenta ,cyan ,base03])
      ;; fill-column-indicator
      `(fci-rule-color ,solarized-hl)
 

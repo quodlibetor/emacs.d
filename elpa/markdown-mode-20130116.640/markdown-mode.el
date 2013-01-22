@@ -1,6 +1,6 @@
 ;;; markdown-mode.el --- Emacs Major mode for Markdown-formatted text files
 
-;; Copyright (C) 2011, 2012 Donald Ephraim Curtis <dcurtis@milkbox.net>
+;; Copyright (C) 2011-2013 Donald Ephraim Curtis <dcurtis@milkbox.net>
 ;; Copyright (C) 2007-2011 Jason R. Blevins <jrblevin@sdf.org>
 ;; Copyright (C) 2007, 2009 Edward O'Connor <ted@oconnor.cx>
 ;; Copyright (C) 2007 Conal Elliott <conal@conal.net>
@@ -22,7 +22,7 @@
 ;; Author: Jason R. Blevins <jrblevin@sdf.org>
 ;; Maintainer: Donald Ephraim Curtis <dcurtis@milkbox.net
 ;; Created: May 24, 2007
-;; Version: 1.8.2
+;; Version: 1.8.3
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: http://github.com/milkypostman/markdown-mode
 
@@ -614,6 +614,9 @@ This will not take effect until Emacs is restarted."
 (defvar markdown-math-face 'markdown-math-face
   "Face name to use for LaTeX expressions.")
 
+(defvar markdown-language-keyword-face 'markdown-language-keyword-face
+  "Face for language identifier in 'pre' text.")
+
 (defgroup markdown-faces nil
   "Faces used in Markdown Mode"
   :group 'markdown
@@ -733,6 +736,12 @@ This will not take effect until Emacs is restarted."
   '((t (:inherit font-lock-string-face)))
   "Face for LaTeX expressions."
   :group 'markdown-faces)
+
+(defface markdown-language-keyword-face
+  '((t (:inherit font-lock-keyword-face)))
+  "Face for langauge identifier in 'pre' text."
+  :group 'markdown-faces)
+
 
 (defconst markdown-regex-link-inline
   "\\[\\(!?[^]]*?\\)\\](\\([^\\)]*\\))"
@@ -855,6 +864,20 @@ text.")
   "^\\(\\s *\\)\\([0-9]+\\.\\|[\\*\\+-]\\)\\(\\s +\\)"
   "Regular expression for matching indentation of list items.")
 
+(defun markdown-match-quoted-code-blocks (last)
+  "Match quoted code blocks from the point to LAST."
+  (cond ((search-forward-regexp "^\\(```\\).*" last t)
+         (beginning-of-line)
+         (let ((beg (point))
+               (end (progn (end-of-line) (point))))
+           (forward-line)
+           (cond ((search-forward-regexp "^```$" last t)
+                  (match-data)
+                  (set-match-data (list beg (+ beg 3) (+ beg 3) end (1+ end) (point)))
+                  t)
+                 (t nil))))
+        (t nil)))
+
 (defvar markdown-mode-font-lock-keywords-basic
   (list
    '(markdown-match-pre-blocks 0 markdown-pre-face t t)
@@ -905,6 +928,7 @@ text.")
    )
   "Syntax highlighting for Markdown files.")
 
+
 (defconst markdown-mode-font-lock-keywords-latex
   (list
    ;; Math mode $..$ or $$..$$
@@ -924,6 +948,15 @@ text.")
    markdown-mode-font-lock-keywords-basic)
   "Default highlighting expressions for Markdown mode.")
 
+(defvar markdown-mode-font-lock-keywords-gfm
+  (append
+   markdown-mode-font-lock-keywords
+   (list
+    (cons 'markdown-match-quoted-code-blocks
+          '((0 markdown-pre-face t t)
+            (1 markdown-language-keyword-face t t)
+            (2 markdown-pre-face t t))))))
+
 ;; Footnotes
 (defvar markdown-footnote-counter 0
   "Counter for footnote numbers.")
@@ -932,6 +965,19 @@ text.")
 (defconst markdown-footnote-chars
   "[[:alnum:]-]"
   "Regular expression maching any character that is allowed in a footnote identifier.")
+
+;; imenu information
+(setq markdown-imenu-generic-expression
+      `((nil ,markdown-regex-header-1-setext 1)
+        (nil ,markdown-regex-header-2-setext 1)
+        (nil ,markdown-regex-header-1-atx 2)
+        (nil ,markdown-regex-header-2-atx 2)
+        (nil ,markdown-regex-header-3-atx 2)
+        (nil ,markdown-regex-header-4-atx 2)
+        (nil ,markdown-regex-header-5-atx 2)
+        (nil ,markdown-regex-header-6-atx 2)
+        ("fn" "^\\[\\^\\(.*\\)\\]" 1)))
+
 
 
 
@@ -1481,6 +1527,85 @@ Arguments BEG and END specify the beginning and end of the region."
   (interactive "*r")
   (markdown-block-region beg end "    "))
 
+(defun markdown-insert-list-item (&optional arg)
+  "Insert a newline and a list item.
+
+If ARG is `C-u', descend one level in indentation. If ARG is `C-u
+C-u' increase the indentation by one level.
+
+If the point is inside unordered list, insert the bullet
+mark (*).
+
+If the point is inside ordered list, insert the next number
+followed by a period."
+  (interactive "P")
+  ;; compute indentation
+  (let* ((prf (prefix-numeric-value arg))
+         (item-indent (save-excursion
+                        (beginning-of-line)
+                        (when (looking-at "^\\([ ]*\\)")
+                          (match-string 0))))
+         (indent (and item-indent
+                      (cond
+                       ((and arg (= prf 4))
+                        (max (- (length item-indent) 4) 0))
+                       ((and arg (= prf 16))
+                        (+ (length item-indent) 4))
+                       (t(length item-indent)))))
+         (new-indent (make-string indent 32)))
+    (cond
+     ;; are we in an unordered list?
+     ((save-excursion (beginning-of-line)
+                      (looking-at "^[ ]*\\*"))
+      (newline)
+      (insert (concat new-indent "* ")))
+     ((save-excursion (beginning-of-line)
+                      (looking-at "^[ ]*\\([0-9]+\\)\\."))
+      (newline)
+      (if (= prf 16) ;; starting a new column indented one more level
+          (insert (concat new-indent "1. "))
+        ;; travel up to the last item and pick the correct number.  If
+        ;; the argument was nil, "new-indent = item-indent" is the same,
+        ;; so we don't need special treatment. Neat.
+        (save-excursion
+          (while (not (looking-at (concat new-indent "\\([0-9]+\\)\\.")))
+            (forward-line -1)))
+
+        (insert (concat new-indent
+                        (int-to-string (1+ (string-to-int (match-string 1))))
+                        ". ")))
+      (markdown-cleanup-list-numbers))
+     ;; if we're not in a list, start an unordered one
+     (t (insert "* ")))))
+
+
+(defun gfm-insert-code-block (&optional lang)
+  "Insert a code block using a specific language highlighting queried
+from user.  If a region is active, wrap this region with the markup
+instead.  If the region boundaries are not on empty lines, these are
+added automatically in order to have the correct markup."
+  (interactive "sWhat language to use for highlighting: ")
+  (if (and transient-mark-mode mark-active)
+      (let ((b (region-beginning)) (e (region-end)))
+        (goto-char b)
+        ;; if we're on a blank line, insert the quotes here, otherwise
+        ;; add a new line first
+        (unless (looking-at "\n")
+          (newline)
+          (forward-line -1)
+          (setq e (1+ e)))
+        (insert "```" lang)
+        (goto-char (+ e 3 (length lang)))
+        ;; if we're on a blank line, don't newline, otherwise the ```
+        ;; should go on its own line
+        (unless (looking-back "\n")
+          (newline))
+        (insert "```"))
+    (insert "```" lang)
+    (newline 2)
+    (insert "```")
+    (forward-line -1)))
+
 ;;; Footnotes ======================================================================
 
 (defun markdown-footnote-counter-inc ()
@@ -1690,6 +1815,7 @@ it in the usual way."
     (define-key map "\C-c-" 'markdown-insert-hr)
     (define-key map "\C-c\C-tt" 'markdown-insert-title)
     (define-key map "\C-c\C-ts" 'markdown-insert-section)
+    (define-key map (kbd "M-<return>") 'markdown-insert-list-item)
     ;; Footnotes
     (define-key map "\C-c\C-fn" 'markdown-footnote-new)
     (define-key map "\C-c\C-fg" 'markdown-footnote-goto-text)
@@ -1718,6 +1844,13 @@ it in the usual way."
     (define-key map "\C-c\C-cc" 'markdown-check-refs)
     map)
   "Keymap for Markdown major mode.")
+
+(defvar gfm-mode-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map markdown-mode-map)
+    (define-key map "\C-c\C-s\C-c" 'gfm-insert-code-block)
+    map)
+  "Keymap for `gfm-mode'.  See also `markdown-mode-map'.")
 
 ;;; Menu ==================================================================
 
@@ -1924,7 +2057,7 @@ Assume that the previously found match was for a numbered item in a list."
         (continue t)
         (step t)
         (sep nil))
-    (while continue
+    (while (and continue (not (eobp)))
       (setq step t)
       (cond
        ((looking-at "^\\([\s-]*\\)[0-9]+\\. ")
@@ -2256,20 +2389,26 @@ and [[test test]] both map to Test-test.ext."
                 (concat "."
                         (file-name-extension (buffer-file-name)))))))
 
-(defun markdown-follow-wiki-link (name)
+(defun markdown-follow-wiki-link (name &optional other)
   "Follow the wiki link NAME.
 Convert the name to a file name and call `find-file'.  Ensure that
 the new buffer remains in `markdown-mode'."
-  (let ((filename (markdown-convert-wiki-link-to-filename name)))
-    (find-file filename))
-  (markdown-mode))
+  (let ((filename (markdown-convert-wiki-link-to-filename name))
+        (wp (progn
+              (string-match "\\(.*/\\).*$" buffer-file-name)
+              (match-string 1 buffer-file-name))))
+    (when other (other-window 1))
+    (find-file (concat wp filename)))
+  (when (eq major-mode 'fundamental-mode) (markdown-mode)))
 
-(defun markdown-follow-wiki-link-at-point ()
-  "Find Wiki Link at point.
+(defun markdown-follow-wiki-link-at-point (&optional arg)
+  "Find Wiki Link at point.  With prefix argument C-u open the file in
+other window.
+
 See `markdown-wiki-link-p' and `markdown-follow-wiki-link'."
-  (interactive)
+  (interactive "P")
   (if (markdown-wiki-link-p)
-      (markdown-follow-wiki-link (markdown-wiki-link-link))
+      (markdown-follow-wiki-link (markdown-wiki-link-link) arg)
     (error "Point is not at a Wiki Link")))
 
 (defun markdown-next-wiki-link ()
@@ -2417,6 +2556,8 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   (set (make-local-variable 'font-lock-defaults)
        '(markdown-mode-font-lock-keywords))
   (set (make-local-variable 'font-lock-multiline) t)
+  ;; For imenu support
+  (set (make-local-variable 'imenu-generic-expression) markdown-imenu-generic-expression)
   ;; For menu support in XEmacs
   (easy-menu-add markdown-mode-menu markdown-mode-map)
   (set (make-local-variable 'beginning-of-defun-function)
@@ -2459,7 +2600,7 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   ;; do the initial link fontification
   (markdown-fontify-buffer-wiki-links))
 
-                                        ;(add-to-list 'auto-mode-alist '("\\.text$" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.text$" . markdown-mode))
 
 ;;; GitHub Flavored Markdown Mode  ============================================
 
@@ -2472,6 +2613,10 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   (if (fboundp 'visual-line-mode)
       (visual-line-mode 1)
     (longlines-mode 1))
+
+  (set (make-local-variable 'font-lock-defaults)
+       '(markdown-mode-font-lock-keywords-gfm))
+
   ;; do the initial link fontification
   (markdown-fontify-buffer-wiki-links))
 
