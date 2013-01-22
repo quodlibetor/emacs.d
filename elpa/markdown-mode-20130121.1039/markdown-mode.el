@@ -1467,7 +1467,8 @@ FIX: needs more functionality added to make behavior more DWIM."
                    (point-min)))
         (level (or (length (match-string-no-properties 1)) 1))
         end)
-    (setq end (if (re-search-forward (format "^#\\{1,%d\\} " level) nil t 2)
+    (setq end (if (ignore-errors
+                    (re-search-forward (format "^#\\{1,%d\\} " level) nil t 2))
                   (point-at-bol)
                 (point-max)))
     (goto-char begin)
@@ -1572,7 +1573,7 @@ followed by a period."
             (forward-line -1)))
 
         (insert (concat new-indent
-                        (int-to-string (1+ (string-to-int (match-string 1))))
+                        (int-to-string (1+ (string-to-number (match-string 1))))
                         ". ")))
       (markdown-cleanup-list-numbers))
      ;; if we're not in a list, start an unordered one
