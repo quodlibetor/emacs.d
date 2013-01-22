@@ -41,6 +41,11 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("scripts/" flymake-pylint-init)))
 
+(setq jedi:setup-keys t)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (jedi:setup)
+            (auto-complete-mode)))
 
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
 (setq pylookup-dir "~/.emacs.d/packages/pylookup")
