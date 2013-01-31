@@ -284,7 +284,7 @@ See also: `jedi:server-args'."
                         " ")))))
   (if (and (local-variable-p 'jedi:epc) jedi:epc)
       (message "Dedicated Jedi server is already running!")
-    (make-local-variable 'jedi:epc)
+    (set (make-local-variable 'jedi:epc) nil)
     (let ((jedi:server-command command)
           (jedi:server-args nil))
       (jedi:start-server))))
@@ -456,6 +456,7 @@ See also: `jedi:server-args'."
        ((not (and module_path (file-exists-p module_path)))
         (message "File '%s' does not exist." module_path))
        (t
+        (push-mark)
         (funcall (if other-window #'find-file-other-window #'find-file)
                  module_path)
         (goto-char (point-min))
@@ -652,5 +653,10 @@ running server."
 
 
 (provide 'jedi)
+
+;; Local Variables:
+;; coding: utf-8
+;; indent-tabs-mode: nil
+;; End:
 
 ;;; jedi.el ends here

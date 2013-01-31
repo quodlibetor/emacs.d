@@ -3,25 +3,25 @@
 ;;; Code:
 
 
-;;;### (autoloads (magit-status) "magit" "magit.el" (20632 9657))
+;;;### (autoloads (magit-status) "magit" "magit.el" (20746 61864))
 ;;; Generated autoloads from magit.el
 
 (autoload 'magit-status "magit" "\
-Open a Magit status buffer for the Git repository containing
-DIR.  If DIR is not within a Git repository, offer to create a
-Git repository in DIR.
+Open a Magit status buffer for the Git repository containing DIR.
+If DIR is not within a Git repository, offer to create a Git
+repository in DIR.
 
 Interactively, a prefix argument means to ask the user which Git
-repository to use even if `default-directory' is under Git control.
-Two prefix arguments means to ignore `magit-repo-dirs' when asking for
-user input.
+repository to use even if `default-directory' is under Git
+control.  Two prefix arguments means to ignore `magit-repo-dirs'
+when asking for user input.
 
 \(fn DIR)" t nil)
 
 ;;;***
 
 ;;;### (autoloads (magit-blame-mode) "magit-blame" "magit-blame.el"
-;;;;;;  (20632 9656))
+;;;;;;  (20746 61863))
 ;;; Generated autoloads from magit-blame.el
 
 (autoload 'magit-blame-mode "magit-blame" "\
@@ -32,7 +32,7 @@ Display blame information inline.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-stgit magit-stgit-mode) "magit-stgit"
-;;;;;;  "magit-stgit.el" (20632 9656))
+;;;;;;  "magit-stgit.el" (20746 61863))
 ;;; Generated autoloads from magit-stgit.el
 
 (autoload 'magit-stgit-mode "magit-stgit" "\
@@ -48,7 +48,7 @@ Unconditionally turn on `magit-stgit-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-svn magit-svn-mode) "magit-svn"
-;;;;;;  "magit-svn.el" (20632 9657))
+;;;;;;  "magit-svn.el" (20746 61863))
 ;;; Generated autoloads from magit-svn.el
 
 (autoload 'magit-svn-mode "magit-svn" "\
@@ -64,7 +64,7 @@ Unconditionally turn on `magit-svn-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-topgit magit-topgit-mode) "magit-topgit"
-;;;;;;  "magit-topgit.el" (20632 9657))
+;;;;;;  "magit-topgit.el" (20746 61864))
 ;;; Generated autoloads from magit-topgit.el
 
 (autoload 'magit-topgit-mode "magit-topgit" "\
@@ -80,7 +80,7 @@ Unconditionally turn on `magit-topgit-mode'.
 ;;;***
 
 ;;;### (autoloads (global-magit-wip-save-mode magit-wip-save-mode
-;;;;;;  magit-wip-mode) "magit-wip" "magit-wip.el" (20632 9657))
+;;;;;;  magit-wip-mode) "magit-wip" "magit-wip.el" (20746 61864))
 ;;; Generated autoloads from magit-wip.el
 
 (defvar magit-wip-mode nil "\
@@ -129,8 +129,8 @@ See `magit-wip-save-mode' for more information on Magit-Wip-Save mode.
 
 ;;;***
 
-;;;### (autoloads (rebase-mode) "rebase-mode" "rebase-mode.el" (20632
-;;;;;;  9657))
+;;;### (autoloads (rebase-mode) "rebase-mode" "rebase-mode.el" (20746
+;;;;;;  61864))
 ;;; Generated autoloads from rebase-mode.el
 
 (autoload 'rebase-mode "rebase-mode" "\
@@ -148,7 +148,7 @@ running 'man git-rebase' at the command line) for details.
 ;;;***
 
 ;;;### (autoloads nil nil ("magit-bisect.el" "magit-key-mode.el"
-;;;;;;  "magit-pkg.el") (20632 9657 269524))
+;;;;;;  "magit-pkg.el") (20746 61864 220645))
 
 ;;;***
 

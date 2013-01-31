@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (jedi:setup anything-jedi-related-names helm-jedi-related-names
-;;;;;;  jedi:ac-setup jedi:complete) "jedi" "jedi.el" (20734 51560))
+;;;;;;  jedi:ac-setup jedi:complete) "jedi" "jedi.el" (20746 61866))
 ;;; Generated autoloads from jedi.el
 
 (autoload 'jedi:complete "jedi" "\
@@ -44,7 +44,7 @@ what jedi can do.
 
 ;;;***
 
-;;;### (autoloads nil nil ("jedi-pkg.el") (20734 51560 753864))
+;;;### (autoloads nil nil ("jedi-pkg.el") (20746 61866 229446))
 
 ;;;***
 

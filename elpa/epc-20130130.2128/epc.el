@@ -111,6 +111,7 @@ return epc:connection object."
     (set-process-sentinel connection-process
                           (lambda (p e) 
                             (epc:process-sentinel connection p e)))
+    (set-process-query-on-exit-flag connection-process nil)
     connection))
 
 (defun epc:connection-reset (connection)
@@ -268,10 +269,17 @@ failure."
     (epc:init-epc-layer mngr)
     mngr))
 
+(defun epc:server-process-name (uid)
+  (format "epc:server:%s" uid))
+
+(defun epc:server-buffer-name (uid)
+  (format " *%s*" (epc:server-process-name uid)))
+
 (defun epc:start-server (server-prog server-args)
   "[internal] Start a peer server and return an epc:manager instance which is set up partially."
-  (let* ((process-name (format "epc:server:%s" (epc:uid)))
-         (process-buffer (get-buffer-create (format " *%s*" process-name)))
+  (let* ((uid (epc:uid))
+         (process-name (epc:server-process-name uid))
+         (process-buffer (get-buffer-create (epc:server-buffer-name uid)))
          (process (apply 'start-process
                          process-name process-buffer 
                          server-prog server-args))
@@ -285,13 +293,16 @@ failure."
           (setq port (string-to-number port-str)
                 cont nil))
          ((< 0 (length port-str))
-          (error "Server may raise an error : %s" port-str))
+          (error "Server may raise an error. \
+Use \"M-x epc:pop-to-last-server-process-buffer RET\" \
+to see full traceback:\n%s" port-str))
          ((not (eq 'run (process-status process)))
           (setq cont nil))
          (t
           (incf cont)
           (when (< 30 cont) ; timeout 3 seconds
             (error "Timeout server response."))))))
+    (set-process-query-on-exit-flag process nil)
     (make-epc:manager :server-process process
                       :commands (cons server-prog server-args)
                       :title (mapconcat 'identity (cons server-prog server-args) " ")
@@ -554,6 +565,30 @@ If an exception is occurred, this function throws the error."
   "Call peer's method with args synchronously and return the result.
 If an exception is occurred, this function throws the error."
   (epc:sync mngr (epc:call-deferred mngr method-name args)))
+
+(defun epc:live-p (mngr)
+  "Return non-nil when MNGR is an EPC manager object with a live
+connection."
+  (let ((proc (ignore-errors
+                (epc:connection-process (epc:manager-connection mngr)))))
+    (and (processp proc)
+         ;; Same as `process-live-p' in Emacs >= 24:
+         (memq (process-status proc) '(run open listen connect stop)))))
+
+
+;;==================================================
+;; Troubleshooting / Debugging support
+
+(defun epc:pop-to-last-server-process-buffer ()
+  "Open the buffer for most recently started server program process.
+This is useful when you want to check why the server program
+failed to start (e.g., to see its traceback / error message)."
+  (interactive)
+  (let ((buffer (get-buffer (epc:server-buffer-name epc:uid))))
+    (if buffer
+        (pop-to-buffer buffer)
+      (error "No buffer for the last server process.  \
+Probably the EPC connection exits correctly or you didn't start it yet."))))
 
 
 
