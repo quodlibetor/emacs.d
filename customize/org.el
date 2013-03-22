@@ -26,7 +26,7 @@
 
 (setq jiralib-url "https://jira2.advance.net/")
 
-(let ((load-path (cons "packages/org-jira" load-path)))
+(let ((load-path (cons ".emacs.d/packages/org-jira" load-path)))
   (require 'org-jira "packages/org-jira/org-jira"))
 
 (add-hook 'org-mode-hook
