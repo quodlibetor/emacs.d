@@ -1,0 +1,47 @@
+# -*- mode: snippet -*-
+# name: ingestor-release-notes
+# key: ingestorrn
+# expand-env: ((yas-indent-line nil))
+# --
+*This is a minor release to stage providing only incremental enhancements to the currently installed release.*
+
+h2. JIRA Release Notes
+
+Release Notes - Services Development - ${1:Ingestor} Library v${2:1}
+
+${3:Jira-generated notes}
+
+h2. Deployment Steps
+
+${4:Updates will be made via yum. No additional update steps are required.}
+
+h2. Anticipated Outage
+
+${5:This is a deploy to lightly used stage. The yum update will complete in seconds, there will be a few seconds where ingestor is nonfunctional, but it should not affect anything--if superfeedr tries to contact us, they'll try again.}
+
+h2. Affected Applications
+
+${6:The following applications depend upon Ingestor:
+* Ragu Data Store
+* Feed Register
+
+This release should not change the relationship.}
+
+h2. Release Announcement
+
+{info}
+
+All,
+
+I will be deploying Ingestor to stage via a yum install.
+
+${7}
+
+Docs for Ingestor: [https://wiki.advance.net/display/services/Ingestor]
+
+With the rollout recursively documented here: [https://wiki.advance.net/display/services/${1}+${2}+Release+Notes]
+
+\-Josh
+
+
+{info}

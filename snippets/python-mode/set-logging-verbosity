@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: set-logging-verbosity
+# key: logv
+# --
+def set_logging_verbosity(verbosity, logger_path=__name__):
+    if not verbosity:
+        return
+
+    sh = logging.StreamHandler()
+    simple = logging.Formatter("%(message)s")
+    detail = logging.Formatter("%(name)s: %(message)s")
+
+    if verbosity == 1:
+        sh.setFormatter(simple)
+        sh.setLevel(logging.INFO)
+        logging.getLogger(logger_path).addHandler(sh)
+
+    elif verbosity == 2:
+        sh.setFormatter(simple)
+        sh.setLevel(logging.DEBUG)
+        logging.getLogger(logger_path).addHandler(sh)
+
+    elif verbosity == 3:
+        sh.setFormatter(detail)
+        sh.setLevel(logging.INFO)
+        logging.getLogger().addHandler(sh)
+
+    elif verbosity >= 4:
+        sh.setFormatter(detail)
+        sh.setLevel(logging.DEBUG)
+        logging.getLogger().addHandler(sh)
+
+    if verbosity > 4:
+        logging.warn("-vvvv is the maximum verbosity")
+
+    try:
+        log.setLevel(sh.level)
+    except NameError:
+        try:
+            logger.setLevel(sh.level)
+        except NameError:
+            logging.setLevel(sh.level)
