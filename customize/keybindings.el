@@ -3,6 +3,7 @@
 (global-set-key (kbd "<f4>") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c w") 'fixup-whitespace)
 (global-set-key (kbd "C-c g") 'magit-status)
+(global-set-key (kbd "C-c f") 'helm-locate)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
@@ -12,6 +13,7 @@
 (global-set-key (kbd "C-c d s") 'desktop-save)
 (winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
                 ;; layouts
+(require 'iedit) ;; `C-;' means edit everything in buffer (or narrowed region)
 
 ;; misc commands
 (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
