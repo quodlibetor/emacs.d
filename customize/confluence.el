@@ -57,3 +57,8 @@
                     (if (buffer-live-p tmp-buf)
                         (with-current-buffer tmp-buf
                           (longlines-restore))))))))
+
+(add-to-list 'auto-mode-alist
+             '(".c\(on\)?fl\(uen\)?ce?\\'" . confluence-edit-mode))
+(add-to-list 'auto-mode-alist
+	     '("jira.*txt\\'" . confluence-edit-mode))
