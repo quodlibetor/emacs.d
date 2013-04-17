@@ -12,10 +12,11 @@
 
 (add-hook 'confluence-mode-hook
           (lambda ()
-	    (local-set-key (kbd "\C-c") confluence-prefix-map)
-	    (local-set-key "\M-j" 'confluence-newline-and-indent)
-	    (local-set-key "\M-;" 'confluence-list-indent-dwim)
-	    (longlines-mode)))
+            (local-set-key (kbd "\C-c") confluence-prefix-map)
+            (local-set-key "\M-j" 'confluence-newline-and-indent)
+            (local-set-key "\M-;" 'confluence-list-indent-dwim)
+            (longlines-mode)
+            (flyspell-mode)))
 
 (eval-after-load "confluence"
   '(progn
