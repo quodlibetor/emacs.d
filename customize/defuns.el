@@ -43,6 +43,22 @@
     (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
     temp-name))
 
+(defun jdz-get-hostname (&optional long-p)
+  "Get the current hostname by calling 'hostname'"
+  (interactive "*P")
+  (let ((jdz-hostname-buffer (generate-new-buffer " get-hostname"))
+	(hostname "unknown"))
+    (unwind-protect
+	(with-current-buffer jdz-hostname-buffer
+	  (apply 'call-process
+		 (list "hostname" nil t nil))
+	  (skip-chars-backward "\n\t ")
+	  (setq hostname (buffer-substring (point-min) (point))))
+      (kill-buffer jdz-hostname-buffer))
+    (if (called-interactively-p 'any)
+	(insert hostname))
+    hostname))
+
 ;;; from http://emacswiki.org/emacs/misc-cmds.el (thanks drew)
 (defun read-shell-file-command (command)
   "Prompt for shell COMMAND, using current buffer's file as default arg.

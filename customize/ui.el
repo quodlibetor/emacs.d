@@ -34,8 +34,9 @@
 
 ;; set the font to dejavu then ubuntu because it doesn't like setting ubuntu's
 ;; font with a size
-(set-frame-font "DejaVu Sans Mono-10.9")
-(set-frame-font "Ubuntu Mono")
+(if (string= (jdz-get-hostname) "tinman")
+    (set-frame-font "Ubuntu Mono-12")
+  (set-frame-font "Ubuntu Mono"))
 (load-theme 'tsdh-dark)
 
 (global-flycheck-mode 1)
