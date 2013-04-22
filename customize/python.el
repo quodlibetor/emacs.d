@@ -23,7 +23,9 @@
             (local-set-key (kbd "C-c n p m") 'nosetests-pdb-module)
             (local-set-key (kbd "C-c n p o") 'nosetests-pdb-one)
             (local-set-key (kbd "C-c h") 'pylookup-lookup)
-            ))
+            (if (boundp 'org-src-mode)
+                (local-set-key (kbd "C-c C-'") 'org-edit-src-exit)))
+            )
 
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
