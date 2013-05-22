@@ -4,8 +4,8 @@
 # --
 `(save-excursion
     (goto-char 0)
-    (re-search-forward "\n\n")
-    (backward-char)
+    (re-search-forward "import")
+    (beginning-of-line)
     (insert "import argparse\n"))
 `def parse_args():
     parser = argparse.ArgumentParser(

@@ -2,5 +2,5 @@
 # name: parser.add_argument
 # key: addarg
 # --
-parser.add_argument("$1",
+parser.add_argument("$1",${2: "",}
                     help="$0")

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: deflist
+# key: dl
+# --
+* *$1* -- $0

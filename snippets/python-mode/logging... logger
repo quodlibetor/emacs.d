@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: logging... logger
-# key: getlogger
+# key: getlg
 # --
 import logging
 log = logging.getLogger(__name__)$0
