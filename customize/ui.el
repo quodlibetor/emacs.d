@@ -47,3 +47,5 @@
              '("bashrc" . shell-script-mode))
 (add-to-list 'auto-mode-alist
              '("README\\(.rst\\)?" . rst-mode))
+
+(which-func-mode)
