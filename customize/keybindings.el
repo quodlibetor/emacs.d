@@ -21,12 +21,11 @@
 (substitute-key-definition   'back-to-indentation 'beginning-or-indentation global-map)
 
 ;; org-mode
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c ol") 'org-store-link)
 (global-set-key (kbd "C-c oa") 'org-agenda)
 (global-set-key (kbd "C-c oc") 'org-capture)
 (global-set-key (kbd "C-c oj") 'org-clock-goto)
+(global-set-key (kbd "C-c ob") 'org-iswitchb)
 
 ;; confluence wiki
 (global-set-key (kbd "C-c cf") 'confluence-get-page)
