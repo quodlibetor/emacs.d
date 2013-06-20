@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: patcher
+# key: patcher
+# --
+self.$1_patcher = patch('$2.$1', autospec=True)
+self.$1 = self.$1_patcher.start()
+$0self.$1_patcher.stop()
