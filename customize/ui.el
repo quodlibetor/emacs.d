@@ -49,3 +49,20 @@
              '("README\\(.rst\\)?" . rst-mode))
 
 (which-func-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Reduce modeline polution
+;; minor modes
+(when (require 'diminish nil 'noerror)
+  (eval-after-load "yasnippet"
+    '(diminish 'yas-minor-mode " Y"))
+  (eval-after-load "auto-complete"
+    '(diminish 'auto-complete-mode ""))
+  ;; Diminishing flymake's thing doesn't play well with its error count
+  ;; (eval-after-load "flymake"
+  ;;   '(diminish 'flymake-mode " Fly"))
+  )
+;; major modes
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq mode-name "Py")))
