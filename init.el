@@ -17,6 +17,7 @@
 (load "customize/text")
 (load "customize/yaml")
 (load "customize/html")
+(load "customize/vc-annotate")
 
 ;; special modes
 (load "customize/magit")
