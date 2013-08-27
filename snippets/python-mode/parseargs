@@ -6,11 +6,12 @@
     (goto-char 0)
     (re-search-forward "import")
     (beginning-of-line)
-    (insert "import argparse\n"))
+    (insert "import argparse\n")
+    (push-mark))
 `def parse_args():
     parser = argparse.ArgumentParser(
         description="$1")
-    parser.add_argument("$2",
-                        help="$3")
+    parser.add_argument("$2", ${3:"",}
+                        help="$4")
     $0
     return parser.parse_args()
