@@ -25,7 +25,7 @@
 (provide 'git-tools)
 
 (defconst git-tools-grep-command
-  "git ls-files -z | xargs -0 grep -In %s"
+  "git ls-files -z %s | xargs -0 grep -In %s"
   "The command used for grepping files using git. See `git-tools-grep'.")
 
 ;; Run 'code' at the root of the branch which dirname is in.
@@ -36,10 +36,12 @@
 (defun git-tools-grep (expression dirname)
   "Search a branch for `expression'. If there's a C-u prefix, prompt for `dirname'."
   (interactive
-   (let* ((string (read-string "Search for: "))
-          (dir (if (null current-prefix-arg)
-                   default-directory
-                 (read-directory-name (format "Search for %s in: " string)))))
-     (list string dir)))
+   (let* ((search-string (read-string "Search for: "))
+          (search-dir (if (null current-prefix-arg)
+                          (expand-file-name (locate-dominating-file default-directory ".git"))
+                        (read-directory-name (format "Search for %s in: " search-string)))))
+     (list search-string search-dir)))
   (git-tools-at-branch-root dirname
-   (grep-find (format git-tools-grep-command (shell-quote-argument expression)))))
+   (grep-find (format git-tools-grep-command
+                      (shell-quote-argument dirname)
+                      (shell-quote-argument expression)))))
