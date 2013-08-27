@@ -5,7 +5,7 @@
 
 ;;;### (autoloads (ack-and-a-half-find-file-same ack-and-a-half-find-file
 ;;;;;;  ack-and-a-half-same ack-and-a-half) "ack-and-a-half" "ack-and-a-half.el"
-;;;;;;  (20771 62136))
+;;;;;;  (21020 43876 856157 564000))
 ;;; Generated autoloads from ack-and-a-half.el
 
 (autoload 'ack-and-a-half "ack-and-a-half" "\
@@ -48,8 +48,8 @@ Prompt to find a file found by ack in DIRECTORY.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ack-and-a-half-pkg.el") (20771 62136
-;;;;;;  178553))
+;;;### (autoloads nil nil ("ack-and-a-half-pkg.el") (21020 43876
+;;;;;;  945413 776000))
 
 ;;;***
 

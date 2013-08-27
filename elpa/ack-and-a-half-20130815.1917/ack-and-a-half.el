@@ -1,17 +1,20 @@
 ;;; ack-and-a-half.el --- Yet another front-end for ack
 ;;
-;; Copyright (C) 2012 Jacob Helwig <jacob@technosorcery.net>
+;; Copyright (C) 2013 Jacob Helwig <jacob@technosorcery.net>
 ;; Alexey Lebedeff <binarin@binarin.ru>
+;; Andrew Pennebaker <andrew.pennebaker@gmail.com>
 ;; Andrew Stine <stine.drew@gmail.com>
 ;; Derek Chen-Becker <derek@precog.com>
 ;; Gleb Peregud <gleber.p@gmail.com>
 ;; Kim van Wyk <vanwykk@gmail.com>
+;; Lars Andersen <expez@expez.com>
 ;; Ronaldo M. Ferraz <ronaldoferraz@gmail.com>
 ;; Ryan Thompson <rct@thompsonclan.org>
 ;;
 ;; Author: Jacob Helwig <jacob+ack@technosorcery.net>
 ;; Homepage: http://technosorcery.net
-;; Version: 1.1.3
+;; Version: 20130815.1917
+;; X-Original-Version: 1.2.0
 ;; URL: https://github.com/jhelwig/ack-and-a-half
 ;;
 ;; This file is NOT part of GNU Emacs.
@@ -180,6 +183,10 @@ confirmed.  If t, then always prompt for the directory to use."
                  (const :tag "Don't prompt when guessed" unless-guessed)
                  (const :tag "Always prompt" t)))
 
+(defcustom ack-and-a-half-use-ido nil
+  "Whether or not ack-and-a-half should use ido to provide
+  completion suggestions when prompting for directory.")
+
 ;;; Default setting lists ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconst ack-and-a-half-mode-type-default-alist
@@ -316,7 +323,9 @@ This is intended to be used in `ack-and-a-half-root-directory-functions'."
     (if ack-and-a-half-prompt-for-directory
         (if (and dir (eq ack-and-a-half-prompt-for-directory 'unless-guessed))
             dir
-          (read-directory-name "Directory: " dir dir t))
+          (if ack-and-a-half-use-ido
+              (ido-read-directory-name "Directory: " dir dir t)
+            (read-directory-name "Directory: " dir dir t)))
       (or dir
           (and buffer-file-name (file-name-directory buffer-file-name))
           default-directory))))
@@ -379,6 +388,8 @@ non-nil, treat FROM as a regular expression."
                             arguments
                             (list "--")
                             (list (shell-quote-argument pattern))
+                            (when (eq system-type 'windows-nt)
+                              (list (concat " < " null-device)))
                             ))
     (make-local-variable 'compilation-buffer-name-function)
     (let (compilation-buffer-name-function)
