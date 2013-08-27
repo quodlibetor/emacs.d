@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dunder
+# key: __
+# --
+{{\_\_$1\_\_$2}}$0

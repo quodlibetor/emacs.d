@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: self.foo = foo
+# key: self.
+# --
+self.$1 = $1

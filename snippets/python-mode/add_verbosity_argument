@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: add_verbosity_argument
+# key: addverbose
+# --
+parser.add_argument("-v", "--verbose", action='count', default=0,
+                    help="Set verbosity")
+$0
