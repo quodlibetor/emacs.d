@@ -18,6 +18,7 @@
             (local-set-key (kbd "C-c n a") 'nosetests-all)
             (local-set-key (kbd "C-c n m") 'nosetests-module)
             (local-set-key (kbd "C-c n o") 'nosetests-one)
+            (local-set-key (kbd "C-c n e") 'nosetests-with-extra-args)
             (local-set-key (kbd "C-c n f") 'nosetests-failed)
             (local-set-key (kbd "C-c n p a") 'nosetests-pdb-all)
             (local-set-key (kbd "C-c n p m") 'nosetests-pdb-module)
@@ -64,3 +65,54 @@
   "Lookup SEARCH-TERM in the Python HTML indexes." t)
 (autoload 'pylookup-update "pylookup" 
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
+
+
+(require 'nose)
+;; overwrite run-nose to include a runner that runs tests and tests/integration
+(defun run-nose (&optional tests debug failed extra-args)
+  "run nosetests"
+  (let* ((nose (nose-find-test-runner))
+         (where (nose-find-project-root))
+         (args (concat (if debug " --pdb" "")
+                       (if failed " --failed" "")
+                       (if extra-args extra-args "")))
+         (tnames (if tests tests "")))
+    (if (not where)
+        (error
+         (format (concat "abort: nosemacs couldn't find a project root, "
+                         "looked for any of %S") nose-project-root-files)))
+    (funcall (if debug
+                 'pdb
+               '(lambda (command)
+                  (compilation-start command
+                                     nil
+                                     (lambda (mode) (concat "*nosetests*")))))
+             (format
+              (concat "%s "
+                      (if nose-use-verbose "-v " "")
+                      "%s -w %s %s")
+              nose args where tnames)))
+  )
+
+(defun nosetests-with-extra-args (extra-args &optional debug failed)
+  "run tests in tests and tests/integration"
+  (interactive "Mnose args: ")
+  (run-nose nil nil nil extra-args))
+
+
+;;pdb setup, note the python version
+(setq pdb-path (if (boundp 'virtualenv-default-directory)
+                   (if (file-exists-p (concat virtualenv-default-directory "ipdb.py"))
+                       "ipdb"
+                     "pdb"))
+      gud-pdb-command-name pdb-path)
+(defadvice pdb (before gud-query-cmdline activate)
+  "Provide a better default command line when called interactively."
+  (interactive
+   (let* ((pdb-path (if (boundp 'virtualenv-default-directory)
+                        (if (file-exists-p (concat virtualenv-default-directory "ipdb.py"))
+                            "ipdb"
+                          "pdb")))
+          (gud-pdb-command-name pdb-path))
+     (list (gud-query-cmdline pdb-path
+                              (file-name-nondirectory buffer-file-name))))))
