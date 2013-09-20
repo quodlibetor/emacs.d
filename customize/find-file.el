@@ -2,4 +2,5 @@
 (setq ido-everywhere t)
 (setq ido-use-filename-at-point 'guess)
 (setq ido-create-new-buffer 'always)
+(setq ido-auto-merge-work-directories-length -1)
 (ido-mode 1)
