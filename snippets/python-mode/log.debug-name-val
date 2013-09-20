@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log.debug(name, val)
+# key: lgd
+# --
+log.debug("$1: %s", $1)

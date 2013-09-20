@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: emacsruntests
+# key: runtests
+# expand-env: ((venv (file-name-nondirectory (directory-file-name (file-name-directory (buffer-file-name))))))
+# --
+#!/bin/sh
+
+/home/bwm/.virtualenvs/`venv`/bin/nosetests \
+    --with-coverage --cover-package `venv` --cover-erase \
+    $@

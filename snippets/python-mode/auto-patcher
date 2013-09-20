@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: auto-patcher
+# key: ptchr
+# --
+`(save-excursion
+    (narrow-to-defun)
+    (beginning-of-buffer)
+    (when (not (search-forward "self.patchers = []" nil t))
+        (beginning-of-buffer)
+        (end-of-line)
+        (insert "\nself.patchers = []")
+        (indent-for-tab-command))
+    (widen))`self.$1_patcher = patch('$2.$1', autospec=True)
+self.patchers.append(self.$1_patcher)
+$0self.$1 = self.$1_patcher.start()
