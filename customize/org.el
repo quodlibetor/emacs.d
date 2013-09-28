@@ -42,7 +42,6 @@
 
 (let ((load-path (cons ".emacs.d/packages/org-jira" load-path)))
   (require 'org-jira "packages/org-jira/org-jira"))
-(require 'org-html5presentation "packages/org-html5presentation/org-html5presentation")
 
 (add-hook 'org-mode-hook
 	  (lambda ()
