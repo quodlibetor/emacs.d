@@ -138,8 +138,32 @@ Tries to get pytest for the local virtualenv, falling back to global"
                                         ; override the default sentinel set by term-ansi-make-term
           (set-process-sentinel proc 'pytest-term-sentinel))))
      ((equal style 'compile)
-      (message "%s" "running compilation tests")
-      (compilation-start cmdline nil (lambda (mode) bufname))))))
+      (compilation-start cmdline nil
+                         (lambda (mode)
+                           (if (boundp 'pytest-compile-source)
+                               (progn
+                                 (with-current-buffer pytest-compile-source
+                                   (local-pytest-bufname)))
+                             (local-pytest-bufname))))
+      (let ((buf (current-buffer)))
+        (with-current-buffer (local-pytest-bufname)
+          (set (make-local-variable 'pytest-compile-source) buf)
+          (local-set-key "g" 'pytest-recompile)))))))
+
+(defun pytest-recompile ()
+  "Basically just advice `recompile' to use the original source
+
+This is because recompile creates a new buffer, instead of using
+the current one, meaning that buffer-local variables get reset on
+every recompilation, meaning that it's hard to know where to go."
+  (interactive)
+  (let* ((source-buffer pytest-compile-source)
+         (compile-buffer (with-current-buffer source-buffer
+                    (local-pytest-bufname))))
+    (recompile)
+    (with-current-buffer compile-buffer
+      (set (make-local-variable 'pytest-compile-source) source-buffer)
+      (local-set-key "g" 'pytest-recompile))))
 
 (defun pytest-arg-from-path (path)
   (let ((filename (file-name-nondirectory path)))
