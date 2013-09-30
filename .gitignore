@@ -9,3 +9,4 @@ packages/pylookup/*.db
 packages/pylookup/.buildinfo
 /ac-comphist.dat
 /eshell
+elpa/auctex*

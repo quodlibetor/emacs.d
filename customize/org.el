@@ -1,5 +1,5 @@
-(add-to-list 'load-path "~/.emacs.d/packages/org-8.0.3/lisp")
-(add-to-list 'load-path "~/.emacs.d/packages/org-8.0.3/contrib/lisp" t)
+(add-to-list 'load-path "~/.emacs.d/packages/org-8.2/lisp")
+(add-to-list 'load-path "~/.emacs.d/packages/org-8.2/contrib/lisp" t)
 (require 'org)
 (require 'ox-latex)
 (require 'ox-s5)
@@ -38,10 +38,10 @@
   "make sure that all agenda files are included"
   (set-agenda-files))
 
-(setq jiralib-url "https://jira2.advance.net/")
+;(setq jiralib-url "https://jira2.advance.net/")
 
-(let ((load-path (cons ".emacs.d/packages/org-jira" load-path)))
-  (require 'org-jira "packages/org-jira/org-jira"))
+;; (let ((load-path (cons ".emacs.d/packages/org-jira" load-path)))
+;;   (require 'org-jira "packages/org-jira/org-jira"))
 
 (add-hook 'org-mode-hook
 	  (lambda ()
