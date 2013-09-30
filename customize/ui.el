@@ -34,7 +34,7 @@
 ;; font with a size
 (set-frame-font "DejaVu Sans Mono-10.9")
 (set-frame-font "Ubuntu Mono")
-(load-theme 'tango-dark)
+(load-theme 'deeper-blue)
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
