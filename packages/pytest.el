@@ -75,6 +75,14 @@ Used if `virtualenv-default-directory' is not bound.
 "
   :group 'pytest)
 
+(defcustom pytest-test-runner
+  nil
+  "Test runner to use to run tests
+
+`nil' means to try to use py.test from `virtualenv-workon', or if
+that's not set to use a global py.test command"
+  :group 'pytest)
+
 (defun pytest-locate-dominating-file ()
   (cond
    ((boundp 'virtualenv-default-directory)
@@ -88,13 +96,17 @@ Used if `virtualenv-default-directory' is not bound.
            (directory-files dir nil pytest-dom-re))))))))
 
 (defun get-pytest-bin ()
-  (let ((virtualenv (if (boundp 'virtualenv-workon)
-                         (concat (expand-file-name virtualenv-root)
-                                 "/"
-                                 virtualenv-workon
-                                 "/bin")
-                       ".")))
-    (concat virtualenv "/py.test")))
+  (if pytest-test-runner
+      (let ((runner-dir (locate-dominating-file (buffer-file-name)
+                                                 pytest-test-runner)))
+        (file-truename (concat runner-dir "/" pytest-test-runner)))
+    (let ((virtualenv (if (boundp 'virtualenv-workon)
+                          (concat (expand-file-name virtualenv-root)
+                                  "/"
+                                  virtualenv-workon
+                                  "/bin")
+                        ".")))
+      (concat virtualenv "/py.test"))))
 
 (defun local-pytest-bufname ()
   "Get the appropriate pytest buffer for the current buffer
