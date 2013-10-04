@@ -56,12 +56,16 @@
 (define-key ctl-c-t-map "m" 'pytest-run-method)
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c t a") 'pytest-compile-all)
             (local-set-key (kbd "C-c t o") 'pytest-compile-function)
             (local-set-key (kbd "C-c t m") 'pytest-compile-file)
+            (local-set-key (kbd "C-c t a") 'pytest-compile-all)
             (local-set-key (kbd "C-c t r o") 'pytest-run-function)
             (local-set-key (kbd "C-c t r m") 'pytest-run-file)
-            (local-set-key (kbd "C-c t r t") 'pytest-run-again)))
+            (local-set-key (kbd "C-c t r m") 'pytest-run-all)
+            (local-set-key (kbd "C-c t r t") 'pytest-run-again)
+            (local-set-key (kbd "C-c t p o") 'pytest-pdb-function)
+            (local-set-key (kbd "C-c t p o") 'pytest-pdb-file)
+            (local-set-key (kbd "C-c t p o") 'pytest-pdb-all)))
 
 (defvar pytest-run-history nil)
 
@@ -125,13 +129,13 @@ Tries to get pytest for the local virtualenv, falling back to global"
       (local-set-key "g" 'pytest-run-again))))
 
 (defun pytest-run (cmdline show-prompt style)
-  (let* ((cmdline (format "cd %s; %s"
+  (let* ((full-cmdline (format "cd %s; %s"
                       (pytest-locate-dominating-file)
                       cmdline))
-         (cmdline (if show-prompt
-                      (read-shell-command "Run: " cmdline
+         (full-cmdline (if show-prompt
+                      (read-shell-command "Run: " full-cmdline
                                           'pytest-run-history)
-                    cmdline))
+                    full-cmdline))
          (bufname (local-pytest-bufname)))
     (cond
      ((equal style 'ansi)
@@ -142,15 +146,15 @@ Tries to get pytest for the local virtualenv, falling back to global"
             (term-kill-subjob))
         (setq buffer-read-only nil)
         (erase-buffer)
-        (insert cmdline)
+        (insert full-cmdline)
         (newline)
-        (term-ansi-make-term "*pytest*" "/bin/sh" nil "-c" cmdline)
+        (term-ansi-make-term bufname "/bin/sh" nil "-c" full-cmdline)
         (term-char-mode)
         (let ((proc (get-buffer-process buffer)))
-                                        ; override the default sentinel set by term-ansi-make-term
+          ; override the default sentinel set by term-ansi-make-term
           (set-process-sentinel proc 'pytest-term-sentinel))))
      ((equal style 'compile)
-      (compilation-start cmdline nil
+      (compilation-start full-cmdline nil
                          (lambda (mode)
                            (if (boundp 'pytest-compile-source)
                                (progn
@@ -160,7 +164,9 @@ Tries to get pytest for the local virtualenv, falling back to global"
       (let ((buf (current-buffer)))
         (with-current-buffer (local-pytest-bufname)
           (set (make-local-variable 'pytest-compile-source) buf)
-          (local-set-key "g" 'pytest-recompile)))))))
+          (local-set-key "g" 'pytest-recompile))))
+     ((equal style 'pdb)
+      (pdb (concat cmdline " --pdb"))))))
 
 (defun pytest-recompile ()
   "Basically just advice `recompile' to use the original source
@@ -248,6 +254,19 @@ minibuffer before executing it.
       (message "No preceding pytest commands in history")
     (let ((cmdline (car pytest-run-history)))
       (pytest-run cmdline show-prompt 'ansi))))
+
+(defun pytest-pdb-function (show-prompt)
+  (interactive "P")
+  (pytest-run (pytest-function-command) show-prompt 'pdb))
+
+(defun pytest-pdb-file (show-prompt)
+  (interactive "P")
+  (pytest-run (pytest-file-command) show-prompt 'pdb))
+
+(defun pytest-pdb-all (show-prompt)
+  (interactive "P")
+  (pytest-run (pytest-all-command) show-prompt 'pdb))
+
 
 (provide 'pytest-compile)
 
