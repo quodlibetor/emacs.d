@@ -48,12 +48,6 @@
 
 (require 'term)
 
-(defvar ctl-c-t-map (make-sparse-keymap)
-  "Keymap for subcommands of C-x t.")
-;(define-key ctl-c-map "t" ctl-c-t-map)
-(define-key ctl-c-t-map "t" 'pytest-run-again)
-(define-key ctl-c-t-map "f" 'pytest-run-file)
-(define-key ctl-c-t-map "m" 'pytest-run-method)
 (add-hook 'python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c t o") 'pytest-compile-function)
@@ -113,9 +107,11 @@ that's not set to use a global py.test command"
       (concat virtualenv "/py.test"))))
 
 (defun local-pytest-bufname ()
-  "Get the appropriate pytest buffer for the current buffer
+  "Get the compilation pytest buffer for the currently executing buffer
 
-Tries to get pytest for the local virtualenv, falling back to global"
+Tries to get pytest for the local virtualenv, falling back to global.
+
+Doesn't work in compilation buffers because dir-local variables aren't set"
   (if (boundp 'virtualenv-workon)
       (format "*%s-pytest*" virtualenv-workon)
     "*pytest*"))
@@ -232,7 +228,7 @@ If the name of the current file matches test_*.py, run py.test on
 it. Else, run py.test on the directory where the current file is in.
 "
   (interactive "P")
-  (pytest-run (pytest-file-command)) show-prompt 'ansi)
+  (pytest-run (pytest-file-command) show-prompt 'ansi))
 
 (defun pytest-run-function (show-prompt)
   "Run py.test on the current test.
@@ -242,6 +238,15 @@ name of the test_* function you are editing.
 "
   (interactive "P")
   (pytest-run (pytest-function-command) show-prompt 'ansi))
+
+(defun pytest-run-all (show-prompt)
+  "Run py.test on the current test.
+
+If invokes py.test by adding \"-k funcname\", where funcname is the
+name of the test_* function you are editing.
+"
+  (interactive "P")
+  (pytest-run (pytest-all-command) show-prompt 'ansi))
 
 (defun pytest-run-again (show-prompt)
   "Re-run the last py.test command.
