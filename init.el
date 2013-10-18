@@ -18,6 +18,7 @@
 (load "customize/yaml")
 (load "customize/html")
 (load "customize/vc-annotate")
+(load "customize/puppet")
 
 ;; special modes
 (load "customize/magit")
