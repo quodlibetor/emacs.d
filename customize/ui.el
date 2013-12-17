@@ -7,9 +7,11 @@
 (column-number-mode 1)
 (electric-pair-mode)
 (put 'dired-find-alternate-file 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 (setq-default indent-tabs-mode nil)
-(setq set-mark-command-repeat-pop t)
-(setq confirm-nonexistent-file-or-buffer nil)
+(setq set-mark-command-repeat-pop t
+      confirm-nonexistent-file-or-buffer nil
+      dired-dwim-target t)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
