@@ -52,6 +52,11 @@
 (add-to-list 'auto-mode-alist
              '("README\\(.rst\\)?" . rst-mode))
 
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(setq web-mode-engines-alist '(("django" . "\\.html\\'")))
+
 (which-func-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
