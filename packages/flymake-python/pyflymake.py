@@ -45,8 +45,7 @@ class LintRunner(object):
         else:
             return self.config.IGNORE_CODES
 
-    @property
-    def run_flags(self):
+    def run_flags(self, source_file):
         return ()
 
     @staticmethod
@@ -74,9 +73,9 @@ class LintRunner(object):
                     fixed_data['description'][:MAX_DESCRIPTION_LENGTH - 3])
             print cls.output_format % fixed_data
 
-    def run(self, filename):
+    def run(self, filename, source_file):
         cmdline = [self.command]
-        cmdline.extend(self.run_flags)
+        cmdline.extend(self.run_flags(source_file))
         cmdline.append(filename)
 
         env = dict(os.environ, **self.env)
@@ -141,8 +140,7 @@ class PylintRunner(LintRunner):
         data['level'] = fixup_map.get(data['error_type'][0], fixup_map[None])
         return data
 
-    @property
-    def run_flags(self):
+    def run_flags(self, source_file):
         return ('--output-format', 'parseable',
                 '--include-ids', 'y',
                 '--reports', 'n',
@@ -171,8 +169,7 @@ class PycheckerRunner(LintRunner):
         data['level'] = 'warning'
         return data
 
-    @property
-    def run_flags(self):
+    def run_flags(self, source_file):
         return ('-c',
                 ('import sys;'
                  'import pychecker.checker;'
@@ -202,8 +199,7 @@ class PyflakesRunner(LintRunner):
     def stream(self):
         return 'stdout'
 
-    @property
-    def run_flags(self):
+    def run_flags(self, source_file):
         return ('-c',
                 ('import sys;'
                  'from pyflakes.scripts import pyflakes;'
@@ -244,9 +240,8 @@ class Pep8Runner(LintRunner):
 
         return data
 
-    @property
-    def run_flags(self):
-        return '--repeat', '--ignore=' + ','.join(self.config.IGNORE_CODES)
+    def run_flags(self, source_file):
+        return '--repeat', '--ignore=' + ','.join(self.config.IGNORE_CODES), '--config-leaf='+source_file
 
 
 class TestRunner(LintRunner):
@@ -274,8 +269,7 @@ class TestRunner(LintRunner):
     def stream(self):
         return self.config.TEST_RUNNER_OUTPUT
 
-    @property
-    def run_flags(self):
+    def run_flags(self, source_file):
         return self.config.TEST_RUNNER_FLAGS
 
 
@@ -365,11 +359,11 @@ def main():
 
     if config.TEST_RUNNER_COMMAND:
         tests = TestRunner(config)
-        tests.run(args[0])
+        tests.run(args[0], options.source_file)
 
     def run(runner_class):
         runner = runner_class(config)
-        runner.run(args[0])
+        runner.run(args[0], options.source_file)
 
     if config.PYLINT:
         run(PylintRunner)
