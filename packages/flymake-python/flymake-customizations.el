@@ -17,7 +17,7 @@
   (defun flymake-pylint-init (&optional trigger-type)
     "Return the command to run Python checks wyth pyflymake.py"
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
+                       'flymake-create-temp-intemp))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name)))
