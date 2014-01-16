@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: parameters
+# key: P-
+# --
+Parameters
+----------
+$1 : $2
+    $0
+
+Returns
+-------

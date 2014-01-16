@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: patchup
+# key: patchup
+# --
+self.$1 = start_patching(self, '$2.$1')

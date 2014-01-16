@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pudbg
+# key: pudbg
+# --
+import pudb; pudb.set_trace()  # DEBUG

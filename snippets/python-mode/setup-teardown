@@ -4,7 +4,7 @@
 # expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
 # --
     def setUp(self):
-        ${1:pass}
+        $0
 
     def tearDown(self):
         pass
