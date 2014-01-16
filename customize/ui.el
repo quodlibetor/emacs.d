@@ -51,6 +51,8 @@
              '("\\.zsh" . shell-script-mode))
 (add-to-list 'auto-mode-alist
              '("README\\(.rst\\)?" . rst-mode))
+(add-to-list 'auto-mode-alist
+             '("gitconfig\\'" . gitconfig-mode))
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
