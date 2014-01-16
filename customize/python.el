@@ -14,6 +14,7 @@
             (require 'virtualenv)
             (require 'nose)
             (add-to-list 'nose-project-names ".emacsruntests")
+            (add-to-list 'nose-project-names "runtests")
             (set (make-local-variable 'nose-use-verbose) nil)
             (local-set-key (kbd "C-c n a") 'nosetests-all)
             (local-set-key (kbd "C-c n m") 'nosetests-module)
