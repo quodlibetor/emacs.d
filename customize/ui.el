@@ -58,6 +58,9 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (setq web-mode-engines-alist '(("django" . "\\.html\\'")))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (set (make-local-variable 'electric-pair-mode) nil)))
 
 (which-func-mode)
 
