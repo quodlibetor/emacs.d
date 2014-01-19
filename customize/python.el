@@ -45,9 +45,26 @@
                '("scripts/" flymake-pylint-init)))
 
 (setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
+(defun bwm:setup-jedi-with-virtualenv ()
+  (when boundp 'virtualenv-workon
+        (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
+               (args (list "--virtual-env" virtualenv-dir
+                           ;; fuck it
+                           "--sys-path" (concat virtualenv-dir "/lib/python3.3/site-packages")
+                           "--sys-path" (concat virtualenv-dir "/lib/python2.7/site-packages")))
+               (cmd (list (concat virtualenv-dir "/bin/python") jedi:server-script)))
+          (set (make-local-variable 'jedi:server-args) args)
+          (set (make-local-variable 'jedi:server-cmd) cmd)))
+  (jedi:setup))
+(load "auto-complete")
 (add-hook 'python-mode-hook
           (lambda ()
-            (jedi:setup)
+            ;; The actual dir-locals loading doesn't seem to have
+            ;; loaded by the time this hook is being run, so wait a second.
+            ;;
+            ;; No. Literally. Wait a second.
+            (run-at-time "1 sec" nil 'bwm:setup-jedi-with-virtualenv)
             (auto-complete-mode)))
 
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
