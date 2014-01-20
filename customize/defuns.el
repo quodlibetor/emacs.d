@@ -118,9 +118,7 @@ If at beginning of line, move to indentaion.
 
 This is modified from Drew's version to just bounce back and forth"
   (interactive "P")
-  (cond ((bolp)
-         (back-to-indentation))
-        ((save-excursion (skip-chars-backward " \t") (bolp)) ; At indentation.
+  (cond ((equal (point) (save-excursion (back-to-indentation) (point))) ; At indentation.
          (forward-line 0))
         (t (back-to-indentation))))
 ;;; end misc-cmds
