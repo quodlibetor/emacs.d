@@ -56,7 +56,8 @@
                                              "-c" "import sys; sys.stdout.write(sys.version[:3])")
                                (buffer-substring (point-min) (point-max))))
              (args (list "--virtual-env" virtualenv-dir
-                         "--sys-path" (concat virtualenv-dir "/lib/python" python-version "/site-packages"))))
+                         "--sys-path" (concat virtualenv-dir "/lib/python" python-version "/site-packages")
+                         "--sys-path" virtualenv-default-directory)))
         (set (make-local-variable 'jedi:server-args) args))))
   (jedi:setup))
 (add-hook 'hack-local-variables-hook #'bwm:setup-jedi-with-virtualenv)
