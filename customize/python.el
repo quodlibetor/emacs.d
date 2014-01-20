@@ -46,9 +46,28 @@
                '("scripts/" flymake-pylint-init)))
 
 (setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
+(defun bwm:setup-jedi-with-virtualenv ()
+  (when (equal major-mode 'python-mode)
+    (when (boundp 'virtualenv-workon)
+      (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
+             (python-version (with-temp-buffer
+                               (call-process (concat virtualenv-dir "/bin/python")
+                                             nil (current-buffer) nil
+                                             "-c" "import sys; sys.stdout.write(sys.version[:3])")
+                               (buffer-substring (point-min) (point-max))))
+             (args (list "--virtual-env" virtualenv-dir
+                         "--sys-path" (concat virtualenv-dir "/lib/python" python-version "/site-packages")
+                         "--sys-path" virtualenv-default-directory)))
+        (set (make-local-variable 'jedi:server-args) args))))
+  (jedi:setup))
+(add-hook 'hack-local-variables-hook #'bwm:setup-jedi-with-virtualenv)
+
+;; for some reason this recently started being required in order for
+;; auto-complete-mode to work
+(load "auto-complete")
 (add-hook 'python-mode-hook
           (lambda ()
-            (jedi:setup)
             (auto-complete-mode)))
 
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
