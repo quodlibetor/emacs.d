@@ -49,7 +49,8 @@
 (setq jedi:complete-on-dot t)
 (defun bwm:setup-jedi-with-virtualenv ()
   (when (equal major-mode 'python-mode)
-    (when (boundp 'virtualenv-workon)
+    (when (and (boundp 'virtualenv-workon)
+               virtualenv-workon)
       (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
              (python-version (with-temp-buffer
                                (call-process (concat virtualenv-dir "/bin/python")
@@ -96,7 +97,7 @@
          (args (concat (if debug " --pdb" "")
                        (if failed " --failed" "")
                        (if extra-args extra-args "")))
-         (tnames (if tests tests "")))
+         (tnames (or tests "")))
     (if (not where)
         (error
          (format (concat "abort: nosemacs couldn't find a project root, "
