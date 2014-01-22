@@ -47,20 +47,42 @@
 
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
+;;; many of these bwm:-defuns would probably be done better using a real
+;;; projects framework
+(defun bwm:get-local-python-version (virtualenv-dir)
+  (with-temp-buffer
+    (call-process (concat virtualenv-dir "/bin/python")
+                  nil (current-buffer) nil
+                  "-c" "import sys; sys.stdout.write(sys.version[:3])")
+    (buffer-substring (point-min) (point-max))))
+
+(defun bwm:locate-python-dominating-file ()
+  (let ((fname (expand-file-name (file-name-directory (buffer-file-name)))))
+    (locate-dominating-file
+     fname
+     (lambda (dirname)
+       (directory-files dirname nil "^\\(setup.\\(py\\|cfg\\)\\|.git\\|.hg\\)\\'")))))
 (defun bwm:setup-jedi-with-virtualenv ()
-  (when (equal major-mode 'python-mode)
-    (when (and (boundp 'virtualenv-workon)
-               virtualenv-workon)
-      (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
-             (python-version (with-temp-buffer
-                               (call-process (concat virtualenv-dir "/bin/python")
-                                             nil (current-buffer) nil
-                                             "-c" "import sys; sys.stdout.write(sys.version[:3])")
-                               (buffer-substring (point-min) (point-max))))
-             (args (list "--virtual-env" virtualenv-dir
-                         "--sys-path" (concat virtualenv-dir "/lib/python" python-version "/site-packages")
-                         "--sys-path" virtualenv-default-directory)))
-        (set (make-local-variable 'jedi:server-args) args))))
+  (when (and (equal major-mode 'python-mode)
+             ; some (e.g. diff) buffers are put in python-mode
+             (buffer-file-name))
+    (if (and (boundp 'virtualenv-workon)
+             virtualenv-workon)
+        (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
+               (python-version (bwm:get-local-python-version virtualenv-dir))
+               (args (list "--virtual-env" virtualenv-dir
+                           "--sys-path" (concat virtualenv-dir "/lib/python" python-version "/site-packages")
+                           "--sys-path" virtualenv-default-directory)))
+          (set (make-local-variable 'jedi:server-args) args))
+      (let ((project-root (bwm:locate-python-dominating-file)))
+        ;; if we're not in a virtualenv just set the sys path to include the
+        ;; project base
+        (if project-root
+            (progn
+              (message "%s" "bwm:jedi: not using full virtualenv settings")
+              (set (make-local-variable 'jedi:server-args)
+                   (list "--sys-path" project-root)))
+          (message "%s" "bwm:jedi: no sys path manipulation at all")))))
   (jedi:setup))
 (add-hook 'hack-local-variables-hook #'bwm:setup-jedi-with-virtualenv)
 
