@@ -19,6 +19,7 @@
 (load "customize/html")
 (load "customize/vc-annotate")
 (load "customize/puppet")
+(load "customize/occur")
 
 ;; special modes
 (load "customize/magit")
