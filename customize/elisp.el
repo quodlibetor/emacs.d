@@ -15,5 +15,5 @@ Yeah I know they're not actually related functions."
 
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
-            (paredit-mode)
+	    (paredit-mode)
             (local-set-key (kbd "C-c C-c") 'bwm/byte-compile)))

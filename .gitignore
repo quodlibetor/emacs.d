@@ -4,6 +4,8 @@ bookmarks
 elpa/*archive*
 tramp
 *.elc
+/tmp
+/auto-save-list
 # pylookup
 packages/pylookup/*docs*
 packages/pylookup/*.db
@@ -13,3 +15,4 @@ packages/pylookup/.buildinfo
 elpa/auctex*
 elpa/*-readme.txt
 /xkcd
+/elpa/monky-20130513.1413/monky.el
