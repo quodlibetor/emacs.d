@@ -29,22 +29,6 @@
                 (local-set-key (kbd "C-c C-'") 'org-edit-src-exit)))
             )
 
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-intemp))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      ;;     check path
-      (list "~/.local/bin/pyflymake.py" (list "--source-file" buffer-file-name
-                                              local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("scripts/" flymake-pylint-init)))
-
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
 ;;; many of these bwm:-defuns would probably be done better using a real

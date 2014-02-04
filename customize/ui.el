@@ -40,7 +40,7 @@
 (set-frame-font "Ubuntu Mono")
 (load-theme 'deeper-blue)
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+(global-flycheck-mode 1)
 
 (defadvice split-window-right (after split-and-rebalance-windows ())
   "I prefer windows to auto-balance when I open new ones"
