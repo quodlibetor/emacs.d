@@ -18,6 +18,11 @@
       uniquify-strip-common-suffix t)
 
 (require 'helm-config)
+(require 'helm-swoop)
+(global-set-key (kbd "M-s o") 'helm-swoop)
+;; When doing isearch, hand the word over to helm-swoop
+(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
 
 (require 'yasnippet)
 (yas-global-mode)
