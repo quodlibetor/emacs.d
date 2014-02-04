@@ -17,6 +17,8 @@
 (setq uniquify-buffer-name-style 'post-forward
       uniquify-strip-common-suffix t)
 
+(require 'helm-config)
+
 (require 'yasnippet)
 (yas-global-mode)
 
