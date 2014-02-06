@@ -4,7 +4,7 @@
 (global-set-key (kbd "C-c w") 'fixup-whitespace)
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c b") 'magit-blame-mode)
-(global-set-key (kbd "C-c f") 'helm-locate)
+(global-set-key (kbd "C-c f") 'bwm:helm-find-files)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
