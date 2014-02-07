@@ -59,7 +59,6 @@ based off of http://stackoverflow.com/a/19284509/25616"
                     sources)))
     (helm-other-buffer sources
                        "*helm-find-files*")))
-
 (defun hgrep (arg)
   "Run helm-git-grep, defaulting to nothing
 
@@ -68,11 +67,6 @@ With prefix arg, use the thing at point"
   (if arg
       (helm-git-grep-at-point)
     (helm-git-grep)))
-
-(defun hgrep-swoop (arg)
-  (interactive "p")
-  (let ((helm-c-source-swoop helm-source-git-grep))
-    (helm-swoop arg)))
 
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
