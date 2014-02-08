@@ -28,13 +28,12 @@ based off of http://stackoverflow.com/a/19284509/25616"
   ;; just in case someone decides to pass an argument, helm-omni won't fail.
   (interactive "p")
   (let* ((helm-ff-transformer-show-only-basename nil)
-         (sources (append '(helm-c-source-files-in-current-dir) ;; files in current directory
-                          ;; projectile errors out if you're not in a project
+         (sources (append ;; projectile errors out if you're not in a project
                           (if (projectile-project-p) ;; so look before you leap
                               '(helm-source-projectile-files-list
                                 helm-source-projectile-recentf-list
                                 helm-source-projectile-buffers-list)
-                            '())
+                            '(helm-c-source-files-in-current-dir))
 
                           '(helm-c-source-buffers-list ;; list of all open buffers
                             helm-c-source-buffer-not-found     ;; ask to create a buffer otherwise
