@@ -26,6 +26,7 @@
 (load "customize/ibuffer")
 (load "customize/dired")
 (load "customize/outline")
+(load "customize/helm")
 
 ;; general emacs config
 (load "customize/package")
