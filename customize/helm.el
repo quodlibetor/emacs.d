@@ -1,4 +1,4 @@
-
+(require 'helm)
 (require 'helm-config)
 (require 'helm-swoop)
 (require 'helm-projectile)
@@ -8,7 +8,7 @@
       '("\\.la$" "\\.o$" "~$"                           ;; cache files
         "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
         "\\.tox" "\\.elc$" "\\.pyc$" "\\.virtualenvs"   ;; python
-        "/src/" "/elpa/")) ;; source from other packages
+        "/src/" "/elpa/" "advance-services-svn")) ;; source from other packages
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 
