@@ -1,5 +1,6 @@
 (require 'package)
 (package-initialize)
+(setq package-enable-at-startup nil)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
