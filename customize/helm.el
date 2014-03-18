@@ -5,10 +5,12 @@
 (require 'recentf)
 (setq recentf-auto-cleanup 'never)
 (setq helm-boring-file-regexp-list
-      '("\\.la$" "\\.o$" "~$"                           ;; cache files
-        "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
-        "\\.tox" "\\.elc$" "\\.pyc$" "\\.virtualenvs"   ;; python
-        "/src/" "/elpa/" "advance-services-svn")) ;; source from other packages
+      (list
+       "\\.la$" "\\.o$" "~$"                           ;; cache files
+       "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
+       "\\.tox" "\\.elc$" "\\.pyc$" "\\.virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
+       "/src/" "/elpa/" "advance-services-svn" ;; source from other packages
+       (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi")))
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 
