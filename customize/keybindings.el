@@ -93,3 +93,4 @@
 	(setq fname (concat "/sudo:root@localhost:" fname)))
       (find-alternate-file fname))))
 (global-set-key (kbd "C-c r") 'find-alternative-file-with-sudo)
+(defalias 'sudo-reopen 'find-alternative-file-with-sudo)
