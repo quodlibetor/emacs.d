@@ -8,6 +8,8 @@
              '("pyflymakerc$" . python-mode))
 (add-to-list 'auto-mode-alist
              '("\\.wsgi$" . python-mode))
+(require 'python)
+(setq python-fill-docstring-style 'pep-257-nn)
 
 (add-hook 'python-mode-hook
           (lambda ()
