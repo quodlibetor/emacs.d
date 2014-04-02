@@ -48,6 +48,7 @@
      fname
      (lambda (dirname)
        (directory-files dirname nil "^\\(setup.\\(py\\|cfg\\)\\|.git\\|.hg\\)\\'")))))
+
 (defun bwm:setup-jedi-with-virtualenv ()
   (when (and (equal major-mode 'python-mode)
              ; some (e.g. diff) buffers are put in python-mode
@@ -68,8 +69,8 @@
               (message "%s" "bwm:jedi: not using full virtualenv settings")
               (set (make-local-variable 'jedi:server-args)
                    (list "--sys-path" project-root)))
-          (message "%s" "bwm:jedi: no sys path manipulation at all")))))
-  (jedi:setup))
+          (message "%s" "bwm:jedi: no sys path manipulation at all"))))
+    (jedi:setup)))
 (add-hook 'hack-local-variables-hook #'bwm:setup-jedi-with-virtualenv)
 
 ;; for some reason this recently started being required in order for
