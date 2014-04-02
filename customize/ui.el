@@ -36,7 +36,7 @@
 ;; font with a size
 (set-frame-font "DejaVu Sans Mono-10.9")
 (set-frame-font "Ubuntu Mono")
-(load-theme 'deeper-blue)
+(load-theme 'tsdh-dark)
 
 (global-flycheck-mode 1)
 
@@ -61,8 +61,6 @@
 (add-hook 'web-mode-hook
           (lambda ()
             (set (make-local-variable 'electric-pair-mode) nil)))
-
-(which-func-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reduce modeline polution
