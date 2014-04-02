@@ -4,6 +4,17 @@
 (require 'ox-latex)
 (require 'ox-s5)
 
+;; active Org-babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+(let ((fname (expand-file-name "~/.local/lib/plantuml.jar")))
+  (unless (file-exists-p fname)
+    (warn "plantuml is not installed (%s does not exist)" fname))
+  (setq org-plantuml-jar-path
+        fname))
+
 (setq org-hide-leading-stars t
       org-columns-default-format "%35ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM(Time Spent) %TODO %3PRIORITY %TAGS"
       org-clock-into-drawer t
