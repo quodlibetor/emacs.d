@@ -73,13 +73,6 @@
     (jedi:setup)))
 (add-hook 'hack-local-variables-hook #'bwm:setup-jedi-with-virtualenv)
 
-;; for some reason this recently started being required in order for
-;; auto-complete-mode to work
-(load "auto-complete")
-(add-hook 'python-mode-hook
-          (lambda ()
-            (auto-complete-mode)))
-
 ;; add pylookup to your loadpath, ex) "~/.lisp/addons/pylookup"
 (setq pylookup-dir "~/.emacs.d/packages/pylookup")
 (add-to-list 'load-path pylookup-dir)
