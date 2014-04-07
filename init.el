@@ -28,12 +28,13 @@
 (load "customize/dired")
 (load "customize/outline")
 (load "customize/helm")
+(load "customize/ido")
+(load "customize/mu4e")
 
 ;; general emacs config
 (load "customize/package")
 (load "customize/find-file")
 (load "customize/ui")
-(load "customize/ido")
 (load "customize/keybindings")
 
 (custom-set-variables
