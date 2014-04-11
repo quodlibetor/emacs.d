@@ -1,7 +1,7 @@
 (require 'mu4e)
 
-(setq mu4e-maildir "/home/bwm/Maildir"
-      mu4e-update-interval 600
+(setq mu4e-maildir "/home/bwm/mail"
+      mu4e-update-interval 240
       mu4e-sent-folder   "/Sent"
       mu4e-drafts-folder "/Drafts"
       mu4e-trash-folder  "/Trash"
@@ -11,10 +11,11 @@
                                ("/inbox"       . ?i)
                                ("/work"        . ?w)
                                ("/sent"        . ?s))
+      mu4e-change-filenames-when-moving t
 
       mu4e-user-mail-address-list '("bmaister@advance.net")
 
-      mu4e-get-mail-command "offlineimap -d maildir -o"
+      mu4e-get-mail-command "mbsync advance"
 
       user-mail-address "bmaister@advance.net"
       user-full-name  "Brandon W Maister"
