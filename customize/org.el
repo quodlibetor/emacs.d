@@ -35,14 +35,17 @@
       org-latex-listings 'minted
       )
 
+(defun bwm:list-all-org (base)
+  (delq nil
+        (mapcar (lambda (filename)
+                  (and (not (string-match "/\.#" filename)) filename))
+                (file-expand-wildcards (concat base "/*/*.org")))))
+
 (defun set-agenda-files ()
   (setq org-agenda-files
         (append '("~/work.org" "~/life.org" "~/SVC.org")
-                ;; elisp doesn't have filter? daaaaaamn
-                (delq nil
-                      (mapcar (lambda (filename)
-                                (and (not (string-match "/\.#" filename)) filename))
-                              (file-expand-wildcards "~/projects/*/*.org")))))
+                (bwm:list-all-org "~/projects")
+                (bwm:list-all-org "~/talks/sprints")))
   (message "Agenda files set to %s" org-agenda-files))
 
 (defadvice org-agenda (before refresh-agenda-files activate)
