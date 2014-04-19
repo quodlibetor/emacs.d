@@ -1,3 +1,7 @@
+;; This seems to undefined in emacs 24.4... somehow. Dumb.
+(defsubst package-desc-vers (desc)
+  "Extract version from a package description vector."
+  (aref desc 0))
 (require 'package)
 (package-initialize)
 (setq package-enable-at-startup nil)
