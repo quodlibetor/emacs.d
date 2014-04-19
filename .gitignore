@@ -16,3 +16,6 @@ elpa/auctex*
 elpa/*-readme.txt
 /xkcd
 /elpa/monky-20130513.1413/monky.el
+elpa/*-readme.txt
+/.cask
+session.*
