@@ -6,40 +6,41 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
 
-(load "customize/defuns")
+(let ((load-path (append load-path (expand-file-name "~/.emacs.d"))))
+  (load "customize/defuns")
 
-;; language/file modes
-(load "customize/elisp")
-(load "customize/org")
-(load "customize/python")
-(load "customize/markdown")
-(load "customize/confluence")
-(load "customize/text")
-(load "customize/yaml")
-(load "customize/html")
-(load "customize/vc-annotate")
-(load "customize/puppet")
-(load "customize/occur")
+  ;; language/file modes
+  (load "customize/elisp")
+  (load "customize/org")
+  (load "customize/python")
+  (load "customize/markdown")
+  (load "customize/confluence")
+  (load "customize/text")
+  (load "customize/yaml")
+  (load "customize/html")
+  (load "customize/vc-annotate")
+  (load "customize/puppet")
+  (load "customize/occur")
 
-;; special modes
-(load "customize/magit")
-(load "customize/ibuffer")
-(load "customize/dired")
-(load "customize/outline")
-(load "customize/helm")
-(load "customize/ido")
-(load "customize/mu4e")
+  ;; special modes
+  (load "customize/magit")
+  (load "customize/ibuffer")
+  (load "customize/dired")
+  (load "customize/outline")
+  (load "customize/helm")
+  (load "customize/ido")
+  (when (file-exists-p (expand-file-name "~/mail"))
+    (load "customize/mu4e"))
 
-;; general emacs config
-(load "customize/package")
-(load "customize/find-file")
-(load "customize/ui")
-(load "customize/keybindings")
+  ;; general emacs config
+  (load "customize/package")
+  (load "customize/find-file")
+  (load "customize/ui")
+  (load "customize/keybindings"))
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 ;(require 'el-get)
