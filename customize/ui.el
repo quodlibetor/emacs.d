@@ -36,7 +36,7 @@
 ;; font with a size
 (set-frame-font "DejaVu Sans Mono-10.9")
 (set-frame-font "Ubuntu Mono")
-(load-theme 'tsdh-dark)
+(load-theme 'sanityinc-tomorrow-night)
 
 (global-flycheck-mode 1)
 
