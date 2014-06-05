@@ -1,3 +1,4 @@
+(require 's)
 (defalias 'nuke 'delete-trailing-whitespace)
 (defalias 'll 'longlines-mode)
 (defalias 'mkdir 'make-directory)
@@ -42,6 +43,48 @@
          )
     (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
     temp-name))
+
+(defun bwm:paste-buffer-sentinel (proc evt)
+  (when (string= evt "finished\n")
+    (with-current-buffer "*paster*"
+      (message (s-trim (buffer-string)))
+      (kill-buffer))))
+
+(defun bwm:paste-syntax ()
+  (let* ((fmode (s-join "-" (butlast (s-split "-" (symbol-name major-mode)))))
+         (mode-alist '(("javascript" . "js")
+                       ("js2" . "js")
+                       ("html" . "html")
+                       ("web" . "html")
+                       ("xml" . "xml")
+                       ("python" . "py")
+                       ("ruby" . "ruby")
+                       ("sh" . "bash")
+                       ("magit-commit" . "diff")
+                       ("magit-status" . "diff")))
+         (syntax (or (cdr (assoc fmode mode-alist)) "text")))
+    syntax))
+
+(defun bwm:do-paste (syntax fname)
+  (set-process-sentinel
+     (start-process "paster" "*paster*"
+                    "paster"
+                    "--syntax"  syntax "-e" "forever" "--user" "bwm" fname)
+     #'bwm:paste-buffer-sentinel))
+
+(defun bwm:paste-buffer (&optional syntax)
+  (interactive)
+  (let* ((fname (buffer-file-name)))
+    (when (equal fname nil)
+      (setq fname (make-temp-file "paster-emacs-"))
+      (append-to-file (point-min) (point-max) fname))
+    (bwm:do-paste (bwm:paste-syntax) fname)))
+
+(defun bwm:paste-region (begin end)
+  (interactive "r")
+  (let ((fname (make-temp-file "paster-emacs-")))
+    (append-to-file begin end fname)
+    (bwm:do-paste (bwm:paste-syntax) fname)))
 
 ;;; from http://emacswiki.org/emacs/misc-cmds.el (thanks drew)
 (defun read-shell-file-command (command)
