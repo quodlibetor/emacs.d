@@ -1,5 +1,39 @@
 (require 'mu4e)
 
+(defun bwm:sprint-mail ()
+  (interactive)
+  (let* ((today (calendar-current-date))
+         (first-day-of-week (- (cadr today) (calendar-day-of-week today)))
+         (begin-string (format (format-time-string "%Y/%m/%%s") first-day-of-week))
+         (end-string (format (format-time-string "%Y/%m/%%s") (cadr today))))
+    (goto-char (point-min))
+    (re-search-forward "To: ")
+    (insert "Mozam Hosein <mhosein@advance.net>")
+    (re-search-forward "Subject: ")
+    (insert (format (format-time-string "Weekly Status for w%U (%%s - %%s)")
+                    begin-string end-string))
+
+    (forward-line 3)
+    (let ((start (point)))
+      (kill-region start (point-max)))
+    (insert (concat "Hi Mozam,
+
+This week I [killed some bugz].
+
+
+\[killed some bugz]: https://jira2.advance.net/issues/?jql=project%20%3D%20%22Services%20Development%22%20AND%20assignee%20%3D%20bmaister%20AND%20updatedDate%20%3E%3D%20" (replace-regexp-in-string "/" "-" begin-string) "%20AND%20updatedDate%20%3C%3D%20" (replace-regexp-in-string "/" "-" end-string) "%20AND%20status%20in%20%28Closed%2C%20Resolved%29%20ORDER%20BY%20updatedDate%20DESC
+
+bwm
+"))
+
+    ;; put the url in the clipboard
+    (re-search-backward "https")
+    (kill-line)
+    (yank)
+
+    (re-search-backward end-string)
+    (forward-word 2)))
+
 (setq mu4e-maildir "/home/bwm/mail"
       mu4e-update-interval 240
       mu4e-sent-folder   "/Sent"
@@ -15,7 +49,7 @@
 
       mu4e-user-mail-address-list '("bmaister@advance.net")
 
-      mu4e-get-mail-command "mbsync advance"
+      mu4e-get-mail-command "true" ; "mbsync advance"
 
       user-mail-address "bmaister@advance.net"
       user-full-name  "Brandon W Maister"

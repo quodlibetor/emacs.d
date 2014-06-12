@@ -37,7 +37,7 @@
 (if (string= (jdz-get-hostname) "tinman")
     (set-frame-font "Ubuntu Mono-12")
   (set-frame-font "Ubuntu Mono"))
-(load-theme 'tsdh-dark)
+(load-theme 'sanityinc-tomorrow-night)
 
 (global-flycheck-mode 1)
 

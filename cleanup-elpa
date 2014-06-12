@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+from collections import defaultdict
+import os
+from os.path import join as dirjoin, isdir
+import shutil
+
+import git  # >= 0.3
+
+repo = git.Repo(os.path.realpath(__file__))
+
+packages = defaultdict(list)
+for name in os.listdir('elpa'):
+    if isdir(dirjoin('elpa', name)) and '-' in name:
+        package, version = name.rsplit('-', 1)
+        packages[package].append((version, name))
+
+untracked_packages = {'/'.join(fn.split('/')[:2])
+                      for fn in repo.untracked_files}
+to_git_rm = []
+to_rm = []
+to_add = []
+for packages, versions in packages.items():
+    if len(versions) > 1:
+        versions.sort()
+
+        for version, name in versions[:-1]:
+            fname = dirjoin('elpa', name)
+            if fname not in untracked_packages:
+                to_git_rm.append(fname)
+            else:
+                to_rm.append(fname)
+                #print "old: " + fname
+
+        to_add.append(dirjoin('elpa', versions[-1][1]))
+        #print "new: " + fname
+
+did_something = False
+if to_rm:
+    did_something = True
+    print "rm " + ' '.join(to_rm)
+    for dname in to_rm:
+        shutil.rmtree(dname)
+
+if to_git_rm:
+    did_something = True
+    print "git rm -r " + ' '.join(to_git_rm)
+    repo.git.rm(*to_git_rm, r=True)
+    for dname in to_git_rm:
+        shutil.rmtree(dname)
+
+if to_add:
+    did_something = True
+    print 'git add ' + ' '.join(to_add)
+    repo.git.add(*to_add)
+
+if not did_something:
+    print 'nothing to do'

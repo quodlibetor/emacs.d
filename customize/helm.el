@@ -9,8 +9,9 @@
        "\\.la$" "\\.o$" "~$"                           ;; cache files
        "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
        "\\.tox" "\\.elc$" "\\.pyc$" "\\.virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
-       "/src/" "/elpa/" "advance-services-svn" ;; source from other packages
-       (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi")))
+       "/src/" "/elpa/" "/build/" "/_archive/" "advance-services-svn" ;; source from other packages
+       (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi") (expand-file-name "~/.cache")
+       (expand-file-name "~/.local/lib") (expand-file-name "~/.local/share")))
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 

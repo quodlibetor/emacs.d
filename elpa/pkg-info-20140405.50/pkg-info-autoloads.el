@@ -3,8 +3,10 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "pkg-info" "pkg-info.el" (21330 64615 779605
-;;;;;;  156000))
+;;;### (autoloads (pkg-info-version-info pkg-info-package-version
+;;;;;;  pkg-info-defining-library-version pkg-info-defining-library-original-version
+;;;;;;  pkg-info-library-version pkg-info-library-original-version)
+;;;;;;  "pkg-info" "pkg-info.el" (21337 20471 816492 722000))
 ;;; Generated autoloads from pkg-info.el
 
 (autoload 'pkg-info-library-original-version "pkg-info" "\
@@ -114,6 +116,15 @@ version.
 
 ;;;***
 
+<<<<<<< HEAD:elpa/pkg-info-20140405.50/pkg-info-autoloads.el
+=======
+;;;### (autoloads nil nil ("pkg-info-pkg.el") (21337 20471 912465
+;;;;;;  159000))
+
+;;;***
+
+(provide 'pkg-info-autoloads)
+>>>>>>> refs/remotes/qdc/mu4e:elpa/pkg-info-20140405.50/pkg-info-autoloads.el
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
