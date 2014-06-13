@@ -7,41 +7,41 @@
 (setq package-enable-at-startup nil)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
 
-(let ((load-path (append load-path (expand-file-name "~/.emacs.d"))))
-  (load "customize/defuns")
+(load "customize/defuns")
 
-  ;; language/file modes
-  (load "customize/elisp")
-  (load "customize/org")
-  (load "customize/python")
-  (load "customize/markdown")
-  (load "customize/confluence")
-  (load "customize/text")
-  (load "customize/yaml")
-  (load "customize/html")
-  (load "customize/vc-annotate")
-  (load "customize/puppet")
-  (load "customize/occur")
+;; language/file modes
+(load "customize/elisp")
+(load "customize/org")
+(load "customize/python")
+(load "customize/markdown")
+(load "customize/confluence")
+(load "customize/text")
+(load "customize/yaml")
+(load "customize/html")
+(load "customize/vc-annotate")
+(load "customize/puppet")
+(load "customize/occur")
 
-  ;; special modes
-  (load "customize/magit")
-  (load "customize/ibuffer")
-  (load "customize/dired")
-  (load "customize/outline")
-  (load "customize/helm")
-  (load "customize/ido")
-  (when (file-exists-p (expand-file-name "~/mail"))
-    (load "customize/mu4e")
-    (load "customize/notmuch"))
+;; special modes
+(load "customize/magit")
+(load "customize/ibuffer")
+(load "customize/dired")
+(load "customize/outline")
+(load "customize/helm")
+(load "customize/ido")
+(when (file-exists-p (expand-file-name "~/mail"))
+  (load "customize/mu4e")
+  (load "customize/notmuch"))
 
-  ;; general emacs config
-  (load "customize/package")
-  (load "customize/find-file")
-  (load "customize/ui")
-  (load "customize/keybindings"))
+;; general emacs config
+(load "customize/package")
+(load "customize/find-file")
+(load "customize/ui")
+(load "customize/keybindings")
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 ;(require 'el-get)
@@ -53,9 +53,39 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
  '(dired-dwim-target t)
- '(safe-local-variable-values (quote ((eval when (and (buffer-file-name) (file-regular-p (buffer-file-name)) (string-match-p "^[^.]" (buffer-file-name))) (emacs-lisp-mode) (when (fboundp (quote flycheck-mode)) (flycheck-mode -1)) (unless (featurep (quote package-build)) (let ((load-path (cons ".." load-path))) (require (quote package-build)))) (package-build-minor-mode)) (pytest-compile-runner-format . nose) (pytest-compile-runner-format quote nose) (virtualenv-default-directory . "/home/bwm/projects/schedaddle/") (virtualenv-workon . "schedaddle3") (pytest-compile-test-runner . "nosetests") (pytest-compile-runner-format . "nose")))))
+ '(safe-local-variable-values
+   (quote
+    ((eval when
+           (and
+            (buffer-file-name)
+            (file-regular-p
+             (buffer-file-name))
+            (string-match-p "^[^.]"
+                            (buffer-file-name)))
+           (emacs-lisp-mode)
+           (when
+               (fboundp
+                (quote flycheck-mode))
+             (flycheck-mode -1))
+           (unless
+               (featurep
+                (quote package-build))
+             (let
+                 ((load-path
+                   (cons ".." load-path)))
+               (require
+                (quote package-build))))
+           (package-build-minor-mode))
+     (pytest-compile-runner-format . nose)
+     (pytest-compile-runner-format quote nose)
+     (virtualenv-default-directory . "/home/bwm/projects/schedaddle/")
+     (virtualenv-workon . "schedaddle3")
+     (pytest-compile-test-runner . "nosetests")
+     (pytest-compile-runner-format . "nose")))))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
  '(exec-path (quote ("/home/bwm/.local/bin" "/home/bwm/bin" "/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/home/bwm/.local/libexec/emacs/24.3/x86_64-unknown-linux-gnu")))
