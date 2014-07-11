@@ -66,41 +66,47 @@
       (message (s-trim (buffer-string)))
       (kill-buffer))))
 
-(defun bwm:paste-syntax ()
-  (let* ((fmode (s-join "-" (butlast (s-split "-" (symbol-name major-mode)))))
-         (mode-alist '(("javascript" . "js")
-                       ("js2" . "js")
-                       ("html" . "html")
-                       ("web" . "html")
-                       ("xml" . "xml")
-                       ("python" . "py")
-                       ("ruby" . "ruby")
-                       ("sh" . "bash")
-                       ("magit-commit" . "diff")
-                       ("magit-status" . "diff")))
-         (syntax (or (cdr (assoc fmode mode-alist)) "text")))
-    syntax))
+(defvar bwm:paster-mode-syntax-alist
+  '(("javascript" . "js")
+    ("js2" . "js")
+    ("html" . "html")
+    ("web" . "html")
+    ("xml" . "xml")
+    ("python" . "py")
+    ("ruby" . "ruby")
+    ("sh" . "bash")
+    ("magit-diff" . "diff")
+    ("magit-commit" . "diff")
+    ("magit-status" . "diff"))
+  "Mapping from mode-names to paster syntaxes")
 
-(defun bwm:do-paste (syntax fname)
+(defun bwm:paster-syntax ()
+  "Return the paster syntax for the current buffer's major mode"
+  (let* ((fmode (s-join "-" (butlast (s-split "-" (symbol-name major-mode))))))
+    (or (cdr (assoc fmode bwm:paster-mode-syntax-alist))
+        "text")))
+
+(defun bwm:do-paster (syntax fname)
+  "Send content to codetrunk using the paster script"
   (set-process-sentinel
      (start-process "paster" "*paster*"
                     "paster"
                     "--syntax"  syntax "-e" "forever" "--user" "bwm" fname)
-     #'bwm:paste-buffer-sentinel))
+     #'bwm:paster-buffer-sentinel))
 
-(defun bwm:paste-buffer (&optional syntax)
+(defun bwm:paster-buffer (&optional syntax)
   (interactive)
   (let* ((fname (buffer-file-name)))
     (when (equal fname nil)
       (setq fname (make-temp-file "paster-emacs-"))
       (append-to-file (point-min) (point-max) fname))
-    (bwm:do-paste (bwm:paste-syntax) fname)))
+    (bwm:do-paster (bwm:paster-syntax) fname)))
 
-(defun bwm:paste-region (begin end)
+(defun bwm:paster-region (begin end)
   (interactive "r")
   (let ((fname (make-temp-file "paster-emacs-")))
     (append-to-file begin end fname)
-    (bwm:do-paste (bwm:paste-syntax) fname)))
+    (bwm:do-paster (bwm:paster-syntax) fname)))
 
 ;;; from http://emacswiki.org/emacs/misc-cmds.el (thanks drew)
 (defun read-shell-file-command (command)

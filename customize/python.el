@@ -53,6 +53,7 @@
   (when (and (equal major-mode 'python-mode)
              ; some (e.g. diff) buffers are put in python-mode
              (buffer-file-name))
+    (message "setting up jedi; mode: %s bufname: %s" major-mode (buffer-file-name))
     (if (and (boundp 'virtualenv-workon)
              virtualenv-workon)
         (let* ((virtualenv-dir (concat (expand-file-name "~/.virtualenvs/") virtualenv-workon))
