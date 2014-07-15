@@ -5,6 +5,6 @@
 # --
 #!/bin/sh
 
-/home/bwm/.virtualenvs/`venv`/bin/nosetests \
+$HOME/.virtualenvs/`venv`/bin/nosetests \
     --with-coverage --cover-package `venv` --cover-erase \
     $@

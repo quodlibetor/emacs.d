@@ -3,8 +3,8 @@
   "Extract version from a package description vector."
   (aref desc 0))
 (require 'package)
-(package-initialize)
 (setq package-enable-at-startup nil)
+(package-initialize)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -88,7 +88,7 @@
      (pytest-compile-runner-format . "nose")))))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
- '(exec-path (quote ("/home/bwm/.local/bin" "/home/bwm/bin" "/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/home/bwm/.local/libexec/emacs/24.3/x86_64-unknown-linux-gnu")))
+ '(exec-path (quote ("/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/home/bwm/.local/libexec/emacs/24.3/x86_64-unknown-linux-gnu")))
  '(max-specpdl-size 13400)
  '(notmuch-saved-searches (quote (("inbox" . "tag:inbox") ("unread" . "tag:unread") ("sent" . "from:bmaister"))))
  '(org-agenda-files (quote ("~/projects/tdd/tdd.org" "~/projects/subman/subman.org" "~/projects/sphinx-server/sphinx.org" "~/projects/requests-ragu/requests.org" "~/projects/ragu.utils/ragu.utils.org" "~/projects/ragu.register/register.org" "~/projects/ragu.ddb/ragu.ddb.org" "~/projects/models/models.org" "~/projects/ingestor/ingestor.org" "~/projects/ingestor/release-outline.org" "~/projects/incinerator/incinerator.org" "~/projects/feed_register/register.org" "~/projects/djeneric/djeneric.org" "~/projects/auth/auth.org")))
@@ -111,4 +111,3 @@
  '(rst-level-4-face ((t (:background "grey25"))) t)
  '(rst-level-5-face ((t (:background "grey30"))) t))
 (setq debug-on-error t)
-(find-file "/home/bwm/.emacs.d/packages/pytest-compile.el")

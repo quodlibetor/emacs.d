@@ -36,18 +36,21 @@ for packages, versions in packages.items():
         #print "new: " + fname
 
 did_something = False
+def del_list(lst):
+    for dname in lst:
+        shutil.rmtree(dname)
+
 if to_rm:
     did_something = True
-    print "rm " + ' '.join(to_rm)
-    for dname in to_rm:
-        shutil.rmtree(dname)
+    print "rm " + ' '.join(lst)
+    del_list(to_rm)
 
 if to_git_rm:
     did_something = True
     print "git rm -r " + ' '.join(to_git_rm)
-    repo.git.rm(*to_git_rm, r=True)
     for dname in to_git_rm:
         shutil.rmtree(dname)
+    repo.git.rm(*to_git_rm, r=True)
 
 if to_add:
     did_something = True

@@ -34,7 +34,7 @@ bwm
     (re-search-backward end-string)
     (forward-word 2)))
 
-(setq mu4e-maildir "/home/bwm/mail"
+(setq mu4e-maildir (expand-file-name "~/mail")
       mu4e-update-interval 240
       mu4e-sent-folder   "/Sent"
       mu4e-drafts-folder "/Drafts"
@@ -79,7 +79,7 @@ bwm
  ;; if you need offline mode, set these -- and create the queue dir
  ;; with 'mu mkdir', i.e.. mu mkdir /home/user/Maildir/queue
  ;smtpmail-queue-mail  nil
- smtpmail-queue-dir  "/home/bwm/Maildir/queue/cur"
+ smtpmail-queue-dir  (expand-file-name "~/Maildir/queue/cur")
  )
 
 ;; don't keep message buffers around
