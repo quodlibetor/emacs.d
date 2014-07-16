@@ -42,6 +42,8 @@
 (load "customize/find-file")
 (load "customize/ui")
 (load "customize/keybindings")
+(when (string-equal system-type "darwin")
+  (load "customize/osx"))
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 ;(require 'el-get)
