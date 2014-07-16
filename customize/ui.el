@@ -11,6 +11,7 @@
 (setq-default indent-tabs-mode nil)
 (setq set-mark-command-repeat-pop t
       confirm-nonexistent-file-or-buffer nil
+      require-final-newline t
       dired-dwim-target t)
 
 (require 'uniquify)
