@@ -44,7 +44,7 @@ based off of http://stackoverflow.com/a/19284509/25616"
          (sources (if arg
                       (append '(helm-c-source-recentf) ;; all recent files
                               sources
-                              '(helm-c-source-locate      ;; file anywhere
+                              '(helm-source-locate      ;; file anywhere
                                 helm-c-source-bookmarks)) ;; bookmarks too
                     sources))
          (helm-boring-file-regexp-list (if (> arg 4)
