@@ -19,3 +19,5 @@ elpa/*-readme.txt
 elpa/*-readme.txt
 /.cask
 session.*
+/ido.last
+recentf
