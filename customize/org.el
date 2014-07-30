@@ -1,7 +1,5 @@
 (require 'dash)
 
-(add-to-list 'load-path "~/.emacs.d/packages/org-8.2/lisp")
-(add-to-list 'load-path "~/.emacs.d/packages/org-8.2/contrib/lisp" t)
 (require 'org)
 (require 'ox-latex)
 (require 'ox-s5)
