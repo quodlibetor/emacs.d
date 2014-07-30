@@ -1,3 +1,5 @@
+(require 'dash)
+
 (add-to-list 'load-path "~/.emacs.d/packages/org-8.2/lisp")
 (add-to-list 'load-path "~/.emacs.d/packages/org-8.2/contrib/lisp" t)
 (require 'org)
@@ -9,11 +11,16 @@
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)))
-(let ((fname (expand-file-name "~/.local/lib/plantuml.jar")))
-  (unless (file-exists-p fname)
-    (warn "plantuml is not installed (%s does not exist)" fname))
-  (setq org-plantuml-jar-path
-        fname))
+
+;; set plantuml jar path for linux or homebrew
+(let* ((maybe-jars (-map 'expand-file-name
+                         '("~/.local/lib/plantuml.jar"
+                           "/usr/local/Cellar/plantuml/7999/plantuml.7999.jar")))
+      (jars (-filter 'file-exists-p maybe-jars)))
+  (if jars
+      (setq org-plantuml-jar-path
+            (car jars))
+    (warn "plantuml is not installed [%s do not exist]" maybe-jars)))
 
 (setq org-hide-leading-stars t
       org-columns-default-format "%35ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM(Time Spent) %TODO %3PRIORITY %TAGS"
@@ -25,7 +32,7 @@
       org-use-speed-commands t
       org-clock-out-remove-zero-time-clocks t
       org-html-head "<style type=\"text/css\">\n <!--/*--><![CDATA[/*><!--*/\n  html { font-family: Times, serif; font-size: 12pt; }\n  .title  { text-align: center; }\n  .todo   { color: red; }\n  .done   { color: green; }\n  .tag    { background-color: #add8e6; font-weight:normal }\n  .target { }\n  .timestamp { color: #bebebe; }\n  .timestamp-kwd { color: #5f9ea0; }\n  p.verse { margin-left: 3% }\n  pre {\nborder: 1pt solid #AEBDCC;\nbackground-color: #F3F5F7;\npadding: 5pt;\nfont-family: courier, monospace;\n        font-size: 90%;\n        overflow:auto;\n  }\n.slide pre{\nfont-size: 65%\n}\n.src {\n          background-color: #110000;\n          color: #4682b4;\n          font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace;\n }\n  table { border-collapse: collapse; }\n  td, th { vertical-align: top; }\n  dt { font-weight: bold; }\n  div#content { max-width: 800px; margin: auto; }\n  div.figure { padding: 0.5em; }\n  div.figure p { text-align: center; }\n  .mono { font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace; font-size: 10pt; }\n  code { background-color: #dfdfdf; font-size: 85%; padding: 0.1em; border-radius: 0.2em;}\n  .linenr { font-size:smaller }\n  .code-highlighted {background-color:#ffff00;}\n  .org-info-js_info-navigation { border-style:none; }\n  table tbody tr:nth-child(even) { background-color: #f0f0f9; }                            white-space:nowrap; }\n  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;\n                                 font-weight:bold; }\n  /*]]>*/-->\n</style>\n"
-      org-default-notes-file (expand-file-name "~/work.org")
+      org-default-notes-file (expand-file-name "~/bwm/org/work.org")
       org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                               "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                               "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
