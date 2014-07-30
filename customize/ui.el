@@ -55,6 +55,7 @@
              '("README\\(.rst\\)?" . rst-mode))
 (add-to-list 'auto-mode-alist
              '("gitconfig\\'" . gitconfig-mode))
+(electric-indent-mode 0)
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
