@@ -21,3 +21,4 @@
                 "/usr/local/Cellar/emacs/HEAD/libexec/emacs/24.4.50/x86_64-apple-darwin13.3.0"
                 "/usr/local/bin"))
         (add-to-list 'exec-path path))
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
