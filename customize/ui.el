@@ -21,6 +21,10 @@
 (require 'yasnippet)
 (yas-global-mode)
 
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/save-place")
+
 (setq-default show-trailing-whitespace t
 	      default-indicate-empty-lines t
 	      sentence-end-double-space nil
