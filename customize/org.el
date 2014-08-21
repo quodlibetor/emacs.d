@@ -48,7 +48,7 @@
 
 (defun set-agenda-files ()
   (setq org-agenda-files
-        (append '("~/work.org" "~/life.org" "~/SVC.org")
+        (append '("~/org/work.org")
                 (bwm:list-all-org "~/projects")
                 (bwm:list-all-org "~/talks/sprints")))
   (message "Agenda files set to %s" org-agenda-files))
