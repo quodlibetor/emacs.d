@@ -2,16 +2,17 @@
   (require 'cl))
 (require 'ibuffer)
 (require 'ibuffer-tramp)
+(require 'f)
 
 (defun bwm/list-app-dirs ()
   (let ((app-dirs nil))
-    (dolist (code-dir (append
-                       (directory-files "~/syseng" nil "^[^.]")
-                       (directory-files "~/projects" nil "^[^.]")))
-      (setq app-dirs
-            (cons `(,code-dir (filename . ,(concat (expand-file-name "~/projects") "/" code-dir)))
-                  app-dirs)))
-    (reverse app-dirs)))
+    (dolist (code-dir '("~/syseng" "~/projects" "~/src"))
+      (dolist (fname (directory-files code-dir nil "^[^.]"))
+        (setq app-dirs
+              (cons `(,(concat fname " |" (f-base code-dir))
+                      (filename . ,(concat (expand-file-name code-dir) "/" fname)))
+                    app-dirs))))
+    (sort app-dirs (lambda (l r) (string< (car l) (car r))))))
 
 (setq ibuffer-show-empty-filter-groups nil)
 (defun bwm/reload-ibuffer-filter-groups ()
@@ -56,7 +57,8 @@
 (defun bwm/ibuffer-update (arg &optional silent)
   (interactive "P")
   (bwm/reload-ibuffer-filter-groups)
-  (ibuffer-update arg silent))
+  (ibuffer-update arg silent)
+  (ibuffer-switch-to-saved-filter-groups "verbose"))
 
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()
