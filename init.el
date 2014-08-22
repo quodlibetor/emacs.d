@@ -25,6 +25,7 @@
 (load "customize/vc-annotate")
 (load "customize/puppet")
 (load "customize/occur")
+(load "customize/json")
 
 ;; special modes
 (load "customize/magit")
