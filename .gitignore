@@ -22,3 +22,4 @@ session.*
 /ido.last
 recentf
 /save-place
+/local.el
