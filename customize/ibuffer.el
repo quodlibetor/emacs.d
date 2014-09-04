@@ -6,7 +6,7 @@
 
 (defun bwm/list-app-dirs ()
   (let ((app-dirs nil))
-    (dolist (code-dir '("~/syseng" "~/projects" "~/src"))
+    (dolist (code-dir '("~/syseng" "~/chef-repo/cookbooks" "~/projects/tools" "~/projects" "~/source"))
       (dolist (fname (directory-files code-dir nil "^[^.]"))
         (setq app-dirs
               (cons `(,(concat fname " |" (f-base code-dir))
