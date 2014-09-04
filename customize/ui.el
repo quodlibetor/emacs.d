@@ -59,6 +59,10 @@
              '("README\\(.rst\\)?" . rst-mode))
 (add-to-list 'auto-mode-alist
              '("gitconfig\\'" . gitconfig-mode))
+(add-to-list 'auto-mode-alist
+             '("Cheffile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist  ; cloudformation templates
+             '("\\.template\\'" . json-mode))
 (electric-indent-mode 0)
 
 (require 'web-mode)
