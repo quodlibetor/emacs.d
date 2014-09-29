@@ -115,7 +115,6 @@
  '(rst-level-3-face ((t (:background "grey20"))) t)
  '(rst-level-4-face ((t (:background "grey25"))) t)
  '(rst-level-5-face ((t (:background "grey30"))) t))
-(setq debug-on-error t)
 
 (let ((local (expand-file-name "~/.emacs.d/local.el")))
   (when (file-exists-p local)
