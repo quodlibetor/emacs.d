@@ -106,6 +106,8 @@
  '(ediff-fine-diff-B ((t (:background "#023D2C"))))
  '(font-lock-builtin-face ((t (:foreground "#ff83fa"))))
  '(helm-selection ((t (:background "ForestGreen" :foreground "SlateGray1" :underline t))))
+ '(highlight ((t (:background "OrangeRed1" :foreground "black" :inverse-video nil))))
+ '(magit-item-highlight ((t (:inherit highlight :background "#0A2036" :foreground "DeepSkyBlue1"))))
  '(org-column ((t (:background "grey10" :strike-through nil :underline nil :slant normal :weight normal :height 105 :family "Ubuntu Mono"))))
  '(org-scheduled ((t (:background "#232323" :foreground "light goldenrod"))))
  '(rst-level-1-face ((t (:background "grey10"))) t)
