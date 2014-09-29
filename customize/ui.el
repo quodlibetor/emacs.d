@@ -14,6 +14,8 @@
       require-final-newline t
       dired-dwim-target t)
 
+(hes-mode)
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
       uniquify-strip-common-suffix t)

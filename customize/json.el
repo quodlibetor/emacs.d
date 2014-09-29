@@ -5,3 +5,6 @@
 (add-hook 'json-mode-hook
           (lambda ()
             (set (make-local-variable 'js-indent-level) 2)))
+
+(add-to-list 'hes-simple-modes
+             'json-mode)
