@@ -9,6 +9,12 @@
   (interactive)
   (flymake-mode 0))
 
+(defun bwm:arbitrary-search (&optional use-hgrep)
+  (interactive "P")
+  (if use-hgrep
+      (hgrep nil)
+    (isearch-forward)))
+
 (defun dont-show-trailing-whitespace ()
   (interactive)
   (set (make-local-variable 'show-trailing-whitespace) nil))

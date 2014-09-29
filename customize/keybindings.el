@@ -5,6 +5,7 @@
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c b") 'magit-blame-mode)
 (global-set-key (kbd "C-c f") 'bwm:helm-find-files)
+(global-set-key (kbd "C-s") 'bwm:arbitrary-search)
 (global-set-key (kbd "M-s o") 'helm-swoop)
 (global-set-key (kbd "C-c m") 'notmuch)
 (global-set-key (kbd "M-x") 'helm-M-x)
