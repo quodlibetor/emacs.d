@@ -1,7 +1,7 @@
 ;;; Customizations to get emacs to work right on Apple products
 (add-to-list 'exec-path "/usr/local/opt/coreutils/libexec/gnubin")
-(setq locate-command "mdfind -name")
-(setq helm-locate-command "mdfind -name %s %s")
+(setq locate-command "mdfind")
+(setq helm-locate-command "mdfind %s %s")
 (global-set-key (kbd "s-w") 'kill-ring-save)
 (setenv "TMPDIR" "/tmp")  ; /var/folders/hh/30-byte-hex/90-byte-hex really?
 (setq mac-command-modifier 'meta)
