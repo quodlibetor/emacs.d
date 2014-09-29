@@ -29,25 +29,26 @@ Increasing prefixes expand the number of files to look at:
 
 based off of http://stackoverflow.com/a/19284509/25616"
   ;; just in case someone decides to pass an argument, helm-omni won't fail.
-  (interactive "p")
+  (interactive "P")
   (let* ((helm-ff-transformer-show-only-basename nil)
          (sources (append ;; projectile errors out if you're not in a project
                           (if (projectile-project-p) ;; so look before you leap
-                              '(helm-source-projectile-files-list
-                                helm-source-projectile-recentf-list
-                                helm-source-projectile-buffers-list)
+                              '(helm-source-projectile-recentf-list
+                                helm-source-projectile-buffers-list
+                                helm-source-projectile-files-list)
                             '(helm-c-source-files-in-current-dir))
 
                           '(helm-c-source-buffers-list ;; list of all open buffers
                             helm-c-source-buffer-not-found     ;; ask to create a buffer otherwise
                             )))
          (sources (if arg
-                      (append '(helm-c-source-recentf) ;; all recent files
+                      (append '(helm-c-source-recentf     ;; all recent files
+                                helm-source-locate        ;; file anywhere
+                                )
                               sources
-                              '(helm-source-locate      ;; file anywhere
-                                helm-c-source-bookmarks)) ;; bookmarks too
+                              '(helm-c-source-bookmarks)) ;; bookmarks too
                     sources))
-         (helm-boring-file-regexp-list (if (> arg 4)
+         (helm-boring-file-regexp-list (if (and arg (> (car arg) 4))
                                            (remove "/src/"
                                                  (remove "\\.virtualenvs"
                                                        helm-boring-file-regexp-list))
