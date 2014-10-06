@@ -8,7 +8,7 @@
       (list
        "\\.la$" "\\.o$" "~$"                           ;; cache files
        "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
-       "\\.tox" "\\.elc$" "\\.pyc$" "\\.virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
+       "\\.tox" "\\.elc$" "\\.pyc$" "virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
        "/src/" "/elpa/" "/build/" "/_archive/" "advance-services-svn" ;; source from other packages
        (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi") (expand-file-name "~/.cache")
        (expand-file-name "~/.local/lib") (expand-file-name "~/.local/share")))
@@ -50,7 +50,7 @@ based off of http://stackoverflow.com/a/19284509/25616"
                     sources))
          (helm-boring-file-regexp-list (if (and arg (> (car arg) 4))
                                            (remove "/src/"
-                                                 (remove "\\.virtualenvs"
+                                                 (remove "virtualenvs"
                                                        helm-boring-file-regexp-list))
                                          helm-boring-file-regexp-list)))
     (helm-other-buffer sources
