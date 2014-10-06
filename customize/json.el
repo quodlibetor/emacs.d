@@ -6,5 +6,6 @@
           (lambda ()
             (set (make-local-variable 'js-indent-level) 2)))
 
+(require 'highlight-escape-sequences)
 (add-to-list 'hes-simple-modes
              'json-mode)

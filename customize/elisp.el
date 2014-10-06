@@ -3,7 +3,7 @@
 
 Yeah I know they're not actually related functions."
   (interactive "P")
-  (cond ((and arg (> 4 (car arg)))
+  (cond ((and arg (> (car arg) 4))
          (let ((dir (expand-file-name "~/.emacs.d")))
            (message "recompiling %s" dir)
            (byte-recompile-directory dir 0)))

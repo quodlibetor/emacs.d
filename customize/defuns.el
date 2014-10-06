@@ -13,7 +13,7 @@
   (interactive "P")
   (if use-hgrep
       (hgrep nil)
-    (isearch-forward)))
+    (isearch-forward-regexp)))
 
 (defun dont-show-trailing-whitespace ()
   (interactive)

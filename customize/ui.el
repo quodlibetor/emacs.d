@@ -5,7 +5,7 @@
 (scroll-bar-mode -1)
 (show-paren-mode 1)
 (column-number-mode 1)
-(electric-pair-mode)
+(electric-pair-mode 1)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (setq-default indent-tabs-mode nil)
