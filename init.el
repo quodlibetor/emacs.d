@@ -24,6 +24,7 @@
 (load "customize/org")
 (load "customize/puppet")
 (load "customize/python")
+(load "customize/ruby")
 (load "customize/text")
 (load "customize/vc-annotate")
 (load "customize/yaml")
