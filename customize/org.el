@@ -3,6 +3,7 @@
 (require 'org)
 (require 'ox-latex)
 (require 'ox-s5)
+(require 'org-capture)
 
 ;; active Org-babel languages
 (org-babel-do-load-languages
@@ -38,7 +39,11 @@
                                  ("fontsize" "\\scriptsize")
                                  ("linenos" ""))
       org-latex-listings 'minted
-      )
+
+      org-capture-templates '(("t" "Todo" entry (file+headline "~/org/work.org" "Tasks")
+                               "* TODO %?\n  %i\n  %a")
+                              ("j" "Journal" entry (file+datetree "~/org/diary.org")
+                               "* %?\n%U\n" :clock-in t :clock-resume t)))
 
 (defun bwm:list-all-org (base)
   (delq nil
@@ -48,7 +53,8 @@
 
 (defun set-agenda-files ()
   (setq org-agenda-files
-        (append '("~/org/work.org")
+        (append '("~/org/work.org"
+                  "~/org/diary.org")
                 (bwm:list-all-org "~/projects")
                 (bwm:list-all-org "~/talks/sprints")))
   (message "Agenda files set to %s" org-agenda-files))
