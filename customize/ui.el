@@ -39,6 +39,9 @@
       kept-old-versions 2
       version-control t)       ; use versioned backups
 
+(setq custom-safe-themes
+      (quote
+       ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
 ;; set the font to dejavu then ubuntu because it doesn't like setting ubuntu's
 ;; font with a size
 (if (string= (jdz-get-hostname) "tinman")
