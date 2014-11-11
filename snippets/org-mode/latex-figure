@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: latex-figure
+# key: fig
+# --
+\begin{figure}
+\centering
+\includegraphics[width=.9\linewidth]{$0}
+\end{figure}
