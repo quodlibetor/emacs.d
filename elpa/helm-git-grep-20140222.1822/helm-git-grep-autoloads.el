@@ -1,16 +1,10 @@
 ;;; helm-git-grep-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (helm-git-grep-from-helm helm-git-grep-from-isearch
-;;;;;;  helm-git-grep-with-exclude-file-pattern helm-git-grep-at-point
-;;;;;;  helm-git-grep helm-git-grep-help helm-git-grep-toggle-showing-trailing-leading-line
-;;;;;;  helm-git-grep-toggle-ignore-case helm-git-grep-run-save-buffer
-;;;;;;  helm-git-grep-run-elscreen-action helm-git-grep-run-other-frame-action
-;;;;;;  helm-git-grep-run-other-window-action helm-git-grep-run-default-action
-;;;;;;  helm-git-grep-run-persistent-action) "helm-git-grep" "helm-git-grep.el"
-;;;;;;  (21288 45275 529797 422000))
+;;;### (autoloads nil "helm-git-grep" "helm-git-grep.el" (21603 36472
+;;;;;;  0 0))
 ;;; Generated autoloads from helm-git-grep.el
 
 (autoload 'helm-git-grep-run-persistent-action "helm-git-grep" "\
@@ -98,16 +92,9 @@ Invoke `helm-git-grep' from other helm.
 
 ;;;***
 
-;;;### (autoloads nil nil ("helm-git-grep-pkg.el") (21288 45275 643880
-;;;;;;  514000))
-
-;;;***
-
-(provide 'helm-git-grep-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; helm-git-grep-autoloads.el ends here
