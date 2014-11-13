@@ -67,3 +67,17 @@ With prefix arg, use the thing at point"
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
 (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+
+
+(defun bwm:helm-swoop-only-exact-match ()
+  "Surround the selected text with word-delimiters"
+  (concat "\\b" (thing-at-point 'symbol) "\\b"))
+(defun bwm:helm-swoop-liberal-match ()
+  "This is the original helm-swoop function"
+  (thing-at-point 'symbol))
+
+(defun bwm:toggle-helm-swoop-matcher ()
+  (interactive)
+  (if (eq helm-swoop-pre-input-function #'bwm:helm-swoop-only-exact-match)
+      (setq helm-swoop-pre-input-function #'bwm:helm-swoop-liberal-match)
+    (setq helm-swoop-pre-input-function #'bwm:helm-swoop-only-exact-match)))
