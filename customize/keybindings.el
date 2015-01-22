@@ -14,6 +14,7 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "M-%") 'query-replace-regexp)
 (global-set-key (kbd "C-c O") 'rotate-windows)
+(global-set-key (kbd "C-z") 'repeat)
 (winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
                 ;; layouts
 (require 'iedit) ;; `C-;' means edit everything in buffer (or narrowed region)
