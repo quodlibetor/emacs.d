@@ -68,6 +68,10 @@
              '("Cheffile\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist  ; cloudformation templates
              '("\\.template\\'" . json-mode))
+(add-to-list 'auto-mode-alist
+             '("Cargo.lock\\'" . toml-mode))
+(add-to-list 'auto-mode-alist
+             '("/group_vars/" . yaml-mode))
 (electric-indent-mode 0)
 
 (require 'web-mode)
