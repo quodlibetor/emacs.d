@@ -60,9 +60,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(dired-dwim-target t)
+ '(org-agenda-files (quote ("~/org/work.org")))
  '(safe-local-variable-values
    (quote
-    ((eval when
+    ((virtualenv-default-directory . "/Users/bwm/.virtualenvs/metahack")
+     (virtualenv-workon . "metahack")
+     (eval when
            (and
             (buffer-file-name)
             (file-regular-p
@@ -88,7 +91,8 @@
      (virtualenv-default-directory . "/home/bwm/projects/schedaddle/")
      (virtualenv-workon . "schedaddle3")
      (pytest-compile-test-runner . "nosetests")
-     (pytest-compile-runner-format . "nose")))))
+     (pytest-compile-runner-format . "nose"))))
+ '(term-buffer-maximum-size 50000))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
  '(exec-path (quote ("/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/home/bwm/.local/libexec/emacs/24.3/x86_64-unknown-linux-gnu")))

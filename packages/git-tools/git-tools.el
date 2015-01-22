@@ -25,7 +25,7 @@
 (provide 'git-tools)
 
 (defconst git-tools-grep-command
-  "git ls-files -z %s | xargs -0 grep -Pin %s"
+  "git ls-files -z %s | xargs -0 grep -in %s"
   "The command used for grepping files using git. See `git-tools-grep'.")
 
 ;; Run 'code' at the root of the branch which dirname is in.
