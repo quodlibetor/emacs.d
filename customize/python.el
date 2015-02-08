@@ -27,6 +27,8 @@
             (local-set-key (kbd "C-c n p m") 'nosetests-pdb-module)
             (local-set-key (kbd "C-c n p o") 'nosetests-pdb-one)
             (local-set-key (kbd "C-c h") 'pylookup-lookup)
+            (setq-local bwm:sane-newline-indent-chars '("}" "]" ")"))
+            (local-set-key (kbd "C-j") 'bwm:sane-newline)
             (if (boundp 'org-src-mode)
                 (local-set-key (kbd "C-c C-'") 'org-edit-src-exit)))
             )

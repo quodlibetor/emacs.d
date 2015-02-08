@@ -22,6 +22,21 @@
 (require 'git-tools "packages/git-tools/git-tools.el")
 (defalias 'ggrep 'git-tools-grep)
 
+(defvar bwm:sane-newline-indent-chars (list "}" "]")
+  "The list of characters to automatically indent if point is before them.
+
+This is safe as a file and mode-local variable")
+
+(defun bwm:sane-newline (point)
+  "Newline and indent and indent closing brace"
+  (interactive "d")
+  (when (member (and (not (= point (point-max)))
+                     (buffer-substring point (+ point 1))) bwm:sane-newline-indent-chars)
+    (save-excursion (insert "\n")
+                    (forward-char)
+                    (indent-according-to-mode)))
+  (electric-newline-and-maybe-indent))
+
 ; from http://blog.urth.org/2011/06/flymake-versus-the-catalyst-restarter.html
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking
