@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ansible-module-param
+# key: ap
+# --
+$1 = module.params['$1']
