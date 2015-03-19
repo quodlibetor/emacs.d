@@ -26,7 +26,9 @@
       org-clock-into-drawer t
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")
 			  (sequence "NEXT(n)" "|")
-			  (sequence "BUG(b)" "|" "FIXED(f)" "WONTFIX(w)"))
+			  (sequence "BUG(b)" "|" "FIXED(f)" "WONTFIX(w)")
+                          (sequence "TO-SCHEDULE(s)" "|" "JIRAd(j)")
+                          )
       org-log-done 'time
       org-use-speed-commands t
       org-clock-out-remove-zero-time-clocks t
