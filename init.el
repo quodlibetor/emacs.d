@@ -20,6 +20,7 @@
 (load "customize/html")
 (load "customize/json")
 (load "customize/markdown")
+(load "customize/ocaml")
 (load "customize/occur")
 (load "customize/org")
 (load "customize/puppet")
