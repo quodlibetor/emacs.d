@@ -13,6 +13,28 @@
        "/src/" "/elpa/" "/build/" "/_archive/" "advance-services-svn" ;; source from other packages
        (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi") (expand-file-name "~/.cache")
        (expand-file-name "~/.local/lib") (expand-file-name "~/.local/share")))
+
+(setq helm-display-header-line nil)
+(defun helm-toggle-header-line ()
+  "Show the source header if there is more than one source, otherwise don't"
+  (if (> (length helm-sources) 1)
+      (set-face-attribute 'helm-source-header
+                          nil
+                          :foreground helm-source-header-default-foreground
+                          :background helm-source-header-default-background
+                          :box helm-source-header-default-box
+                          :height 1.0)
+    (set-face-attribute 'helm-source-header
+                        nil
+                        :foreground (face-attribute 'helm-selection :background)
+                        :background (face-attribute 'helm-selection :background)
+                        :box nil
+                        :height 0.1)))
+(helm-autoresize-mode 1)
+(setq helm-autoresize-max-height 40)
+(setq helm-autoresize-min-height 40)
+(setq helm-split-window-in-side-p t)
+
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 
