@@ -98,3 +98,7 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq mode-name "Py")))
+
+
+(add-hook 'eval-expression-minibuffer-setup-hook
+          #'eldoc-mode)
