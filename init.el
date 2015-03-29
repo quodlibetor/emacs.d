@@ -30,6 +30,7 @@
 (load "customize/text")
 (load "customize/vc-annotate")
 (load "customize/yaml")
+(load "customize/prog")
 
 ;; special modes
 (load "customize/dired")
