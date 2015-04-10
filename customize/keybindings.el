@@ -1,3 +1,5 @@
+(when (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
+
 (global-set-key (kbd "<f2>") 'flymake-start-syntax-check)
 (global-set-key (kbd "<f3>") 'flymake-display-err-menu-for-current-line)
 (global-set-key (kbd "<f4>") 'flymake-goto-next-error)
