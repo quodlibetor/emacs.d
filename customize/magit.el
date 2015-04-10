@@ -1,9 +1,8 @@
-(require 'magit-svn)
+;(setq magit-auto-revert-mode-lighter ""
+;      magit-gitk-executable "/usr/bin/gitk")
 
-(add-hook 'magit-mode-hook
-	  (lambda ()
-	    (when (magit-get "svn-remote" "svn" "url")
-	      (magit-svn-mode 1))))
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit")
+(require 'magit)
 
-(setq magit-auto-revert-mode-lighter ""
-      magit-gitk-executable "/usr/bin/gitk")
+(define-key magit-mode-map "\t" 'magit-section-cycle)
+(define-key magit-mode-map [C-tab] 'magit-section-toggle)
