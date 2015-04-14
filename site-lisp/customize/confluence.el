@@ -1,4 +1,4 @@
-(let ((load-path (cons "~/.emacs.d/packages/confluence-1.6beta" load-path)))
+(let ((load-path (cons "~/.emacs.d/site-lisp/packages/confluence-1.6beta" load-path)))
   (require 'xml-rpc)
   (require 'confluence))
 (setq confluence-url "https://wiki.advance.net/rpc/xmlrpc"

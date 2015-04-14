@@ -6,7 +6,6 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
