@@ -13,7 +13,10 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (require 'virtualenv)
+            (hack-local-variables)
+            (when (boundp 'project-venv-name)
+              (venv-workon project-venv-name))
+
             (require 'nose)
             (add-to-list 'nose-project-names ".emacsruntests")
             (add-to-list 'nose-project-names "runtests")

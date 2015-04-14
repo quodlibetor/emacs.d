@@ -1,6 +1,7 @@
 ;(setq magit-auto-revert-mode-lighter ""
 ;      magit-gitk-executable "/usr/bin/gitk")
 
+(setq magit-last-seen-setup-instructions "1.4.0")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit")
 (require 'magit)
 
