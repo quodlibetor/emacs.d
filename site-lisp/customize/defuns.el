@@ -22,6 +22,37 @@
 (require 'git-tools "packages/git-tools/git-tools.el")
 (defalias 'ggrep 'git-tools-grep)
 
+(defvar ansible-vault-password-file nil
+  "File to use to decrypte ansible-vault files")
+
+(defun ansible-vault-view ()
+  (interactive)
+  (let ((new-buf (get-buffer-create (concat (buffer-name) "-decrypted")))
+        (command (concat "ansible-vault view --vault "
+                           ansible-vault-password-file " "
+                           buffer-file-name)))
+    (shell-command command new-buf)
+    (pop-to-buffer new-buf)
+    (yaml-mode)))
+
+(defun ansible-vault-save ()
+  (interactive)
+  (let ((source-buffer (s-chop-suffix "-decrypted" (buffer-name))))
+    (write-file source-buffer)
+    (shell-command (concat "ansible-vault encrypt --vault "
+                           ansible-vault-password-file " "
+                           source-buffer))
+    (kill-buffer (current-buffer))
+    (pop-to-buffer source-buffer)
+    (revert-buffer nil t)))
+
+(defun ansible-vault-encrypt ()
+  (interactive)
+  (shell-command (concat "ansible-vault encrypt --vault "
+                         ansible-vault-password-file " "
+                         (buffer-file-name)))
+  (revert-buffer nil t))
+
 (defun endless/comment-line-or-region (n)
   "Comment or uncomment current line and leave point after it.
 With positive prefix, apply to N lines including current one.
