@@ -84,7 +84,11 @@ This is safe as a file and mode-local variable")
     (save-excursion (insert "\n")
                     (forward-char)
                     (indent-according-to-mode)))
-  (electric-newline-and-maybe-indent))
+  (electric-newline-and-maybe-indent)
+  (when goal-column
+    (while (< (current-column) goal-column)
+      (insert " "))
+    (delete-char (- goal-column (current-column)))))
 
 ; from http://blog.urth.org/2011/06/flymake-versus-the-catalyst-restarter.html
 (defun flymake-create-temp-intemp (file-name prefix)
