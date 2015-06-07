@@ -18,6 +18,7 @@
 (load "customize/elisp")
 (load "customize/html")
 (load "customize/json")
+(load "customize/go")
 (load "customize/markdown")
 (load "customize/ocaml")
 (load "customize/occur")
