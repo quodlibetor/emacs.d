@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: one_subnet
+# key: onesub
+# --
+${1:subnet}: '{{ vpc.subnets | privacy("${2:private}") | az(${3:"1a"}) | subnet("${4:management}") | only }}'

@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: vhosts
+# key: vhosts
+# --
+- hosts: sandbox:staging:systems:uat:production
+  gather_facts: no
+
+  tasks:
+    - $0
