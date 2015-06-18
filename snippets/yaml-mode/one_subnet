@@ -2,4 +2,4 @@
 # name: one_subnet
 # key: onesub
 # --
-${1:subnet}: '{{ vpc.subnets | privacy("${2:private}") | az(${3:"1a"}) | subnet("${4:management}") | only }}'
+${1:subnet}: '{{ vpc.subnets | subnet("${2:management}") | privacy("${3:private}") | az(${4:"1a"}) | only }}'
