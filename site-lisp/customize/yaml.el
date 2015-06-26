@@ -1,39 +1,38 @@
 (add-to-list 'auto-mode-alist
              '("\\.ya?ml$" . yaml-mode))
 ;; TODO: make this go to the previous line with less indentation
-(defun yaml-next-field ()
+(defun ansible-next-field ()
   "Jump to next yaml field"
   (interactive)
   (end-of-line)
   (search-forward-regexp ":\\( \\|$\\)")
   (backward-char)
   (search-backward-regexp " ")
-  (forward-char))
-(defun yaml-prev-field ()
+  (backward-char))
+
+(defun ansible-prev-field ()
   "Jump to next yaml field"
   (interactive)
   (search-backward-regexp ":\\( \\|$\\)")
   (backward-char)
   (search-backward-regexp " ")
-  (forward-char))
+  (backward-char))
 
-(defun yaml-prev-section ()
+(defun ansible-prev-section ()
   (interactive)
-  (search-backward-regexp "- [-a-zA-Z]+:\\( \\|$\\)")
-  (forward-char 2))
+  (search-backward-regexp "- [-a-zA-Z]+:\\( \\|$\\)"))
 
-(defun yaml-next-section ()
+(defun ansible-next-section ()
   (interactive)
   (end-of-line)
   (search-forward-regexp "- [-a-zA-Z]+:\\( \\|$\\)")
-  (search-backward-regexp "- ")
-  (forward-char 2))
+  (search-backward-regexp "- "))
 
 (require 'yaml-mode)
-(define-key yaml-mode-map (kbd "M-n") 'yaml-next-field)
-(define-key yaml-mode-map (kbd "M-p") 'yaml-prev-field)
-(define-key yaml-mode-map (kbd "C-M-a") 'yaml-prev-section)
-(define-key yaml-mode-map (kbd "C-M-e") 'yaml-next-section)
+(define-key yaml-mode-map (kbd "M-n") 'ansible-next-field)
+(define-key yaml-mode-map (kbd "M-p") 'ansible-prev-field)
+(define-key yaml-mode-map (kbd "C-M-a") 'ansible-prev-section)
+(define-key yaml-mode-map (kbd "C-M-e") 'ansible-next-section)
 
 (add-hook 'yaml-mode-hook
           (lambda ()
