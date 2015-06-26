@@ -37,6 +37,7 @@
 (load "customize/helm")
 (load "customize/ibuffer")
 (load "customize/ido")
+(load "customize/projectile")
 (load "customize/magit")
 (load "customize/outline")
 (when (file-exists-p (expand-file-name "~/mail"))

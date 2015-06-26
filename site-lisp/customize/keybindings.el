@@ -66,7 +66,7 @@
     (if (looking-back "^[[:blank:]]*[[:punct:][:alnum:]].*")
 	(fixup-whitespace)
       (indent-according-to-mode))))
-(global-set-key (kbd "C-c p") 'pull-line)
+(global-set-key (kbd "C-c j") 'pull-line)
 
 (defun rotate-windows ()
   "Rotate your windows"
