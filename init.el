@@ -31,6 +31,7 @@
 (load "customize/vc-annotate")
 (load "customize/yaml")
 (load "customize/prog")
+(load "customize/upstart")
 
 ;; special modes
 (load "customize/dired")
