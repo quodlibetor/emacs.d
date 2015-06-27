@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ansible_managed
+# key: #am
+# --
+# {{ ansible_managed }}

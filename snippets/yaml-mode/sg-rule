@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: sg-rule
+# key: proto
+# expand-env: ((yas-indent-line 'fixed))
+# --
+- proto: ${1:tcp}
+  from_port: $2
+  to_port: $2
+  cidr_ip: ${0:'{{ cidr_all }}'}
