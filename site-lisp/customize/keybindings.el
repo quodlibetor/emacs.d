@@ -16,13 +16,16 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "M-%") 'query-replace-regexp)
 (global-set-key (kbd "C-c O") 'rotate-windows)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-;") 'mc/mark-all-like-this-dwim)
+(global-set-key (kbd "C-'") 'er/expand-region)
 (global-set-key (kbd "C-c C-;") 'endless/comment-line-or-region)
 (global-set-key (kbd "C-h a") 'helm-apropos)
 (global-set-key (kbd "C-z") 'repeat)
 
 (winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
                 ;; layouts
-(require 'iedit) ;; `C-;' means edit everything in buffer (or narrowed region)
 
 ;; misc commands
 (substitute-key-definition   'move-beginning-of-line 'beginning-of-line+ global-map)
