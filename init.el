@@ -66,8 +66,7 @@
  '(dired-dwim-target t)
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
-   (quote
-    (virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi iedit ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
+   (quote (avy expand-region multiple-cursors mmm-mode virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
  '(safe-local-variable-values
    (quote
     ((project-venv-name . "ansible")
