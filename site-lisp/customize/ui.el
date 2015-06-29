@@ -14,6 +14,9 @@
       require-final-newline t
       dired-dwim-target t)
 
+(autoload 'scratch "scratch" nil t)
+
+;; highlight escape-sequences
 (hes-mode)
 
 (require 'uniquify)
