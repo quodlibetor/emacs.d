@@ -27,6 +27,7 @@
 (global-set-key (kbd "C-c C-;") 'endless/comment-line-or-region)
 (global-set-key (kbd "C-h a") 'helm-apropos)
 (global-set-key (kbd "C-z") 'repeat)
+(global-set-key (kbd "C-c ! h") 'helm-flycheck)
 
 (winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
                 ;; layouts
