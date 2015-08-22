@@ -5,10 +5,9 @@
 (global-set-key (kbd "<f4>") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c w") 'fixup-whitespace)
 (global-set-key (kbd "C-c g") 'magit-status)
-(global-set-key (kbd "C-c b") 'magit-blame-mode)
+(global-set-key (kbd "C-c b") 'magit-blame)
 (global-set-key (kbd "C-c f") 'bwm:helm-find-files)
 (global-set-key (kbd "M-s o") 'helm-swoop)
-(global-set-key (kbd "C-c m") 'notmuch)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-/") 'hippie-expand)
@@ -30,6 +29,25 @@
 (global-set-key (kbd "C-h a") 'helm-apropos)
 (global-set-key (kbd "C-z") 'repeat)
 (global-set-key (kbd "C-c ! h") 'helm-flycheck)
+
+(defhydra bwm-multiple-cursors-hydra (:hint nil)
+  "
+     ^Up^            ^Down^        ^Miscellaneous^
+----------------------------------------------
+[_p_]   Next    [_n_]   Next    [_l_] Edit lines
+[_P_]   Skip    [_N_]   Skip    [_a_] Mark all    [_m_] Mark All DWIM
+[_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+  ("l" mc/edit-lines :exit t)
+  ("m" mc/mark-all-like-this-dwim :exit t)
+  ("a" mc/mark-all-like-this :exit t)
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+  ("q" nil))
+(global-set-key (kbd "C-c m") 'bwm-multiple-cursors-hydra/body)
 
 (winner-mode 1) ;; enable "C-c →" and "C-c ←" to switch between previous window
                 ;; layouts

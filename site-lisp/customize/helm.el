@@ -90,8 +90,8 @@ With prefix arg, use the thing at point"
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
 (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-(define-key helm-git-grep-map (kbd "M-n") 'helm-goto-next-file)
-(define-key helm-git-grep-map (kbd "M-p") 'helm-goto-precedent-file)
+(define-key helm-git-grep-map (kbd "C-c C-n") 'helm-goto-next-file)
+(define-key helm-git-grep-map (kbd "C-c C-p") 'helm-goto-precedent-file)
 
 (defun bwm:helm-swoop-only-exact-match ()
   "Surround the selected text with word-delimiters"

@@ -3,6 +3,7 @@
 (require 'org)
 (require 'ox-latex)
 (require 'ox-s5)
+(require 'ox-confluence)
 (require 'org-capture)
 
 ;; active Org-babel languages
@@ -56,8 +57,8 @@
 
 (defun set-agenda-files ()
   (setq org-agenda-files
-        (append '("~/org/work.org"
-                  "~/org/diary.org")
+        (append '("~/org")
+                (bwm:list-all-org "~/org")
                 (bwm:list-all-org "~/projects")
                 (bwm:list-all-org "~/talks/sprints")))
   (message "Agenda files set to %s" org-agenda-files))

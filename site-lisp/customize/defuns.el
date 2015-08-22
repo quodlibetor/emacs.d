@@ -28,7 +28,7 @@
 (defun ansible-vault-view ()
   (interactive)
   (let ((new-buf (get-buffer-create (concat (buffer-name) "-decrypted")))
-        (command (concat "ansible-vault view --vault "
+        (command (concat "ansible-vault view --vault-password-file "
                            ansible-vault-password-file " "
                            buffer-file-name)))
     (shell-command command new-buf)
@@ -39,7 +39,7 @@
   (interactive)
   (let ((source-buffer (s-chop-suffix "-decrypted" (buffer-name))))
     (write-file source-buffer)
-    (shell-command (concat "ansible-vault encrypt --vault "
+    (shell-command (concat "ansible-vault encrypt --vault-password-file "
                            ansible-vault-password-file " "
                            source-buffer))
     (kill-buffer (current-buffer))
