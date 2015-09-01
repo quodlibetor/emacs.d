@@ -83,6 +83,7 @@
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
 (add-to-list 'org-latex-packages-alist '("" "minted"))
+(require 'org-export-as-s5)
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
