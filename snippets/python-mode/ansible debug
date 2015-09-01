@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ansible debug
+# key: adbg
+# --
+import epdb; epdb.serve()
