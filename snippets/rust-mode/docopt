@@ -1,0 +1,33 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: docopt
+# key: docopt
+# --
+`(save-excursion
+      (goto-char (point-min))
+      (message "running")
+      (re-search-forward "\n")
+      (push-mark)
+      (insert "\nextern crate rustc_serialize;")
+      (insert "\nextern crate docopt;\n")
+      (push-mark)
+      (insert "\nuse docopt::Docopt;\n"))
+`static USAGE: &'static str = "
+Usage:
+    $1 [options] $2
+    $1 -h | --help
+
+Options:
+    -h, --help            Show this message and exit
+    $0
+";
+
+#[derive(RustcDecodable)]
+struct Args {}
+
+impl Args {
+    fn parse() -> Args {
+        Docopt::new(USAGE)
+            .and_then(|d| d.decode())
+            .unwrap_or_else(|e| e.exit())
+    }
+}
