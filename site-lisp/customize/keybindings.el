@@ -19,6 +19,7 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-;") 'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C-'") 'er/expand-region)
+(global-set-key (kbd "M-z") 'zzz-to-char)
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 (global-set-key (kbd "M-g h") 'avy-goto-word-1)
 (global-set-key (kbd "M-g M-h") 'avy-goto-word-1)
