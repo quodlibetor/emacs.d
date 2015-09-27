@@ -65,6 +65,7 @@
  ;; If there is more than one, they won't work right.
  '(dired-dwim-target t)
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate")))
+ '(magit-tag-arguments (quote ("--annotate")))
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
    (quote
