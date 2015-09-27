@@ -5,6 +5,9 @@
 (global-set-key (kbd "s-w") 'kill-ring-save)
 (setenv "TMPDIR" "/tmp")  ; /var/folders/hh/30-byte-hex/90-byte-hex really?
 (setq mac-command-modifier 'meta)
+(eval-after-load "artist"
+  '(define-key artist-mode-map (kbd "s-<mouse-1>") 'artist-mouse-choose-operation))
+
 (dolist (path '("/usr/local/Library/ENV/4.3"
                 "/usr/local/opt/autoconf/bin"
                 "/usr/local/opt/automake/bin"
