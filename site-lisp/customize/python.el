@@ -7,7 +7,6 @@
         elpy-module-company
         elpy-module-eldoc
         elpy-module-flymake
-        elpy-module-highlight-indentation
         elpy-module-pyvenv
         elpy-module-yasnippet))
 
