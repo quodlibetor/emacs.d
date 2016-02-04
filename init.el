@@ -119,6 +119,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "dark cyan"))))
  '(ediff-current-diff-B ((t (:background "#222" :foreground "DarkOrchid"))))
  '(ediff-fine-diff-B ((t (:background "#01008c"))))
  '(font-lock-builtin-face ((t (:foreground "#ff83fa"))))
@@ -128,6 +129,7 @@
  '(mc/region-face ((t (:inherit highlight))))
  '(org-column ((t (:background "grey10" :strike-through nil :underline nil :slant normal :weight normal :height 105 :family "Ubuntu Mono"))))
  '(org-scheduled ((t (:background "#232323" :foreground "light goldenrod"))))
+ '(region ((t (:background "RoyalBlue4" :inverse-video nil))))
  '(rst-level-1-face ((t (:background "grey10"))) t)
  '(rst-level-2-face ((t (:background "grey13"))) t)
  '(rst-level-3-face ((t (:background "grey20"))) t)
