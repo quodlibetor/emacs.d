@@ -17,6 +17,7 @@
 (load "customize/confluence")
 (load "customize/elisp")
 (load "customize/html")
+(load "customize/javascript")
 (load "customize/json")
 (load "customize/go")
 (load "customize/markdown")
