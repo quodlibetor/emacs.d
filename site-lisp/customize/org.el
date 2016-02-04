@@ -47,7 +47,9 @@
       org-capture-templates '(("t" "Todo" entry (file+headline "~/org/work.org" "Tasks")
                                "* TODO %?\n  %i\n  %a")
                               ("j" "Journal" entry (file+datetree "~/org/diary.org")
-                               "* %?\n%U\n" :clock-in t :clock-resume t)))
+                               "* %?\n%U\n" :clock-in t :clock-resume t)
+                              ("a" "Alexandria" entry (file+headline "~/org/work.org" "Alexandria")
+                               "* %?    :alexandria:fixes:\n  %a")))
 
 (defun bwm:list-all-org (base)
   (delq nil
