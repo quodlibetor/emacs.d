@@ -24,3 +24,7 @@ recentf
 /save-place
 /local.el
 /places
+/.mc-lists.el
+/.python-environments
+/abbrev_defs
+/projectile-bookmarks.eld
