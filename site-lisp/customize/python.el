@@ -18,6 +18,8 @@
 (require 'python)
 (setq python-fill-docstring-style 'django) ;; knewton style
 
+(global-set-key (kbd "C-j") 'bwm:sane-newline)
+
 ;(setq pylookup-dir "~/.emacs.d/packages/pylookup")
 ;(add-to-list 'load-path pylookup-dir)
 ;;; load pylookup when compile time
