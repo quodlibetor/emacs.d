@@ -30,6 +30,9 @@
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/save-place")
 
+(blink-cursor-mode t)
+(setq blink-cursor-blinks 3)
+
 (setq-default show-trailing-whitespace t
 	      default-indicate-empty-lines t
 	      sentence-end-double-space nil
@@ -119,3 +122,10 @@
     (setq exec-path (split-string path-from-shell path-separator))))
 
 (when window-system (set-exec-path-from-shell-PATH))
+
+
+(setq ring-bell-function
+      (lambda ()
+	(unless (memq this-command
+		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
+	  (ding))))
