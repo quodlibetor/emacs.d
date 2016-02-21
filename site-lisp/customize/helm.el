@@ -61,8 +61,8 @@ based off of http://stackoverflow.com/a/19284509/25616"
                                 helm-source-projectile-files-list)
                             '(helm-c-source-files-in-current-dir))
 
-                          '(helm-c-source-buffers-list ;; list of all open buffers
-                            helm-c-source-buffer-not-found     ;; ask to create a buffer otherwise
+                          '(helm-source-buffers-list ;; list of all open buffers
+                            helm-source-buffer-not-found     ;; ask to create a buffer otherwise
                             )))
          (sources (if arg
                       (append '(helm-c-source-recentf     ;; all recent files
