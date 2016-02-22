@@ -92,6 +92,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reduce modeline polution
+
+;; TODO: switch to rich-minority, since that's used by smart-mode-line
 ;; minor modes
 (when (require 'diminish nil 'noerror)
   (eval-after-load "yasnippet"
@@ -102,6 +104,9 @@
   ;; (eval-after-load "flymake"
   ;;   '(diminish 'flymake-mode " Fly"))
   )
+; fancy colorful modeline
+(sml/setup)
+
 ;; major modes
 (add-hook 'python-mode-hook
           (lambda ()
