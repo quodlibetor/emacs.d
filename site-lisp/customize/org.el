@@ -30,6 +30,7 @@
 			  (sequence "BUG(b)" "|" "FIXED(f)" "WONTFIX(w)")
                           (sequence "TO-SCHEDULE(s)" "|" "JIRAd(j)")
                           )
+      org-confirm-babel-evaluate nil
       org-log-done 'time
       org-use-speed-commands t
       org-clock-out-remove-zero-time-clocks t
