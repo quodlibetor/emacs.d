@@ -84,7 +84,7 @@ based off of http://stackoverflow.com/a/19284509/25616"
 With prefix arg, use the thing at point"
   (interactive "P")
   (if arg
-      (helm-git-grep-at-point)
+      (helm-git-grep-at-point nil nil)
     (helm-git-grep)))
 
 ;; When doing isearch, hand the word over to helm-swoop

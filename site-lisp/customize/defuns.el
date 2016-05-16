@@ -11,9 +11,12 @@
 
 (defun bwm:arbitrary-search (&optional use-hgrep)
   (interactive "P")
-  (if use-hgrep
-      (hgrep nil)
-    (isearch-forward-regexp)))
+  (cond ((equal use-hgrep '(4))
+         (hgrep nil))
+        ((equal use-hgrep '(16))
+         (hgrep t))
+        (t
+         (isearch-forward-regexp))))
 
 (defun dont-show-trailing-whitespace ()
   (interactive)
