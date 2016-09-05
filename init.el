@@ -24,6 +24,7 @@
 (load "customize/ocaml")
 (load "customize/occur")
 (load "customize/org")
+(load "customize/plantuml")  ; depends on vars from org
 (load "customize/puppet")
 (load "customize/python")
 (load "customize/ruby")
@@ -54,6 +55,8 @@
 (load "customize/ui")
 (when (string-equal system-type "darwin")
   (load "customize/osx"))
+
+(prefer-coding-system 'utf-8)
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 ;(require 'el-get)
