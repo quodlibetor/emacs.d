@@ -496,6 +496,23 @@ virtualenvwrapper.el."
                (setenv "VIRTUAL_ENV" venv-current-dir)))))
     (ad-activate 'shell))
 
+(defun venv-initialize-subprocess-shells ()
+  "Configure interactive shells for use with
+virtualenvwrapper.el."
+    (defadvice call-process-shell-command (around strip-env ())
+      "Use the environment without the venv to start up a new shell."
+      (let* ((buffer-name (or buffer "*shell*"))
+             (buffer-exists-already (get-buffer buffer-name)))
+        (if (or buffer-exists-already (not venv-current-name))
+            ad-do-it
+          (progn (setenv "PATH" (s-join path-separator (venv-get-stripped-path
+                                         (s-split path-separator (getenv "PATH")))))
+                 (setenv "VIRTUAL_ENV" nil)
+                 ad-do-it
+                 (venv-shell-init buffer-name)
+               (setenv "PATH" (concat venv-current-dir venv-executables-dir path-separator (getenv "PATH")))
+               (setenv "VIRTUAL_ENV" venv-current-dir)))))
+    (ad-activate 'call-process-shell-command))
 
 ;; eshell
 
