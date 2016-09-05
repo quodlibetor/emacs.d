@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: redux action type
+# key: atype
+# --
+export const $1 = '$1'
+
+export function ${1:$(let ((downcased (replace-regexp-in-string "_" "" (upcase-initials (downcase (if (> (length yas-text) 0) yas-text "  "))))))
+          (concat (downcase (substring downcased 0 1)) (substring downcased 1)))}(id${2:, value}) {
+    return {
+        type: $1,
+        id$0$2
+    }
+}

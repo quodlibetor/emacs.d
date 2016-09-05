@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: plantuml-ref
+# key: puml-ref
+# --
+#+BEGIN_SRC plantuml :noweb-ref $1 :exports none
+$0
+#+END_SRC

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: plantuml
+# key: puml
+# --
+#+BEGIN_SRC plantuml :noweb yes :file assets/$1.png
+<<uml-style>>
+$0
+#+END_SRC
+#+CAPTION: $2
+#+RESULTS:

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: dotref
+# key: dotref
+# --
+#+BEGIN_SRC dot :noweb-ref $1 :exports none
+$0
+#+END_SRC

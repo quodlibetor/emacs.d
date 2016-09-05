@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: definition item
+# key: di
+# --
+$1<<$1>>$0

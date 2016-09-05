@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: odot
+# key: odot
+# --
+#+BEGIN_SRC dot :noweb yes :file assets/$1.png :exports results
+digraph {
+  <<dot-style>>
+  $0
+}
+#+END_SRC
+#+CAPTION: $2
+#+RESULTS:
