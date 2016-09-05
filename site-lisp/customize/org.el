@@ -10,17 +10,33 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
-   (plantuml . t)))
+   (plantuml . t)
+   (dot . t)))
+
+(defun toggle-babel-evaluate ()
+  (interactive)
+  (if org-export-babel-evaluate
+      (progn
+        (setq org-export-babel-evaluate nil)
+        (message "Babel evaluate set to nil"))
+    (setq org-export-babel-evaluate t)
+    (message "Babel evaluate set to t")))
 
 ;; set plantuml jar path for linux or homebrew
 (let* ((maybe-jars (-map 'expand-file-name
                          '("~/.local/lib/plantuml.jar"
+                           "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar"
                            "/usr/local/Cellar/plantuml/7999/plantuml.7999.jar")))
       (jars (-filter 'file-exists-p maybe-jars)))
   (if jars
       (setq org-plantuml-jar-path
             (car jars))
     (warn "plantuml is not installed [%s do not exist]" maybe-jars)))
+
+(add-to-list
+ 'org-src-lang-modes '("plantuml" . puml))
+(add-to-list
+ 'org-src-lang-modes '("dot" . graphviz-dot))
 
 (setq org-hide-leading-stars t
       org-columns-default-format "%35ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM(Time Spent) %TODO %3PRIORITY %TAGS"
