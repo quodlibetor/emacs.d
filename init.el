@@ -1,12 +1,22 @@
+;;; bwm-init -- An init file for bwm
+;;;
+;;; Commentary:
+;;;
+;;; This .emacs.d is set up as a bunch of mode-specific customization files.
+;;;
+;;; There are some kinds of customization that don't really fit into
+;;; language-specific customization, they are in the special modes section
+;;; below.
+
 ;; This seems to undefined in emacs 24.4... somehow. Dumb.
 (defsubst package-desc-vers (desc)
   "Extract version from a package description vector."
   (aref desc 0))
-(require 'package)
-(setq package-enable-at-startup nil)
-(package-initialize)
+(setq custom-safe-themes '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
+(load "customize/package")
+
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
 (setq load-prefer-newer t)
@@ -51,7 +61,6 @@
 ;; general emacs config
 (load "customize/find-file")
 (load "customize/keybindings")
-(load "customize/package")
 (load "customize/ui")
 (when (string-equal system-type "darwin")
   (load "customize/osx"))
