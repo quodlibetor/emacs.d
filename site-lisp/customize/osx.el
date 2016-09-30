@@ -25,3 +25,5 @@
                 "/usr/local/bin"))
         (add-to-list 'exec-path path))
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setenv "LC_ALL" "en_US.UTF-8")
+(setenv "LANG" "en_US.UTF-8")
