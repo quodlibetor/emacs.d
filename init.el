@@ -24,14 +24,15 @@
 (load "customize/defuns")
 
 ;; language/file modes
-(load "customize/confluence")
+;(load "customize/confluence")
+(load "customize/csv")
 (load "customize/elisp")
 (load "customize/html")
 (load "customize/javascript")
 (load "customize/json")
 (load "customize/go")
 (load "customize/markdown")
-(load "customize/ocaml")
+;(load "customize/ocaml")
 (load "customize/occur")
 (load "customize/org")
 (load "customize/plantuml")  ; depends on vars from org
@@ -44,6 +45,7 @@
 (load "customize/yaml")
 (load "customize/prog")
 (load "customize/upstart")
+(load "customize/sass")
 
 ;; special modes
 (load "customize/dired")
@@ -87,11 +89,15 @@
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
    (quote
-    (plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
+    (rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
  '(paradox-automatically-star nil)
  '(safe-local-variable-values
    (quote
-    ((project-venv-name . "ansible")
+    ((venv-name . "consumer")
+     (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
+     (virtualenv-default-directory . "/Users/bwm/.virtualenvs/consumer")
+     (virtualenv-workon . "consumer")
+     (project-venv-name . "ansible")
      (encoding . utf-8)
      (virtualenv-default-directory . "/Users/bwm/.virtualenvs/metahack")
      (virtualenv-workon . "metahack")
