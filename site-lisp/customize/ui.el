@@ -134,3 +134,17 @@
 	(unless (memq this-command
 		      '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit))
 	  (ding))))
+
+(defun bwm/read-lines (path)
+  "Return a list of lines of a file at filePath."
+  (with-temp-buffer
+    (insert-file-contents path)
+    (split-string (buffer-string) "\n" t)))
+
+(defun set-docker-env ()
+  (interactive)
+  (let ((fname (read-file-name "File with docker env: ")))
+    (dolist (line (bwm/read-lines fname))
+      (when (string-match "\\(DOCKER[^=]+\\)=\"\\(.*\\)\"" line)
+        (setenv (match-string-no-properties 1 line)
+                (match-string-no-properties 2 line))))))
