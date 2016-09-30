@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: reveal-left-right
+# key: reveallr
+# --
+#+REVEAL_HTML: <div class="left"><h3>$1</h3>
+$0
+#+REVEAL_HTML: </div><div class="right"><h3>$2</h3>
+
+#+REVEAL_HTML: </div>

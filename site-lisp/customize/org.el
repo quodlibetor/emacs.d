@@ -5,6 +5,7 @@
 (require 'ox-s5)
 (require 'ox-confluence)
 (require 'org-capture)
+(require 'ox-reveal "packages/org-reveal/ox-reveal.el")
 
 ;; active Org-babel languages
 (org-babel-do-load-languages
