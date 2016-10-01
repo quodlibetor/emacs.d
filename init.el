@@ -148,6 +148,7 @@
  '(font-lock-builtin-face ((t (:foreground "#ff83fa"))))
  '(helm-selection ((t (:background "ForestGreen" :foreground "SlateGray1" :underline t))))
  '(highlight ((t (:background "OrangeRed1" :foreground "black" :inverse-video nil))))
+ '(hl-line ((t (:background "gray8"))))
  '(magit-item-highlight ((t (:inherit highlight :background "#0A2036" :foreground "deep sky blue"))))
  '(mc/region-face ((t (:inherit highlight))))
  '(org-column ((t (:background "grey10" :strike-through nil :underline nil :slant normal :weight normal :height 105 :family "Ubuntu Mono"))))

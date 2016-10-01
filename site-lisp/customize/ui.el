@@ -18,6 +18,7 @@
 
 ;; highlight escape-sequences
 (hes-mode)
+(global-hl-line-mode)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
