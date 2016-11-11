@@ -287,17 +287,17 @@ needed by that style."
      ((equal style 'pdb)
       (pdb (concat cmdline " -s --pdb"))))))
 
-(defun py-gnitset-recompile ()
+(defun py-gnitset-recompile (show-prompt)
   "Basically just advice `recompile' to use the original source.
 
 This is because recompile creates a new buffer, instead of using
 the current one, meaning that buffer-local variables get reset on
 every recompilation, meaning that it's hard to know where to go."
-  (interactive)
+  (interactive "P")
   (let* ((source-buffer py-gnitset-source)
          (compile-buffer (with-current-buffer source-buffer
                     (py-gnitset-local-bufname))))
-    (recompile)
+    (recompile show-prompt)
     (with-current-buffer compile-buffer
       (set (make-local-variable 'py-gnitset-source) source-buffer)
       (set (make-local-variable 'show-trailing-whitespace) nil)
