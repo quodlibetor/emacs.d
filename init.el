@@ -81,7 +81,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa")))
  '(dired-dwim-target t)
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(magit-pull-arguments (quote "--rebase"))
