@@ -1,3 +1,4 @@
+(require 'json-mode)
 (add-to-list 'auto-mode-alist
              '("\\.template\\'" . json-mode))
 
@@ -10,5 +11,6 @@
             (set (make-local-variable 'js-indent-level) 2)))
 
 (require 'highlight-escape-sequences)
-(add-to-list 'hes-simple-modes
-             'json-mode)
+(add-to-list 'hes-mode-alist
+             `(json-mode . ,hes-js-escape-sequence-re)
+             `(yaml-mode . ,hes-js-escape-sequence-re))
