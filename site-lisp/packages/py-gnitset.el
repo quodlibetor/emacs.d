@@ -276,6 +276,13 @@ needed by that style."
         (with-current-buffer (py-gnitset-local-bufname)
           (set (make-local-variable 'py-gnitset-source) buf)
           (set (make-local-variable 'show-trailing-whitespace) nil)
+          (font-lock-add-keywords nil
+                                  '(("\\(^_* ERROR .*_$\\)" . 'compilation-error)
+                                    ("\\(^E .*$\\)" . 'compilation-error)
+                                    ("\\(FAILED\\)" . 'compilation-error)
+                                    ("\\(PASSED\\)" . 'compilation-info)
+                                    ("^\\([A-Za-z/_.]+\.py\\) .*F" 1 'compilation-error t)
+                                    ("\\(^_* .*_$\\)" . 'compilation-info)))
           (local-set-key "g" 'py-gnitset-recompile))))
      ((equal style 'pdb)
       (pdb (concat cmdline " -s --pdb"))))))
@@ -294,6 +301,13 @@ every recompilation, meaning that it's hard to know where to go."
     (with-current-buffer compile-buffer
       (set (make-local-variable 'py-gnitset-source) source-buffer)
       (set (make-local-variable 'show-trailing-whitespace) nil)
+      (font-lock-add-keywords nil
+                              '(("\\(^_* ERROR .*_$\\)" . 'compilation-error)
+                                ("\\(^E .*$\\)" . 'compilation-error)
+                                ("\\(FAILED\\)" . 'compilation-error)
+                                ("\\(PASSED\\)" . 'compilation-info)
+                                ("^\\([A-Za-z/_.]+\.py\\) .*F" 1 'compilation-error t)
+                                ("\\(^_* .*_$\\)" . 'compilation-info)))
       (local-set-key "g" 'py-gnitset-recompile))))
 
 ;;; Locator functions -- find the thing to test
