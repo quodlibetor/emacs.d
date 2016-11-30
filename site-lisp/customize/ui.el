@@ -54,7 +54,15 @@
 ;(if (string= (jdz-get-hostname) "tinman")
 ;    (set-frame-font "Ubuntu Mono-12")
 ;  (set-frame-font "Ubuntu Mono"))
-(load-theme 'sanityinc-tomorrow-night)
+;(load-theme 'sanityinc-tomorrow-night)
+
+(require 'moe-theme)
+(require 'powerline)
+(require 'spaceline-config)
+(spaceline-emacs-theme)
+(spaceline-helm-mode)
+(setq moe-theme-highlight-buffer-id t)
+(moe-dark)
 
 (global-flycheck-mode 1)
 
