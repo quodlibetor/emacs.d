@@ -541,7 +541,8 @@ buffer."
     "true" "trait" "type"
     "use"
     "virtual"
-    "where" "while"))
+    "where" "while"
+    "\\\?"))
 
 (defconst rust-special-types
   '("u8" "i8"
