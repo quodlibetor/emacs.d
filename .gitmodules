@@ -1,7 +1,3 @@
-[submodule "site-lisp/magit"]
-	path = site-lisp/magit
-	url = git://github.com/magit/magit.git
-	branch = next
 [submodule "site-lisp/packages/tern"]
 	path = site-lisp/packages/tern
 	url = https://github.com/ternjs/tern
