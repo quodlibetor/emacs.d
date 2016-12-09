@@ -2,7 +2,7 @@
 # name: plantuml
 # key: puml
 # --
-#+BEGIN_SRC plantuml :noweb yes :file assets/$1.png
+#+BEGIN_SRC plantuml :noweb yes :file assets/$1.png :tangle tangled/$1.puml
 <<uml-style>>
 $0
 #+END_SRC

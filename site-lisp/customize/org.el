@@ -5,6 +5,7 @@
 (require 'ox-s5)
 (require 'ox-confluence)
 (require 'org-capture)
+(require 'ob-plantuml)
 (require 'ox-reveal "packages/org-reveal/ox-reveal.el")
 
 ;; active Org-babel languages
@@ -30,8 +31,7 @@
                            "/usr/local/Cellar/plantuml/7999/plantuml.7999.jar")))
       (jars (-filter 'file-exists-p maybe-jars)))
   (if jars
-      (setq org-plantuml-jar-path
-            (car jars))
+      (setq org-plantuml-jar-path (car jars))
     (warn "plantuml is not installed [%s do not exist]" maybe-jars)))
 
 (add-to-list
