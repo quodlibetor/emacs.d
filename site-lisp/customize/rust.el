@@ -3,6 +3,7 @@
 (require 'company)
 
 (define-key rust-mode-map (kbd "C-j") 'bwm:sane-newline)
+(define-key rust-mode-map (kbd "C-c h") 'racer-describe)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
