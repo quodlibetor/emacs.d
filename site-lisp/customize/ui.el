@@ -1,3 +1,6 @@
+; use this with a bash script that runs emacsclient -s ~/.emacs.d/server/server
+; to avoid macOS temp dir randomization
+(setq server-socket-dir (expand-file-name "~/.emacs.d/server"))
 (server-start)
 (auto-complete-mode)
 (menu-bar-mode -1)
