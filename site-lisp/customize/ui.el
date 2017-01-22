@@ -52,19 +52,14 @@
 (setq custom-safe-themes
       (quote
        ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
-;; set the font to dejavu then ubuntu because it doesn't like setting ubuntu's
-;; font with a size
-;(if (string= (jdz-get-hostname) "tinman")
-;    (set-frame-font "Ubuntu Mono-12")
-;  (set-frame-font "Ubuntu Mono"))
-;(load-theme 'sanityinc-tomorrow-night)
 
 (require 'moe-theme)
 (require 'powerline)
 (require 'spaceline-config)
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
-(setq moe-theme-highlight-buffer-id t)
+(spaceline-toggle-projectile-root)
+;(setq moe-theme-highlight-buffer-id nil)
 (moe-dark)
 
 (global-flycheck-mode 1)
@@ -109,15 +104,17 @@
 ;; minor modes
 (when (require 'diminish nil 'noerror)
   (eval-after-load "yasnippet"
-    '(diminish 'yas-minor-mode " Y"))
+    '(diminish 'yas-minor-mode ""))
   (eval-after-load "auto-complete"
     '(diminish 'auto-complete-mode ""))
-  ;; Diminishing flymake's thing doesn't play well with its error count
-  ;; (eval-after-load "flymake"
-  ;;   '(diminish 'flymake-mode " Fly"))
+  (eval-after-load "paredit"
+    '(diminish 'paredit-mode ""))
+  ;; (eval-after-load "flycheck"
+  ;;   '(diminish 'flycheck-mode "f"))
   )
 ; fancy colorful modeline
-(sml/setup)
+;; (sml/setup)
+
 
 ;; major modes
 (add-hook 'python-mode-hook
