@@ -52,7 +52,53 @@
       org-use-speed-commands t
       org-clock-out-remove-zero-time-clocks t
       org-src-fontify-natively t
-      org-html-head "<style type=\"text/css\">\n <!--/*--><![CDATA[/*><!--*/\n  html { font-family: Times, serif; font-size: 12pt; }\n  .title  { text-align: center; }\n  .todo   { color: red; }\n  .done   { color: green; }\n  .tag    { background-color: #add8e6; font-weight:normal }\n  .target { }\n  .timestamp { color: #bebebe; }\n  .timestamp-kwd { color: #5f9ea0; }\n  p.verse { margin-left: 3% }\n  pre {\nborder: 1pt solid #AEBDCC;\nbackground-color: #F3F5F7;\npadding: 5pt;\nfont-family: courier, monospace;\n        font-size: 90%;\n        overflow:auto;\n  }\n.slide pre{\nfont-size: 65%\n}\n.src {\n          background-color: #110000;\n          color: #4682b4;\n          font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace;\n }\n  table { border-collapse: collapse; }\n  td, th { vertical-align: top; }\n  dt { font-weight: bold; }\n  div#content { max-width: 800px; margin: auto; }\n  div.figure { padding: 0.5em; }\n  div.figure p { text-align: center; }\n  .mono { font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace; font-size: 10pt; }\n  code { background-color: #dfdfdf; font-size: 85%; padding: 0.1em; border-radius: 0.2em;}\n  .linenr { font-size:smaller }\n  .code-highlighted {background-color:#ffff00;}\n  .org-info-js_info-navigation { border-style:none; }\n  table tbody tr:nth-child(even) { background-color: #f0f0f9; }                            white-space:nowrap; }\n  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;\n                                 font-weight:bold; }\n  /*]]>*/-->\n</style>\n"
+      org-html-head "<style type=\"text/css\">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+    border: 1pt solid #AEBDCC;
+    background-color: #F3F5F7;
+    padding: 5pt;
+    font-family: courier, monospace;
+    font-size: 90%;
+    overflow:auto;
+  }
+  .slide pre{
+    font-size: 65%
+  }
+  .src {
+    background-color: #110000;
+    color: #4682b4;
+    font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div#content { max-width: 800px; margin: auto; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .mono { font-family: \"DejaVu Sans Mono\", \"Inconsolata\", \"Consolas\", monospace; font-size: 10pt; }
+  code { background-color: #dfdfdf; font-size: 85%; padding: 0.1em; border-radius: 0.2em; }
+  .linenr { font-size:smaller }
+  .code-highlighted { background-color:#ffff00; }
+  .org-info-js_info-navigation { border-style:none; }
+  table tbody tr:nth-child(even) { background-color: #f0f0f9; }
+  white-space: nowrap;
+  .org-info-js_search-highlight {
+    background-color:#ffff00;
+    color:#000000;
+    font-weight:bold; }
+  /*]]>*/-->
+</style>
+"
       org-default-notes-file (expand-file-name "~/bwm/org/work.org")
       org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                               "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
