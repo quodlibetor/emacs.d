@@ -96,7 +96,7 @@
     (end-of-line)
     (while (looking-at "[ \n\r\t]")
       (delete-char 1))
-    (if (looking-back "^[[:blank:]]*[[:punct:][:alnum:]].*")
+    (if (looking-back "^[[:blank:]]*[[:punct:][:alnum:]].*" 1)
 	(fixup-whitespace)
       (indent-according-to-mode))))
 (global-set-key (kbd "C-c j") 'pull-line)
