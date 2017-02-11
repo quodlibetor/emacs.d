@@ -1,8 +1,9 @@
 (when (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
 
-(global-set-key (kbd "<f2>") 'flymake-start-syntax-check)
-(global-set-key (kbd "<f3>") 'flymake-display-err-menu-for-current-line)
-(global-set-key (kbd "<f4>") 'flymake-goto-next-error)
+(global-set-key (kbd "<f2>") 'flycheck-next-error)
+(global-set-key (kbd "M-<f2>") 'flycheck-previous-error)
+(global-set-key (kbd "<f3>") 'flycheck-explain-error-at-point)
+(global-set-key (kbd "<f4>") 'flycheck-buffer)
 (global-set-key (kbd "C-c w") 'fixup-whitespace)
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c b") 'magit-blame)
