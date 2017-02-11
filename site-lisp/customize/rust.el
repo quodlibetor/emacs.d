@@ -16,3 +16,12 @@
 (setq racer-rust-src-path (concat (getenv "HOME") "/src/rust/src"))
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
+
+
+;; override the cargo error message face to draw more attention to parts of the
+;; buffer used for testing
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(cargo "thread '\\([^']+\\)' panicked at \\('[^']+'\\), \\([^:]+\\):\\([0-9]+\\)"
+                     3 4 nil nil 2 (1 'compilation-info)))
+
