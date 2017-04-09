@@ -13,7 +13,9 @@
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)
-   (dot . t)))
+   (dot . t)
+   (shell . t)
+   (python . t)))
 
 (defun toggle-babel-evaluate ()
   (interactive)
