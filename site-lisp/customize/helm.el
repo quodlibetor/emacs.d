@@ -4,15 +4,24 @@
 (require 'helm-git-grep)
 (require 'helm-projectile)
 (require 'recentf)
-(setq recentf-auto-cleanup 'never)
-(setq helm-boring-file-regexp-list
-      (list
-       "\\.la$" "\\.o$" "~$"                           ;; cache files
-       "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
-       "\\.tox" "\\.elc$" "\\.pyc$" "virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
-       "/src/" "/elpa/" "/build/" "/_archive/" "advance-services-svn" ;; source from other packages
-       (expand-file-name "~/rpmbuild") (expand-file-name "~/.devpi") (expand-file-name "~/.cache")
-       (expand-file-name "~/.local/lib") (expand-file-name "~/.local/share")))
+(helm-autoresize-mode 1)
+(setq recentf-auto-cleanup 'never
+      helm-boring-file-regexp-list (list
+                                    "\\.la$" "\\.o$" "~$"                           ;; cache files
+                                    "\\.git" "\\.hg" "\\.svn" "\\.CVS" "\\._darcs"  ;; vss
+                                    "\\.tox" "\\.elc$" "\\.pyc$" "virtualenvs" "\\.pip" "\\.pylint\\.d"  ;; python
+                                    ;; source from other packages
+                                    "/src/" "/elpa/" "/build/" "/_archive/" "advance-services-svn"
+                                    (expand-file-name "~/rpmbuild")
+                                    (expand-file-name "~/.devpi")
+                                    (expand-file-name "~/.cache")
+                                    (expand-file-name "~/.local/lib")
+                                    (expand-file-name "~/.local/share"))
+      helm-always-two-windows nil
+      helm-split-window-in-side-p t
+      helm-split-window-default-side 'below
+      helm-autoresize-max-height 40
+      helm-autoresize-min-height 40)
 
 (setq helm-display-header-line nil)
 (defun helm-toggle-header-line ()
@@ -30,10 +39,6 @@
                         :background (face-attribute 'helm-selection :background)
                         :box nil
                         :height 0.1)))
-(helm-autoresize-mode 1)
-(setq helm-autoresize-max-height 40)
-(setq helm-autoresize-min-height 40)
-(setq helm-split-window-in-side-p t)
 
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
