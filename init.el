@@ -95,6 +95,8 @@
    (quote
     ((venv-name . "consumer")
      (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
+     (flycheck-python-mypy-args "--strict-optional" "--ignore-missing-imports" "--fast-parser")
+     (flycheck-python-mypy-args "--disallow-untyped-defs" "--strict-optional" "--ignore-missing-imports" "--fast-parser")
      (virtualenv-default-directory . "/Users/bwm/.virtualenvs/consumer")
      (virtualenv-workon . "consumer")
      (project-venv-name . "ansible")
