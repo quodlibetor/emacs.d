@@ -13,3 +13,7 @@
 
 (add-to-list 'auto-mode-alist
              '(".php\\'" . web-mode))
+(add-to-list 'auto-mode-alist
+             '(".html.j2\\'" . web-mode))
+(add-to-list 'auto-mode-alist
+             '(".tsx?\\'" . web-mode))
