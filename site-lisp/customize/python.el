@@ -82,35 +82,35 @@
 ;; run flake8 and pylint, the defaults don't work that well
 ;; https://github.com/flycheck/flycheck/issues/185#issuecomment-213989845
 
-;; (defun fix-flake8 (errors)
-;;   (let ((errors (flycheck-sanitize-errors errors)))
-;;     (seq-do #'flycheck-flake8-fix-error-level errors)
-;;     errors))
+(defun fix-flake8 (errors)
+  (let ((errors (flycheck-sanitize-errors errors)))
+    (seq-do #'flycheck-flake8-fix-error-level errors)
+    errors))
 
-;; (flycheck-define-checker python-flake8-chain
-;;   "A Python syntax and style checker using Flake8.
+(flycheck-define-checker python-flake8-chain
+  "A Python syntax and style checker using Flake8.
 
-;; Requires Flake8 3.0 or newer. See URL
-;; `https://flake8.readthedocs.io/'."
-;;   :command ("flake8"
-;;             "--format=default"
-;;             "--stdin-display-name" source-original
-;;             (config-file "--config" flycheck-flake8rc)
-;;             (option "--max-complexity" flycheck-flake8-maximum-complexity nil
-;;                     flycheck-option-int)
-;;             (option "--max-line-length" flycheck-flake8-maximum-line-length nil
-;;                     flycheck-option-int)
-;;             "-")
-;;   :standard-input t
-;;   :error-filter (lambda (errors)
-;;                   (let ((errors (flycheck-sanitize-errors errors)))
-;;                     (seq-do #'flycheck-flake8-fix-error-level errors)
-;;                     errors))
-;;   :error-patterns
-;;   ((warning line-start
-;;             (file-name) ":" line ":" (optional column ":") " "
-;;             (id (one-or-more (any alpha)) (one-or-more digit)) " "
-;;             (message (one-or-more not-newline))
-;;             line-end))
-;;   :next-checkers ((t . python-pylint))
-;;   :modes python-mode)
+Requires Flake8 3.0 or newer. See URL
+`https://flake8.readthedocs.io/'."
+  :command ("flake8"
+            "--format=default"
+            "--stdin-display-name" source-original
+            (config-file "--config" flycheck-flake8rc)
+            (option "--max-complexity" flycheck-flake8-maximum-complexity nil
+                    flycheck-option-int)
+            (option "--max-line-length" flycheck-flake8-maximum-line-length nil
+                    flycheck-option-int)
+            "-")
+  :standard-input t
+  :error-filter (lambda (errors)
+                  (let ((errors (flycheck-sanitize-errors errors)))
+                    (seq-do #'flycheck-flake8-fix-error-level errors)
+                    errors))
+  :error-patterns
+  ((warning line-start
+            (file-name) ":" line ":" (optional column ":") " "
+            (id (one-or-more (any alpha)) (one-or-more digit)) " "
+            (message (one-or-more not-newline))
+            line-end))
+  :next-checkers ((t . python-pylint))
+  :modes python-mode)
