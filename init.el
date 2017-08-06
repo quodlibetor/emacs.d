@@ -80,21 +80,28 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa")))
  '(dired-dwim-target t)
+ '(fci-rule-color "#373b41")
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(magit-pull-arguments (quote "--rebase"))
  '(magit-tag-arguments (quote ("--annotate")))
+ '(markdown-command "cmark")
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
    (quote
-    (powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
+    (ascii-art-to-unicode powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
  '(paradox-automatically-star nil)
  '(safe-local-variable-values
    (quote
-    ((venv-name . "consumer")
+    ((flycheck-checker . python-flake8-chain)
+     (venv-name . "consumer")
      (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
      (flycheck-python-mypy-args "--strict-optional" "--ignore-missing-imports" "--fast-parser")
      (flycheck-python-mypy-args "--disallow-untyped-defs" "--strict-optional" "--ignore-missing-imports" "--fast-parser")

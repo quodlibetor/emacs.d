@@ -15,7 +15,8 @@
 (setq set-mark-command-repeat-pop t
       confirm-nonexistent-file-or-buffer nil
       require-final-newline t
-      dired-dwim-target t)
+      dired-dwim-target t
+      split-height-threshold 500)
 
 (autoload 'scratch "scratch" nil t)
 
@@ -56,11 +57,11 @@
 (require 'moe-theme)
 (require 'powerline)
 (require 'spaceline-config)
+;(setq moe-theme-highlight-buffer-id nil)
+(moe-dark)
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
 (spaceline-toggle-projectile-root)
-;(setq moe-theme-highlight-buffer-id nil)
-(moe-dark)
 
 (global-flycheck-mode 1)
 
@@ -109,12 +110,15 @@
     '(diminish 'auto-complete-mode ""))
   (eval-after-load "paredit"
     '(diminish 'paredit-mode ""))
-  ;; (eval-after-load "flycheck"
-  ;;   '(diminish 'flycheck-mode "f"))
+  (eval-after-load "flycheck"
+    '(diminish 'flycheck-mode "F✓"))
+  (eval-after-load "projectile"
+    '(diminish 'projectile-mode ""))
   )
+; auto-revert is loaded before this file
+(diminish 'auto-revert-mode "")
 ; fancy colorful modeline
 ;; (sml/setup)
-
 
 ;; major modes
 (add-hook 'python-mode-hook
