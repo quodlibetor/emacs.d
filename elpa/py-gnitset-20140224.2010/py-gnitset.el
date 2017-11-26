@@ -296,9 +296,7 @@ needed by that style."
           (set-process-sentinel proc 'py-gnitset-term-sentinel))
         (set (make-local-variable 'show-trailing-whitespace) nil)))
      ((equal style 'compile)
-      (message "compile cmdline %s" cmdline)
       (let ((cmdline (concat "cd " default-directory " ; " cmdline)))
-        (message "compile cmdline %s" cmdline)
         (compilation-start cmdline nil
                            (lambda (mode)
                              (if (and (boundp 'py-gnitset--source) py-gnitset--source)
