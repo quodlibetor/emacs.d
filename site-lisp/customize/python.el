@@ -16,6 +16,8 @@
              '("\\.wsgi$" . python-mode))
 (add-to-list 'auto-mode-alist
              '("\\.pylintrc\\'" . conf-mode))
+(add-to-list 'auto-mode-alist
+             '(".pyi\\'" . python-mode))
 
 (require 'python)
 (setq python-fill-docstring-style 'django) ;; knewton style
@@ -35,10 +37,10 @@
 ;;               (py-gnitset-mode))))
 
 (require 'flycheck)
-(require 'flycheck-mypy "packages/flycheck-mypy.el")
+(require 'flycheck-mypy)
 
 (setq flycheck-python-mypy-args
-      '("--strict-optional" "--ignore-missing-imports" "--fast-parser"))
+      '("--strict-optional" "--ignore-missing-imports"))
 
 ;; if possible, set this in dir-locals:
 ;; ((python-mode . ((flycheck-python-mypy-args . ("--disallow-untyped-defs"
