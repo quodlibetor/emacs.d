@@ -2,6 +2,10 @@
 ; to avoid macOS temp dir randomization
 (setq server-socket-dir (expand-file-name "~/.emacs.d/server"))
 (server-start)
+
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
+
 (auto-complete-mode)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
