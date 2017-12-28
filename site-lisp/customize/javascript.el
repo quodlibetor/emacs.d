@@ -1,6 +1,8 @@
 (require 'flycheck)
+(require 'web-mode)
 (add-to-list 'auto-mode-alist
-             '(".jsx\\'" . web-mode))
+             '(".jsx?\\'" . web-mode)
+             '(".tsx?\\'" . web-mode))
 
 ;; disable jshint since we prefer eslint checking
 (setq-default flycheck-disabled-checkers
@@ -13,7 +15,12 @@
 
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/packages/tern/emacs")
 ;; (autoload 'tern-mode "tern.el" nil t)
-(add-hook 'web-mode-hook #'tern-mode)
+(add-hook 'web-mode-hook
+          (lambda ()
+            (setq web-mode-markup-indent-offset 2
+                  web-mode-code-indent-offset 2)
+            (prettier-js-mode)
+            (tern-mode)))
 
 (setenv "PATH" (concat "/Users/bwm/.nvm/versions/node/v6.3.0/bin:" (getenv "PATH")))
 (setq exec-path (append '("/Users/bwm/.nvm/versions/node/v6.3.0/bin") exec-path ))
