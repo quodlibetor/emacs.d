@@ -10,7 +10,8 @@
 (add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'rust-mode-hook
           (lambda ()
-            (setq-local company-minimum-prefix-length 0)))
+            (setq-local company-minimum-prefix-length 0)
+            (setq-local compile-command "cargo check")))
 
 (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
 (setq racer-rust-src-path (concat (getenv "HOME") "/src/rust/src"))
