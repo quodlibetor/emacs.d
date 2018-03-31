@@ -91,7 +91,9 @@
 (add-to-list 'auto-mode-alist
              '("\\.fish\\.j2\\'" . fish-mode))
 (add-to-list 'auto-mode-alist
-             '("/group_vars/" . yaml-mode))
+             '("/\\(group\\|host\\)_vars/" . yaml-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.service\\.j2\\'" . systemd-mode))
 (electric-indent-mode 0)
 
 (require 'web-mode)
@@ -111,7 +113,7 @@
   (eval-after-load "yasnippet"
     '(diminish 'yas-minor-mode ""))
   (eval-after-load "auto-complete"
-    '(diminish 'auto-complete-mode ""))
+    '(diminish 'auto-complete-mode "⦔"))
   (eval-after-load "paredit"
     '(diminish 'paredit-mode ""))
   (eval-after-load "flycheck"
