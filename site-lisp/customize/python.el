@@ -46,7 +46,7 @@
 ;; ((python-mode . ((flycheck-python-mypy-args . ("--disallow-untyped-defs"
 ;;                                                "--strict-optional"
 ;;                                                "--ignore-missing-imports"
-;;                                                "--fast-parser")))))
+;;                                                )))))
 
 (flycheck-define-checker python-my-chain
   "Run mypy, pep8, pylint"
@@ -62,7 +62,7 @@
 
 ;; replace flake8 with new chaining one from above
 ;(setq flycheck-checkers (cons 'python-flake8-chain (delq 'python-flake8 flycheck-checkers)))
-(setq flycheck-checkers (cons 'python-my-chain (delq 'python-flake8 flycheck-checkers)))
+(setq flycheck-checkers (cons 'python-my-chain flycheck-checkers))
 
 (add-hook 'python-mode-hook
           (lambda ()
@@ -114,5 +114,6 @@ Requires Flake8 3.0 or newer. See URL
             (id (one-or-more (any alpha)) (one-or-more digit)) " "
             (message (one-or-more not-newline))
             line-end))
-  :next-checkers ((t . python-pylint))
+  :next-checkers ((t . python-mypy)
+                  (t . python-pylint))
   :modes python-mode)
