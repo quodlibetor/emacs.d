@@ -1,5 +1,5 @@
 (add-to-list 'auto-mode-alist
-             '("\\.ya?ml$" . yaml-mode))
+             '("\\.ya?ml\\(\.j2\\)?$" . yaml-mode))
 ;; TODO: make this go to the previous line with less indentation
 (defun ansible-next-field ()
   "Jump to next yaml field"
@@ -40,3 +40,6 @@
             (when (boundp 'project-venv-name)
               (venv-workon project-venv-name)
               (ansible-doc-mode))))
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))
