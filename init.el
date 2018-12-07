@@ -85,22 +85,19 @@
  '(ansi-color-names-vector
    (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
  '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa")))
+   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"))
  '(dired-dwim-target t)
  '(fci-rule-color "#373b41")
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
- '(magit-pull-arguments (quote "--rebase"))
- '(magit-tag-arguments (quote ("--annotate")))
+ '(magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
+ '(magit-pull-arguments '"--rebase")
+ '(magit-tag-arguments '("--annotate"))
  '(markdown-command "cmark")
- '(org-agenda-files (quote ("~/org/work.org")))
+ '(org-agenda-files '("~/org/work.org"))
  '(package-selected-packages
-   (quote
-    (company-go yapfify powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half)))
+   '(flycheck-yamllint blacken company-go yapfify powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy mmm-mode polymode hydra helm-flycheck scratch avy expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode yagist xml-rpc web-mode utop tuareg toml-mode scala-mode2 rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib nose monky merlin markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep haskell-mode haml-mode go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized ack-and-a-half))
  '(paradox-automatically-star nil)
  '(safe-local-variable-values
-   (quote
-    ((flycheck-checker . python-flake8-chain)
+   '((flycheck-checker . python-flake8-chain)
      (venv-name . "consumer")
      (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
      (flycheck-python-mypy-args "--strict-optional" "--ignore-missing-imports" "--fast-parser")
@@ -120,28 +117,46 @@
                             (buffer-file-name)))
            (emacs-lisp-mode)
            (when
-               (fboundp
-                (quote flycheck-mode))
+               (fboundp 'flycheck-mode)
              (flycheck-mode -1))
            (unless
-               (featurep
-                (quote package-build))
+               (featurep 'package-build)
              (let
                  ((load-path
                    (cons ".." load-path)))
-               (require
-                (quote package-build))))
+               (require 'package-build)))
            (package-build-minor-mode))
      (pytest-compile-runner-format . nose)
      (pytest-compile-runner-format quote nose)
      (virtualenv-default-directory . "/home/bwm/projects/schedaddle/")
      (virtualenv-workon . "schedaddle3")
      (pytest-compile-test-runner . "nosetests")
-     (pytest-compile-runner-format . "nose"))))
- '(term-buffer-maximum-size 50000))
+     (pytest-compile-runner-format . "nose")))
+ '(term-buffer-maximum-size 50000)
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   '((20 . "#cc6666")
+     (40 . "#de935f")
+     (60 . "#f0c674")
+     (80 . "#b5bd68")
+     (100 . "#8abeb7")
+     (120 . "#81a2be")
+     (140 . "#b294bb")
+     (160 . "#cc6666")
+     (180 . "#de935f")
+     (200 . "#f0c674")
+     (220 . "#b5bd68")
+     (240 . "#8abeb7")
+     (260 . "#81a2be")
+     (280 . "#b294bb")
+     (300 . "#cc6666")
+     (320 . "#de935f")
+     (340 . "#f0c674")
+     (360 . "#b5bd68")))
+ '(vc-annotate-very-old-color nil))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
- '(exec-path (quote ("/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/home/bwm/.local/libexec/emacs/24.3/x86_64-unknown-linux-gnu")))
+
  '(max-specpdl-size 13400)
  '(notmuch-saved-searches (quote (("inbox" . "tag:inbox") ("unread" . "tag:unread") ("sent" . "from:bmaister"))))
  '(org-agenda-files (quote ("~/projects/tdd/tdd.org" "~/projects/subman/subman.org" "~/projects/sphinx-server/sphinx.org" "~/projects/requests-ragu/requests.org" "~/projects/ragu.utils/ragu.utils.org" "~/projects/ragu.register/register.org" "~/projects/ragu.ddb/ragu.ddb.org" "~/projects/models/models.org" "~/projects/ingestor/ingestor.org" "~/projects/ingestor/release-outline.org" "~/projects/incinerator/incinerator.org" "~/projects/feed_register/register.org" "~/projects/djeneric/djeneric.org" "~/projects/auth/auth.org")))

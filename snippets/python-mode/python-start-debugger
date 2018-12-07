@@ -2,4 +2,4 @@
 # name: python start debugger
 # key: dbg
 # --
-$0import ipdb; ipdb.set_trace() # DEBUG
+$0__import__("ipdb").set_trace() # DEBUG

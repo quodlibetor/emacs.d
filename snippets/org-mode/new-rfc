@@ -14,62 +14,68 @@ Comment by: `(format-time-string "%Y-%m-%d" (time-add (current-time) (* 60 60 24
 
 * Foreward
 
-  Identify your audience before you start writing. These are the
-  people who are impacted by what you’re proposing, subject matter experts, or
-  people who can make the proposal happen/not happen. It may be Product, a
-  particular team, tech-at-large, or some other group. Address that audience at
-  the beginning of your doc.
+** COMMENT What it is
+   Identify your audience before you start writing. These are the
+   people who are impacted by what you’re proposing, subject matter experts, or
+   people who can make the proposal happen/not happen. It may be Product, a
+   particular team, tech-at-large, or some other group. Address that audience at
+   the beginning of your doc.
 
-  In one sentence, summarize what’s being proposed. Then briefly describe how the
-  document will make a case for the proposal. This section should be no more than
-  a couple sentences.
+   In one sentence, summarize what’s being proposed. Then briefly describe how the
+   document will make a case for the proposal. This section should be no more than
+   a couple sentences.
 
 * Motivation
 
-  Why is this change being proposed? You first need to state the problem and make
-  a case that the problem is worth solving.
+** COMMENT What it is
 
-  - Focus on the impact of the problem - monetary expense, wasted time,
-    unnecessary risk, customer unhappiness, etc.
-  - Quantify the impact. Metrics are great, estimates are ok too.
-  - State the immediate cause of the problem. Some potential causes could be
-    scaling issues, missing functionality, or broken process.
-  - Use terminology that’s relevant to your audience.
+   Why is this change being proposed? You first need to state the problem and make
+   a case that the problem is worth solving.
 
-  Don’t write too much. This section should be less than one page - one or two
-  paragraphs or a couple bullet points. Do not go in depth about the cause of the
-  problem. If the problem is unhappy customers because of scaling-induced
-  slowness, it’s ok to simply say “because of scaling issues”.
+   - Focus on the impact of the problem - monetary expense, wasted time,
+     unnecessary risk, customer unhappiness, etc.
+   - Quantify the impact. Metrics are great, estimates are ok too.
+   - State the immediate cause of the problem. Some potential causes could be
+     scaling issues, missing functionality, or broken process.
+   - Use terminology that’s relevant to your audience.
 
-  Don’t describe your solution in this section. It’s ok to allude to a better way
-  or suggest we could achieve a net-positive gain by fixing the problem, but
-  don’t spend more than one or two sentences talking about solutions. You’ll go
-  into more detail later.
+   Don’t write too much. This section should be less than one page - one or two
+   paragraphs or a couple bullet points. Do not go in depth about the cause of the
+   problem. If the problem is unhappy customers because of scaling-induced
+   slowness, it’s ok to simply say “because of scaling issues”.
+
+   Don’t describe your solution in this section. It’s ok to allude to a better way
+   or suggest we could achieve a net-positive gain by fixing the problem, but
+   don’t spend more than one or two sentences talking about solutions. You’ll go
+   into more detail later.
 
 * Background (Optional)
 
-  The purpose of this section is to provide context for the reader to understand
-  what you’re proposing. Describe the current state of the world to illustrate
-  the scope and nature of the problem - go into detail about the immediate causes
-  mentioned in the Motivation section. Some things to talk about could be data
-  schemas, access patterns, race conditions, unnecessary dependencies, or
-  duplicated logic (this is not an exhaustive list).
+** COMMENT What it is
 
-  People are lazy and don’t read, so you’ll need to prioritize information. Don’t
-  bury important details alongside less important information. Pictures are good
-  too.
+   The purpose of this section is to provide context for the reader to understand
+   what you’re proposing. Describe the current state of the world to illustrate
+   the scope and nature of the problem - go into detail about the immediate causes
+   mentioned in the Motivation section. Some things to talk about could be data
+   schemas, access patterns, race conditions, unnecessary dependencies, or
+   duplicated logic (this is not an exhaustive list).
 
-  The level of detail in the section is highly dependent on your target audience
-  and the issues you’re describing. If the motivation is missing functionality,
-  you might skip this section entirely. When in doubt err on the side of being
-  too concise and put deeper background info in the appendix.
+   People are lazy and don’t read, so you’ll need to prioritize information. Don’t
+   bury important details alongside less important information. Pictures are good
+   too.
+
+   The level of detail in the section is highly dependent on your target audience
+   and the issues you’re describing. If the motivation is missing functionality,
+   you might skip this section entirely. When in doubt err on the side of being
+   too concise and put deeper background info in the appendix.
 
 * Requirements
 
-  AKA success criteria. Briefly (one or two sentences) state your solution, and
-  then talk about all the good stuff stakeholders will get once the proposal is
-  implemented - impact of the solution. This section is a counterpart to the
-  Motivation section and the same guidelines apply.
+** COMMENT What it is
+   AKA success criteria. Briefly (one or two sentences) state your solution, and
+   then talk about all the good stuff stakeholders will get once the proposal is
+   implemented - impact of the solution. This section is a counterpart to the
+   Motivation section and the same guidelines apply.
 
 ** High level behavior
 ** Performance Requirements / How does it scale
@@ -79,7 +85,8 @@ Comment by: `(format-time-string "%Y-%m-%d" (time-add (current-time) (* 60 60 24
 
 ** Infrastructure Needs
 
-   Are there any new costs or AWS infrastructure involved
+** COMMENT What it is
+    Are there any new costs or AWS infrastructure involved
 
 ** Testing
 ** Monitoring
