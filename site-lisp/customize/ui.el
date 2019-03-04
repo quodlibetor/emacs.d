@@ -94,6 +94,10 @@
              '("/\\(group\\|host\\)_vars/" . yaml-mode))
 (add-to-list 'auto-mode-alist
              '("\\.service\\.j2\\'" . systemd-mode))
+(add-to-list 'auto-mode-alist
+             '("Dockerfile\\(\\.\\w+\\)?\\'" . dockerfile-mode))
+(add-to-list 'auto-mode-alist
+             '(".sh.j2\\'" . shell-script-mode))
 (electric-indent-mode 0)
 
 (require 'web-mode)
