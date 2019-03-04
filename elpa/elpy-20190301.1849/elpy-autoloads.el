@@ -10,16 +10,34 @@
 ;;; Generated autoloads from elpy.el
 
 (autoload 'elpy-enable "elpy" "\
-Enable Elpy in all future Python buffers.\n\n(fn &optional IGNORED)" t nil)
+Enable Elpy in all future Python buffers.
+
+\(fn &optional IGNORED)" t nil)
 
 (autoload 'elpy-mode "elpy" "\
-Minor mode in Python buffers for the Emacs Lisp Python Environment.\n\nThis mode fully supports virtualenvs. Once you switch a\nvirtualenv using \\[pyvenv-workon], you can use\n\\[elpy-rpc-restart] to make the elpy Python process use your\nvirtualenv.\n\n\\{elpy-mode-map}\n\n(fn &optional ARG)" t nil)
+Minor mode in Python buffers for the Emacs Lisp Python Environment.
+
+This mode fully supports virtualenvs. Once you switch a
+virtualenv using \\[pyvenv-workon], you can use
+\\[elpy-rpc-restart] to make the elpy Python process use your
+virtualenv.
+
+\\{elpy-mode-map}
+
+\(fn &optional ARG)" t nil)
 
 (autoload 'elpy-config "elpy" "\
-Configure Elpy.\n\nThis function will pop up a configuration buffer, which is mostly\na customize buffer, but has some more options.\n\n(fn)" t nil)
+Configure Elpy.
+
+This function will pop up a configuration buffer, which is mostly
+a customize buffer, but has some more options.
+
+\(fn)" t nil)
 
 (autoload 'elpy-version "elpy" "\
-Display the version of Elpy.\n\n(fn)" t nil)
+Display the version of Elpy.
+
+\(fn)" t nil)
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "elpy" '("elpy-")))
 

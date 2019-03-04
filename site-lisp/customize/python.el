@@ -9,7 +9,9 @@
         elpy-module-pyvenv
         elpy-module-yasnippet))
 
-(elpy-enable)
+;; (require 'elpy)
+
+;; (elpy-enable)
 (add-to-list 'auto-mode-alist
              '("pyflymakerc$" . python-mode))
 (add-to-list 'auto-mode-alist

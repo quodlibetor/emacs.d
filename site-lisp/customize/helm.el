@@ -40,8 +40,6 @@
                         :box nil
                         :height 0.1)))
 
-(require 'swiper-helm)
-
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 

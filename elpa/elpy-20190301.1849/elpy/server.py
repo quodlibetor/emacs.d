@@ -13,6 +13,7 @@ from elpy.pydocutils import get_pydoc_completions
 from elpy.rpc import JSONRPCServer, Fault
 from elpy.auto_pep8 import fix_code
 from elpy.yapfutil import fix_code as fix_code_with_yapf
+from elpy.blackutil import fix_code as fix_code_with_black
 
 
 try:
@@ -68,6 +69,13 @@ class ElpyRPCServer(JSONRPCServer):
 
         """
         return self._call_backend("rpc_get_calltip", None, filename,
+                                  get_source(source), offset)
+
+    def rpc_get_oneline_docstring(self, filename, source, offset):
+        """Get a oneline docstring for the symbol at the offset.
+
+        """
+        return self._call_backend("rpc_get_oneline_docstring", None, filename,
                                   get_source(source), offset)
 
     def rpc_get_completions(self, filename, source, offset):
@@ -212,6 +220,13 @@ class ElpyRPCServer(JSONRPCServer):
         """
         source = get_source(source)
         return fix_code_with_yapf(source, directory)
+
+    def rpc_fix_code_with_black(self, source, directory):
+        """Formats Python code to conform to the PEP 8 style guide.
+
+        """
+        source = get_source(source)
+        return fix_code_with_black(source, directory)
 
 
 def get_source(fileobj):
