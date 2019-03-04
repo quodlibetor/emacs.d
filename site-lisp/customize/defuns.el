@@ -16,7 +16,7 @@
         ((equal use-hgrep '(16))
          (hgrep t))
         (t
-         (swiper))))
+         (isearch-forward-regexp))))
 
 (defun dont-show-trailing-whitespace ()
   (interactive)
