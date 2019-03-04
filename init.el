@@ -40,6 +40,7 @@
 (load "customize/python")
 (load "customize/ruby")
 (load "customize/rust")
+(load "customize/shell-script")
 (load "customize/text")
 (load "customize/vc-annotate")
 (load "customize/yaml")
