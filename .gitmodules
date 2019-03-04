@@ -4,3 +4,6 @@
 [submodule "site-lisp/packages/org-reveal"]
 	path = site-lisp/packages/org-reveal
 	url = https://github.com/yjwen/org-reveal
+[submodule "site-lisp/packages/lsp-rust"]
+	path = site-lisp/packages/lsp-rust
+	url = https://github.com/emacs-lsp/lsp-rust

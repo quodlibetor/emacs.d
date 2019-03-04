@@ -12,10 +12,19 @@
 (add-hook 'rust-mode-hook
           (lambda ()
             (setq-local company-minimum-prefix-length 0)
-            (setq-local compile-command "cargo check")))
+            (setq-local compile-command "cargo check")
+            (cargo-minor-mode 1)
+            (rust-enable-format-on-save)))
 
+;; (add-hook 'before-save-hook
+;;           (lambda ()
+;;             ("rustup run nightly rustfmt")))
+;; (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
 (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
-(setq racer-rust-src-path (concat (getenv "HOME") "/src/rust/src"))
+;(setq racer-rust-src-path (concat (getenv "HOME") "/src/rust/src"))
+(setq racer-rust-src-path
+      (concat (getenv "HOME")
+              "/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
@@ -27,3 +36,12 @@
              '(cargo "thread '\\([^']+\\)' panicked at \\('[^']+'\\), \\([^:]+\\):\\([0-9]+\\)"
                      3 4 nil nil 2 (1 'compilation-info)))
 
+
+
+
+;; (with-eval-after-load 'lsp-mode
+;;     (require 'lsp-flycheck))
+;; (require 'lsp-mode)
+;; (global-lsp-mode t)
+
+;; (require 'lsp-rust "packages/lsp-rust/lsp-rust")
