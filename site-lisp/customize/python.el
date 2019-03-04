@@ -67,6 +67,7 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq flycheck-checker 'python-my-chain)
+            (blacken-mode 1)
             (py-gnitset-mode)))
 
 (put 'python-symbol 'end-op
