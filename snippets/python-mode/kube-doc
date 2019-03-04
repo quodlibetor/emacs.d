@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: kube-doc
+# key: kube-doc
+# --
+https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/$0.md

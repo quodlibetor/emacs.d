@@ -1,0 +1,5 @@
+# key: getklgr
+# name: get-knewton-logger
+# --
+from knewton_logging import get_logger
+logger = get_logger()

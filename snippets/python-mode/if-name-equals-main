@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: if name equals main
+# key: ifm
+# --
+$0if __name__ == "__main__":
+    main()
