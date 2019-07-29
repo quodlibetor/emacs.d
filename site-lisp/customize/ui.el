@@ -6,7 +6,17 @@
 (require 'atomic-chrome)
 (atomic-chrome-start-server)
 
-(auto-complete-mode)
+(require 'company)
+(require 'lsp)
+(require 'company-lsp)
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
+
+(global-company-mode 1)
+
+;(auto-complete-mode)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)

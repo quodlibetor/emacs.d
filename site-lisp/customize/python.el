@@ -2,6 +2,8 @@
 ; $emacs/packages/flymake-python/flymake-customizations.el for a bunch of ways
 ; to customize it
 
+;; (add-hook 'python-mode-hook 'lsp)
+
 (setq elpy-modules
       '(elpy-module-sane-defaults
         elpy-module-company
@@ -9,9 +11,9 @@
         elpy-module-pyvenv
         elpy-module-yasnippet))
 
-;; (require 'elpy)
+(require 'elpy)
+(elpy-enable)
 
-;; (elpy-enable)
 (add-to-list 'auto-mode-alist
              '("pyflymakerc$" . python-mode))
 (add-to-list 'auto-mode-alist
@@ -33,10 +35,10 @@
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
-;;               (py-gnitset-mode))))
+(add-hook 'python-mode-hook
+          (lambda ()
+            (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
+              (py-gnitset-mode))))
 
 (require 'flycheck)
 (require 'flycheck-mypy)
