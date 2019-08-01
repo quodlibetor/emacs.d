@@ -42,7 +42,7 @@
 
 ;; (with-eval-after-load 'lsp-mode
 ;;     (require 'lsp-flycheck))
-;; (require 'lsp-mode)
-;; (global-lsp-mode t)
+(require 'lsp-mode)
+(require 'lsp-clients)
 
 ;; (require 'lsp-rust "packages/lsp-rust/lsp-rust")

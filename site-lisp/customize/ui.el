@@ -9,8 +9,6 @@
 (require 'company)
 (require 'lsp)
 (require 'company-lsp)
-(require 'lsp-ui)
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
 ;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 

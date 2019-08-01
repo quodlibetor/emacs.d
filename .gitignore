@@ -30,3 +30,5 @@ recentf
 /.python-environments
 /abbrev_defs
 /projectile-bookmarks.eld
+/transient
+/.lsp*
