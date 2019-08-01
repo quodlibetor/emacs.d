@@ -1,5 +1,6 @@
 (add-to-list 'auto-mode-alist
              '("\\.ya?ml\\(\.j2\\)?$" . yaml-mode))
+
 ;; TODO: make this go to the previous line with less indentation
 (defun ansible-next-field ()
   "Jump to next yaml field"

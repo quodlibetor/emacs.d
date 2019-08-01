@@ -28,27 +28,24 @@
 ;(load "customize/confluence")
 (load "customize/csv")
 (load "customize/elisp")
-(load "customize/html")
-(load "customize/javascript")
+;(load "customize/html")
+;(load "customize/javascript")
 (load "customize/json")
-(load "customize/go")
+;(load "customize/go")
 (load "customize/markdown")
 ;(load "customize/ocaml")
 (load "customize/occur")
 (load "customize/org")
 (load "customize/plantuml")  ; depends on vars from org
-(load "customize/puppet")
+;(load "customize/puppet")
 (load "customize/python")
-(load "customize/ruby")
+;(load "customize/ruby")
 (load "customize/rust")
 (load "customize/shell-script")
-(load "customize/text")
 (load "customize/vc-annotate")
 (load "customize/yaml")
 (load "customize/prog")
-(load "customize/upstart")
-(load "customize/sass")
-(load "customize/web")
+;(load "customize/web")
 
 ;; special modes
 (load "customize/dired")
@@ -57,11 +54,11 @@
 (load "customize/ido")
 (load "customize/projectile")
 (load "customize/magit")
-(load "customize/outline")
+;(load "customize/outline")
 (load "customize/company")
-(when (file-exists-p (expand-file-name "~/mail"))
-  (load "customize/mu4e")
-  (load "customize/notmuch"))
+;; (when (file-exists-p (expand-file-name "~/mail"))
+;;   (load "customize/mu4e")
+;;   (load "customize/notmuch"))
 
 ;; general emacs config
 (load "customize/find-file")
@@ -99,7 +96,7 @@
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
    (quote
-    (forge py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode utop toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized)))
+    (avy forge py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode utop toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-projectile helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized)))
  '(paradox-automatically-star nil)
  '(safe-local-variable-values
    (quote

@@ -40,11 +40,11 @@
             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
               (py-gnitset-mode))))
 
-(require 'flycheck)
-(require 'flycheck-mypy)
+;(require 'flycheck)
+;(require 'flycheck-mypy)
 
-(setq flycheck-python-mypy-args
-      '("--strict-optional" "--ignore-missing-imports"))
+;; (setq flycheck-python-mypy-args
+;;       '("--strict-optional" "--ignore-missing-imports"))
 
 ;; if possible, set this in dir-locals:
 ;; ((python-mode . ((flycheck-python-mypy-args . ("--disallow-untyped-defs"
@@ -52,25 +52,25 @@
 ;;                                                "--ignore-missing-imports"
 ;;                                                )))))
 
-(flycheck-define-checker python-my-chain
-  "Run mypy, pep8, pylint"
-  :command ("pycodestyle" "--max-line-length=100" source-original)
-  :error-patterns
-  ((warning line-start (file-name) ":" line ":" column ": "
-            (id (one-or-more (any alpha)) (one-or-more digit))
-            (message (one-or-more not-newline)
-                     line-end)))
-  :next-checkers ((t . python-mypy)
-                  (t . python-pylint))
-  :modes python-mode)
+;; (flycheck-define-checker python-my-chain
+;;   "Run mypy, pep8, pylint"
+;;   :command ("pycodestyle" "--max-line-length=100" source-original)
+;;   :error-patterns
+;;   ((warning line-start (file-name) ":" line ":" column ": "
+;;             (id (one-or-more (any alpha)) (one-or-more digit))
+;;             (message (one-or-more not-newline)
+;;                      line-end)))
+;;   :next-checkers ((t . python-mypy)
+;;                   (t . python-pylint))
+;;   :modes python-mode)
 
-;; replace flake8 with new chaining one from above
-;(setq flycheck-checkers (cons 'python-flake8-chain (delq 'python-flake8 flycheck-checkers)))
-(setq flycheck-checkers (cons 'python-my-chain flycheck-checkers))
+;; ;; replace flake8 with new chaining one from above
+;; ;(setq flycheck-checkers (cons 'python-flake8-chain (delq 'python-flake8 flycheck-checkers)))
+;; (setq flycheck-checkers (cons 'python-my-chain flycheck-checkers))
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (setq flycheck-checker 'python-my-chain)
+            ;; (setq flycheck-checker 'python-my-chain)
             (blacken-mode 1)
             (py-gnitset-mode)))
 
@@ -89,36 +89,36 @@
 ;; run flake8 and pylint, the defaults don't work that well
 ;; https://github.com/flycheck/flycheck/issues/185#issuecomment-213989845
 
-(defun fix-flake8 (errors)
-  (let ((errors (flycheck-sanitize-errors errors)))
-    (seq-do #'flycheck-flake8-fix-error-level errors)
-    errors))
+;; (defun fix-flake8 (errors)
+;;   (let ((errors (flycheck-sanitize-errors errors)))
+;;     (seq-do #'flycheck-flake8-fix-error-level errors)
+;;     errors))
 
-(flycheck-define-checker python-flake8-chain
-  "A Python syntax and style checker using Flake8.
+;; (flycheck-define-checker python-flake8-chain
+;;   "A Python syntax and style checker using Flake8.
 
-Requires Flake8 3.0 or newer. See URL
-`https://flake8.readthedocs.io/'."
-  :command ("flake8"
-            "--format=default"
-            "--stdin-display-name" source-original
-            (config-file "--config" flycheck-flake8rc)
-            (option "--max-complexity" flycheck-flake8-maximum-complexity nil
-                    flycheck-option-int)
-            (option "--max-line-length" flycheck-flake8-maximum-line-length nil
-                    flycheck-option-int)
-            "-")
-  :standard-input t
-  :error-filter (lambda (errors)
-                  (let ((errors (flycheck-sanitize-errors errors)))
-                    (seq-do #'flycheck-flake8-fix-error-level errors)
-                    errors))
-  :error-patterns
-  ((warning line-start
-            (file-name) ":" line ":" (optional column ":") " "
-            (id (one-or-more (any alpha)) (one-or-more digit)) " "
-            (message (one-or-more not-newline))
-            line-end))
-  :next-checkers ((t . python-mypy)
-                  (t . python-pylint))
-  :modes python-mode)
+;; Requires Flake8 3.0 or newer. See URL
+;; `https://flake8.readthedocs.io/'."
+;;   :command ("flake8"
+;;             "--format=default"
+;;             "--stdin-display-name" source-original
+;;             (config-file "--config" flycheck-flake8rc)
+;;             (option "--max-complexity" flycheck-flake8-maximum-complexity nil
+;;                     flycheck-option-int)
+;;             (option "--max-line-length" flycheck-flake8-maximum-line-length nil
+;;                     flycheck-option-int)
+;;             "-")
+;;   :standard-input t
+;;   :error-filter (lambda (errors)
+;;                   (let ((errors (flycheck-sanitize-errors errors)))
+;;                     (seq-do #'flycheck-flake8-fix-error-level errors)
+;;                     errors))
+;;   :error-patterns
+;;   ((warning line-start
+;;             (file-name) ":" line ":" (optional column ":") " "
+;;             (id (one-or-more (any alpha)) (one-or-more digit)) " "
+;;             (message (one-or-more not-newline))
+;;             line-end))
+;;   :next-checkers ((t . python-mypy)
+;;                   (t . python-pylint))
+;;   :modes python-mode)

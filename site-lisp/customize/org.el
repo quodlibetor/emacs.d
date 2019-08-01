@@ -1,12 +1,13 @@
 (require 'dash)
 
 (require 'org)
-(require 'ox-latex)
-(require 'ox-s5)
-(require 'ox-confluence)
-(require 'org-capture)
-(require 'ob-plantuml)
-(require 'ox-reveal "packages/org-reveal/ox-reveal.el")
+;(require 'ox-latex)
+;(require 'ox-s5)
+;(require 'ox-confluence)
+;(require 'org-capture)
+;(require 'ob-plantuml)
+;; this one seems to be failing:
+;(require 'ox-reveal "packages/org-reveal/ox-reveal.el")
 
 ;; active Org-babel languages
 (org-babel-do-load-languages
@@ -102,13 +103,13 @@
 </style>
 "
       org-default-notes-file (expand-file-name "~/bwm/org/work.org")
-      org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-      org-latex-minted-options '(("frame" "lines")
-                                 ("fontsize" "\\scriptsize")
-                                 ("linenos" ""))
-      org-latex-listings 'minted
+      ;; org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      ;;                         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      ;;                         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+      ;; org-latex-minted-options '(("frame" "lines")
+      ;;                            ("fontsize" "\\scriptsize")
+      ;;                            ("linenos" ""))
+      ;; org-latex-listings 'minted
 
       org-capture-templates '(("t" "Todo" entry (file+headline "~/org/work.org" "Tasks")
                                "* TODO %?\n  %i\n  %a")
@@ -144,14 +145,14 @@
 	  (lambda ()
 	    (set (make-local-variable 'fill-column) 80)))
 
-(add-to-list 'org-latex-classes
-             '("beamer"
-               "\\documentclass\[presentation\]\{beamer\}"
-               ("\\section\{%s\}" . "\\section*\{%s\}")
-               ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-               ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
-(add-to-list 'org-latex-packages-alist '("" "minted"))
-(require 'org-export-as-s5)
+;; (add-to-list 'org-latex-classes
+;;              '("beamer"
+;;                "\\documentclass\[presentation\]\{beamer\}"
+;;                ("\\section\{%s\}" . "\\section*\{%s\}")
+;;                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+;;                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+;; (add-to-list 'org-latex-packages-alist '("" "minted"))
+;; (require 'org-export-as-s5)
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))

@@ -12,7 +12,7 @@
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
-(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
+;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 
 (global-company-mode 1)
 
@@ -68,16 +68,16 @@
       (quote
        ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
 
-(require 'moe-theme)
+;(require 'moe-theme)
 (require 'powerline)
 (require 'spaceline-config)
 ;(setq moe-theme-highlight-buffer-id nil)
-(moe-dark)
+;(moe-dark)
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
 (spaceline-toggle-projectile-root)
 
-(global-flycheck-mode 1)
+;(global-flycheck-mode 1)
 
 (defadvice split-window-right (after split-and-rebalance-windows ())
   "I prefer windows to auto-balance when I open new ones"
