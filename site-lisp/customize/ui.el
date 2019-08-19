@@ -3,8 +3,13 @@
 (setq server-socket-dir (expand-file-name "~/.emacs.d/server"))
 (server-start)
 
-(require 'atomic-chrome)
-(atomic-chrome-start-server)
+(when (require 'edit-server nil t)
+  (setq edit-server-new-frame nil)
+  (edit-server-start))
+(add-hook 'edit-server-start-hook
+          (lambda ()
+            (when (string-match "github.com" (buffer-name))
+              (markdown-mode))))
 
 (require 'company)
 (require 'lsp)
