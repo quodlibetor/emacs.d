@@ -1,6 +1,8 @@
 (require 'dash)
 
 (require 'org)
+; see https://emacs.stackexchange.com/a/47370 for adding things
+(require 'org-tempo)
 ;(require 'ox-latex)
 ;(require 'ox-s5)
 ;(require 'ox-confluence)
@@ -17,7 +19,7 @@
    (dot . t)
    (shell . t)
    (python . t)))
-
+(require 'ox-md)
 (defun toggle-babel-evaluate ()
   (interactive)
   (if org-export-babel-evaluate
