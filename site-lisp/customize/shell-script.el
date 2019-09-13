@@ -29,4 +29,6 @@
           (lambda ()
             (when (string-match-p "^#!.*bash" (buffer-string))
               (sh-set-shell "bash"))
+            (flymake-shellcheck-load)
+            (flymake-mode t)
             (sh-script-extra-font-lock-activate)))
