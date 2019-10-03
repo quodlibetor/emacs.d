@@ -2,6 +2,8 @@
 ;      magit-gitk-executable "/usr/bin/gitk")
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
+(with-eval-after-load 'magit
+  (require 'forge))
 (require 'magit)
 ;(require 'magit-gerrit)
 (setq magit-last-seen-setup-instructions "2.2.0"
