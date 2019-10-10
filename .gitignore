@@ -33,3 +33,4 @@ recentf
 /transient
 /.lsp*
 /forge-database.sqlite
+/elpy
