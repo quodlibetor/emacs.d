@@ -72,8 +72,6 @@
 (global-set-key (kbd "C-c oc") 'org-capture)
 (global-set-key (kbd "C-c oj") 'org-clock-goto)
 (global-set-key (kbd "C-c ob") 'org-iswitchb)
-(require 'helm-org)
-(global-set-key (kbd "C-c os") 'helm-org-agenda-files-headings)
 
 ;; confluence wiki
 (global-set-key (kbd "C-c cf") 'confluence-get-page)
