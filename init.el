@@ -99,13 +99,71 @@
  '(org-agenda-files (quote ("~/org/work.org")))
  '(package-selected-packages
    (quote
-    (rustic use-package helm-rg edit-server flymake-shellcheck projectile avy forge py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized)))
+    (cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy forge py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized)))
  '(paradox-automatically-star nil)
  '(rustic-ansi-faces
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])
  '(safe-local-variable-values
    (quote
-    ((flycheck-checker . python-flake8-chain)
+    ((cljr-favor-prefix-notation . t)
+     (eval progn
+           (put
+            (quote defendpoint)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote defendpoint-async)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote api/defendpoint)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote api/defendpoint-async)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote defsetting)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote setting/defsetting)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote s/defn)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote p\.types/defprotocol+)
+            (quote clojure-doc-string-elt)
+            2)
+           (define-clojure-indent
+             (assert 1)
+             (ex-info 1)
+             (expect 0)
+             (let-404 1)
+             (match 1)
+             (merge-with 1)
+             (with-redefs-fn 1)
+             (p\.types/defprotocol+
+              (quote
+               (1
+                (:defn))))
+             (p\.types/def-abstract-type
+              (quote
+               (1
+                (:defn))))
+             (p\.types/deftype+
+              (quote
+               (2 nil nil
+                  (:defn))))
+             (p\.types/defrecord+
+              (quote
+               (2 nil nil
+                  (:defn))))))
+     (flycheck-checker . python-flake8-chain)
      (venv-name . "consumer")
      (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
      (flycheck-python-mypy-args "--strict-optional" "--ignore-missing-imports" "--fast-parser")
