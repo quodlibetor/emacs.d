@@ -44,6 +44,7 @@
 ;(load "customize/ruby")
 (load "customize/rust")
 (load "customize/shell-script")
+(load "customize/terraform")
 (load "customize/vc-annotate")
 (load "customize/yaml")
 (load "customize/prog")
