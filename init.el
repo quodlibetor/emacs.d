@@ -43,6 +43,7 @@
 (load "customize/python")
 ;(load "customize/ruby")
 (load "customize/rust")
+(load "customize/clojure")
 (load "customize/shell-script")
 (load "customize/terraform")
 (load "customize/vc-annotate")
@@ -86,6 +87,7 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
+ '(compilation-scroll-output (quote first-error))
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa")))
@@ -106,7 +108,66 @@
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])
  '(safe-local-variable-values
    (quote
-    ((cljr-favor-prefix-notation . t)
+    ((eval progn
+           (put
+            (quote defendpoint)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote defendpoint-async)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote api/defendpoint)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote api/defendpoint-async)
+            (quote clojure-doc-string-elt)
+            3)
+           (put
+            (quote defsetting)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote setting/defsetting)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote s/defn)
+            (quote clojure-doc-string-elt)
+            2)
+           (put
+            (quote p\.types/defprotocol+)
+            (quote clojure-doc-string-elt)
+            2)
+           (define-clojure-indent
+             (assert 1)
+             (ex-info 1)
+             (expect 0)
+             (let-404 1)
+             (match 1)
+             (merge-with 1)
+             (p\.types/defprotocol+
+              (quote
+               (1
+                (:defn))))
+             (p\.types/def-abstract-type
+              (quote
+               (1
+                (:defn))))
+             (p\.types/deftype+
+              (quote
+               (2 nil nil
+                  (:defn))))
+             (p\.types/defrecord+
+              (quote
+               (2 nil nil
+                  (:defn))))))
+     (rustic-workspace-dir)
+     (rustic-workspace-dir . "/Users/bwm/github/rust-postgres")
+     (rustic-format-trigger)
+     (cljr-favor-prefix-notation . t)
      (eval progn
            (put
             (quote defendpoint)
