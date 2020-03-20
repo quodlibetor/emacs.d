@@ -1,0 +1,38 @@
+# key: iscript
+# name: iscript
+# --
+#!/usr/bin/env bash
+
+# HELP: $1
+
+set -euo pipefail
+source ./bin/_utils.sh
+
+usage() {
+    echo -n "usage: i $2
+"
+    exit "\$1"
+}
+
+main() {
+    parse_args "$@"
+    $0
+}
+
+parse_args() {
+    local arg
+    while [[ $# -gt 0 ]]; do
+        arg="\$1" && shift
+        case "$arg" in
+            -h|--help)
+                usage 0
+                ;;
+            *)
+                echo "ERROR: unknown argument: '\$arg'"
+                usage 1
+                ;;
+        esac
+    done
+}
+
+main "$@"
