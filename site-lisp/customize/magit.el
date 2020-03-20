@@ -19,3 +19,6 @@
 
 (define-key magit-mode-map "\t" 'magit-section-cycle)
 (define-key magit-mode-map [C-tab] 'magit-section-toggle)
+;; https://github.com/magit/ghub/issues/81
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=36017
+(setq ghub-use-workaround-for-emacs-bug 'force)
