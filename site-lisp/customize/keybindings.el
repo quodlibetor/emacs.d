@@ -138,3 +138,5 @@
       (find-alternate-file fname))))
 (global-set-key (kbd "C-c r") 'find-alternative-file-with-sudo)
 (defalias 'sudo-reopen 'find-alternative-file-with-sudo)
+
+(setq confirm-kill-emacs 'y-or-n-p)
