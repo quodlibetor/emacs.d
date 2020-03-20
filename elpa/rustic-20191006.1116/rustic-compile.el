@@ -156,6 +156,15 @@ Error matching regexes from compile.el are removed."
       (cons re '(1 2 3 1)))) ;; 1 for warning
   "Create hyperlink in compilation buffers for rust warnings.")
 
+(defvar rustic-compilation-note
+  (let ((note "^note:[^\n]*\n\s*-->\s")
+        (file "\\([^\n]+\\)")
+        (start-line "\\([0-9]+\\)")
+        (start-col  "\\([0-9]+\\)"))
+    (let ((re (concat note file ":" start-line ":" start-col)))
+      (cons re '(1 2 3 1)))) ;; 1 for warning
+  "Create hyperlink in compilation buffers for rust notes.")
+
 (defvar rustic-compilation-info
   (let ((file "\\([^\n]+\\)")
         (start-line "\\([0-9]+\\)")

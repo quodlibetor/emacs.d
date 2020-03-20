@@ -33,8 +33,8 @@ If nil then the project is simply created."
   "Holds the type of spinner to be used in the mode-line.
 Takes a value accepted by `spinner-start'."
   :type `(choice (choice :tag "Choose a spinner by name"
-                         ,@(mapcar (lambda (c) (list 'const (car c)))
-                                   spinner-types))
+                         ,@(mapcar (lambda (c) (list 'const (car c))) 
+                                  spinner-types))
                  (const :tag "A random spinner" random)
                  (repeat :tag "A list of symbols from `spinner-types' to randomly choose from"
                          (choice :tag "Choose a spinner by name"
@@ -105,8 +105,7 @@ If ARG is not nil, use value as argument and store it in `rustic-test-arguments'
   (let* ((command (list rustic-cargo-bin "test"))
          (c (if arg
                 (setq rustic-test-arguments
-                      (concat command " "
-                              (read-from-minibuffer "Cargo test arguments: ")))
+                      (append command (list (read-from-minibuffer "Cargo test arguments: "))))
               command))
          (buf rustic-test-buffer-name)
          (proc rustic-test-process-name)

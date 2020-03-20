@@ -1,4 +1,3 @@
-;; (require 'rust-mode)
 ;; (require 'racer)
 
 ;; (define-key rust-mode-map (kbd "C-j") 'bwm:sane-newline)
@@ -38,6 +37,7 @@
 ;;              '(cargo "thread '\\([^']+\\)' panicked at \\('[^']+'\\), \\([^:]+\\):\\([0-9]+\\)"
 ;;                     3 4 nil nil 2 (1 'compilation-info)))
 
+(use-package rust-mode)
 (use-package rustic
   :init
   (setq rustic-format-trigger 'on-save))

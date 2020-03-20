@@ -1123,16 +1123,20 @@ Use idomenu (imenu with `ido-mode') for best mileage.")
     (unless (executable-find rustic-rustfmt-bin)
       (error "Could not locate executable \"%s\"" rustic-rustfmt-bin))))
 
+(setq-default rustic-workspace-dir nil)
+
 (defun rustic-buffer-workspace (&optional nodefault)
-  "Get the workspace root. 
+  "Get the workspace root.
 If NODEFAULT is t, return nil instead of `default-directory' if directory is
 not in a rust project."
-  (let ((dir (locate-dominating-file
-              (or buffer-file-name default-directory) "Cargo.toml")))
-    (if dir
-        (expand-file-name dir)
-      (if nodefault
-          nil default-directory))))
+  (if rustic-workspace-dir
+      rustic-workspace-dir
+    (let ((dir (locate-dominating-file
+                (or buffer-file-name default-directory) "Cargo.toml")))
+      (if dir
+          (expand-file-name dir)
+        (if nodefault
+            nil default-directory)))))
 
 (defun rustic-update-buffer-workspace ()
   "Update current workspace."
