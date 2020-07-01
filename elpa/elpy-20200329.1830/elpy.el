@@ -4,9 +4,9 @@
 
 ;; Author: Jorgen Schaefer <contact@jorgenschaefer.de>, Gaby Launay <gaby.launay@protonmail.com>
 ;; URL: https://github.com/jorgenschaefer/elpy
-;; Version: 1.31.0
+;; Version: 1.33.0
 ;; Keywords: Python, IDE, Languages, Tools
-;; Package-Requires: ((company "0.9.2") (emacs "24.4") (find-file-in-project "3.3")  (highlight-indentation "0.5.0") (pyvenv "1.3") (yasnippet "0.8.0") (s "1.12.0"))
+;; Package-Requires: ((company "0.9.10") (emacs "24.4") (highlight-indentation "0.7.0") (pyvenv "1.20") (yasnippet "0.13.0") (s "1.12.0"))
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -52,9 +52,8 @@
 (require 'elpy-shell)
 (require 'elpy-rpc)
 (require 'pyvenv)
-(require 'find-file-in-project)
 
-(defconst elpy-version "1.31.0"
+(defconst elpy-version "1.33.0"
   "The version of the Elpy Lisp code.")
 
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -91,6 +90,8 @@ can be inidividually enabled or disabled."
                      elpy-module-eldoc)
               (const :tag "Highlight syntax errors (Flymake)"
                      elpy-module-flymake)
+              (const :tag "Code folding"
+                     elpy-module-folding)
               (const :tag "Show the virtualenv in the mode line (pyvenv)"
                      elpy-module-pyvenv)
               (const :tag "Display indentation markers (highlight-indentation)"
@@ -320,6 +321,10 @@ option is `pdb'."
     (define-key map (kbd "C-c C-n") 'elpy-flymake-next-error)
     (define-key map (kbd "C-c C-o") 'elpy-occur-definitions)
     (define-key map (kbd "C-c C-p") 'elpy-flymake-previous-error)
+    (define-key map (kbd "C-c @ C-c") 'elpy-folding-toggle-at-point)
+    (define-key map (kbd "C-c @ C-b") 'elpy-folding-toggle-docstrings)
+    (define-key map (kbd "C-c @ C-m") 'elpy-folding-toggle-comments)
+    (define-key map (kbd "C-c @ C-f") 'elpy-folding-hide-leafs)
     (define-key map (kbd "C-c C-s") 'elpy-rgrep-symbol)
     (define-key map (kbd "C-c C-t") 'elpy-test)
     (define-key map (kbd "C-c C-v") 'elpy-check)
@@ -446,7 +451,7 @@ This option need to bet set through `customize' or `customize-set-variable' to b
                  "Send Region to Python"
                "Send Buffer to Python")
       :help "Send the current region or the whole buffer to Python"]
-     ["Send Definition" python-shell-send-defun
+     ["Send Definition" elpy-shell-send-defun
       :help "Send current definition to Python"]
      ["Kill Python shell" elpy-shell-kill
       :help "Kill the current Python shell"]
@@ -477,6 +482,15 @@ This option need to bet set through `customize' or `customize-set-variable' to b
       :help "Go to the next inline error, if any"]
      ["Previous Error" elpy-flymake-previous-error
       :help "Go to the previous inline error, if any"])
+    ("Code folding"
+     ["Hide/show at point" elpy-folding-toggle-at-point
+      :help "Hide or show the block or docstring at point"]
+     ["Hide/show all docstrings" elpy-folding-toggle-docstrings
+      :help "Hide or show all the docstrings"]
+     ["Hide/show all comments" elpy-folding-toggle-comments
+      :help "Hide or show all the comments"]
+     ["Hide leafs" elpy-folding-hide-leafs
+      :help "Hide all leaf blocks (blocks not containing other blocks)"])
     ("Indentation Blocks"
      ["Dedent" python-indent-shift-left
       :help "Dedent current block or region"
@@ -519,6 +533,7 @@ This option need to bet set through `customize' or `customize-set-variable' to b
     (add-hook 'pyvenv-post-activate-hooks 'elpy-rpc--disconnect)
     (add-hook 'pyvenv-post-deactivate-hooks 'elpy-rpc--disconnect)
     (add-hook 'inferior-python-mode-hook 'elpy-shell--enable-output-filter)
+    (add-hook 'python-shell-first-prompt-hook 'elpy-shell--send-setup-code t)
     ;; Enable Elpy-mode in the opened python buffer
     (dolist (buffer (buffer-list))
       (and (not (string-match "^ ?\\*" (buffer-name buffer)))
@@ -530,9 +545,13 @@ This option need to bet set through `customize' or `customize-set-variable' to b
 (defun elpy-disable ()
   "Disable Elpy in all future Python buffers."
   (interactive)
-  (remove-hook 'python-mode-hook 'elpy-mode)
-  (remove-hook 'inferior-python-mode-hook 'elpy-shell--enable-output-filter)
   (elpy-modules-global-stop)
+  (define-key inferior-python-mode-map (kbd "C-c C-z") nil)
+  (remove-hook 'python-mode-hook 'elpy-mode)
+  (remove-hook 'pyvenv-post-activate-hooks 'elpy-rpc--disconnect)
+  (remove-hook 'pyvenv-post-deactivate-hooks 'elpy-rpc--disconnect)
+  (remove-hook 'inferior-python-mode-hook 'elpy-shell--enable-output-filter)
+  (remove-hook 'python-shell-first-prompt-hook 'elpy-shell--send-setup-code)
   (setq elpy-enabled-p nil))
 
 ;;;###autoload
@@ -566,6 +585,7 @@ virtualenv.
     ("Completion (Company)" company "company-")
     ("Call Signatures (ElDoc)" eldoc "eldoc-")
     ("Inline Errors (Flymake)" flymake "flymake-")
+    ("Code folding (hideshow)" hideshow "hs-")
     ("Snippets (YASnippet)" yasnippet "yas-")
     ("Directory Grep (rgrep)" grep "grep-")
     ("Search as You Type (ido)" ido "ido-")
@@ -578,8 +598,8 @@ virtualenv.
 
 (defvar elpy-config--get-config "import json
 import sys
+from distutils.version import LooseVersion
 import warnings
-
 warnings.filterwarnings('ignore', category=FutureWarning)
 
 try:
@@ -587,12 +607,21 @@ try:
 except ImportError:
     import urllib.request as urllib
 
-from distutils.version import LooseVersion
+
+# Check if we can connect to pypi quickly enough
+try:
+    response = urllib.urlopen('https://pypi.org/pypi', timeout=1)
+    CAN_CONNECT_TO_PYPI = True
+except:
+    CAN_CONNECT_TO_PYPI = False
 
 
 def latest(package, version=None):
+    if not CAN_CONNECT_TO_PYPI:
+        return None
     try:
-        response = urllib.urlopen('https://pypi.org/pypi/{package}/json'.format(package=package)).read()
+        response = urllib.urlopen('https://pypi.org/pypi/{package}/json'.format(package=package),
+               timeout=2).read()
         latest = json.loads(response)['info']['version']
         if version is None or LooseVersion(version) < LooseVersion(latest):
             return latest
@@ -603,6 +632,7 @@ def latest(package, version=None):
 
 
 config = {}
+config['can_connect_to_pypi'] = CAN_CONNECT_TO_PYPI
 config['rpc_python_version'] = ('{major}.{minor}.{micro}'
                             .format(major=sys.version_info[0],
                                     minor=sys.version_info[1],
@@ -688,6 +718,11 @@ a customize buffer, but has some more options."
     (with-current-buffer buf
       (elpy-insert--header "Elpy Configuration")
 
+      (elpy-config--insert-configuration-table config)
+      (insert "\n")
+
+      (elpy-insert--header "Warnings")
+
       (elpy-config--insert-configuration-problems config)
 
       (elpy-insert--header "Options")
@@ -754,9 +789,6 @@ item in another window.\n\n")
                                       (string-match "^3\\." rpc-python-version))
                                  "rope_py3k"
                                "rope")))
-
-    (elpy-config--insert-configuration-table config)
-    (insert "\n")
 
     ;; Python not found
     (unless (gethash "rpc_python_executable" config)
@@ -834,7 +866,38 @@ item in another window.\n\n")
        "\n")
       (insert "\n")
       (widget-create 'elpy-insert--pip-button
-                     :package python-shell-interpreter)
+                     :package python-shell-interpreter :norpc t)
+      (insert "\n\n"))
+
+    ;; Couldn't connect to pypi to check package versions
+    (when (not (gethash "can_connect_to_pypi" config))
+      (elpy-insert--para
+       "Elpy could not connect to Pypi (or at least not quickly enough) "
+       "and check if the python packages were up-to-date. "
+       "You can still try to update all of them:"
+       "\n")
+      (insert "\n")
+      (widget-create 'elpy-insert--generic-button
+                     :button-name "[Update python packages]"
+                     :function (lambda () (with-elpy-rpc-virtualenv-activated
+                                        (elpy-rpc--install-dependencies))))
+      (insert "\n\n"))
+
+    ;; Pip not available in the rpc virtualenv
+    (when (and
+           (equal elpy-rpc-virtualenv-path 'default)
+           (elpy-rpc--pip-missing))
+         (elpy-insert--para
+          "Pip doesn't seem to be installed in the dedicated virtualenv "
+          "created by Elpy (" (elpy-rpc-get-virtualenv-path) "). "
+          "This may prevent some features from working properly"
+          " (completion, documentation, reformatting, ...). "
+          "You can try reinstalling the virtualenv. "
+          "If the problem persists, please report on Elpy's github page."
+          "\n\n")
+      (widget-create 'elpy-insert--generic-button
+                     :button-name "[Reinstall RPC virtualenv]"
+                     :function (lambda () (elpy-rpc-reinstall-virtualenv)))
       (insert "\n\n"))
 
     ;; Requested backend unavailable
@@ -936,15 +999,16 @@ item in another window.\n\n")
        "program to provide syntax checks of your programs, so you might "
        "want to install one. Elpy by default uses flake8.\n")
       (insert "\n")
-      (widget-create 'elpy-insert--pip-button :package "flake8")
+      (widget-create 'elpy-insert--pip-button :package "flake8" :norpc t)
       (insert "\n\n"))
 
     ))
 
 (defun elpy-config--package-available-p (package)
   "Check if PACKAGE is installed in the rpc."
-  (equal 0 (call-process elpy-rpc-python-command nil nil nil "-c"
-                         (format "import %s" package))))
+  (with-elpy-rpc-virtualenv-activated
+   (equal 0 (call-process elpy-rpc-python-command nil nil nil "-c"
+                          (format "import %s" package)))))
 
 (defun elpy-config--get-config ()
   "Return the configuration from `elpy-rpc-python-command'.
@@ -999,7 +1063,9 @@ virtual_env_short"
       (let ((venv (getenv "VIRTUAL_ENV")))
         (puthash "virtual_env" venv config)
         (if venv
-            (puthash "virtual_env_short" (file-name-nondirectory venv) config)
+            (puthash "virtual_env_short" (file-name-nondirectory
+                                          (directory-file-name venv))
+                     config)
           (puthash "virtual_env_short" nil config)))
       (with-elpy-rpc-virtualenv-activated
        (let ((return-value (ignore-errors
@@ -1250,8 +1316,12 @@ PyPI, or nil if that's VERSION."
 
 (defun elpy-insert--pip-button-action (widget &optional _event)
   "The :action option for the pip button widget."
-  (with-elpy-rpc-virtualenv-activated
-   (async-shell-command (widget-get widget :command))))
+  (let ((command (widget-get widget :command))
+        (norpc (widget-get widget :norpc)))
+    (if norpc
+        (async-shell-command command)
+      (with-elpy-rpc-virtualenv-activated
+       (async-shell-command command)))))
 
 ;;;;;;;;;;;;
 ;;; Projects
@@ -1450,12 +1520,12 @@ This combines
 (defun elpy-find-file (&optional dwim)
   "Efficiently find a file in the current project.
 
+It necessitates `projectile' or `find-file-in-project' to be installed.
+
 With prefix argument (or DWIM non-nil), tries to guess what kind of
-file the user wants to open.
-
-On an import line, it opens the file of that module.
-
-Otherwise, it opens a test file associated with the current file,
+file the user wants to open:
+- On an import line, it opens the file of that module.
+- Otherwise, it opens a test file associated with the current file,
 if one exists. A test file is named test_<name>.py if the current
 file is <name>.py, and is either in the same directory or a
 \"test\" or \"tests\" subdirectory."
@@ -1480,11 +1550,27 @@ file is <name>.py, and is either in the same directory or a
       (if test-file
           (find-file test-file)
         (elpy-find-file nil))))
-   (t
+   ((fboundp 'projectile-find-file)
+    (let ((projectile-globally-ignored-file-suffixes
+           (delete-dups
+            (nconc
+             (cl-copy-list projectile-globally-ignored-file-suffixes)
+             (cl-copy-list completion-ignored-extensions))))
+          (projectile-globally-ignored-directories
+           (delete-dups
+            (nconc
+             (cl-copy-list projectile-globally-ignored-directories)
+             (cl-copy-list elpy-ffip-prune-patterns)
+             (elpy-project-ignored-directories))))
+          (projectile-project-root (or (elpy-project-root)
+                                       default-directory)))
+      (projectile-find-file)))
+   ((fboundp 'find-file-in-project)
     (let ((ffip-prune-patterns (elpy-ffip-prune-patterns))
           (ffip-project-root (or (elpy-project-root)
                                  default-directory))
           ;; Set up ido to use vertical file lists.
+          (ffip-prefer-ido-mode t)
           (ido-decorations '("\n" "" "\n" "\n..."
                              "[" "]" " [No match]" " [Matched]"
                              " [Not readable]" " [Too big]"
@@ -1495,7 +1581,9 @@ file is <name>.py, and is either in the same directory or a
                                   (define-key ido-completion-map (kbd "<up>")
                                     'ido-prev-match))
                                 ido-setup-hook)))
-      (find-file-in-project)))))
+      (find-file-in-project)))
+   (t
+    (error "`elpy-find-file' necessitates `projectile' or `find-file-in-project' to be installed"))))
 
 (defun elpy-find--test-file ()
   "Return the test file for the current file, if any.
@@ -1505,27 +1593,36 @@ If this is a test file, return the non-test file.
 A test file is named test_<name>.py if the current file is
 <name>.py, and is either in the same directors or a \"test\" or
 \"tests\" subdirectory."
-  (catch 'return
-    (let (full-name directory file)
-      (setq full-name (buffer-file-name))
-      (unless full-name
-        (throw 'return nil))
-      (setq full-name (expand-file-name full-name)
-            directory (file-name-directory full-name)
-            file (file-name-nondirectory full-name))
-      (if (string-match "^test_" file)
-          (let ((file (substring file 5)))
-            (dolist (implementation (list (format "%s/%s" directory file)
-                                          (format "%s/../%s" directory file)))
-              (when (file-exists-p implementation)
-                (throw 'return implementation))))
-        (dolist (test (list (format "%s/test_%s" directory file)
-                            (format "%s/test/test_%s" directory file)
-                            (format "%s/tests/test_%s" directory file)
-                            (format "%s/../test/test_%s" directory file)
-                            (format "%s/../tests/test_%s" directory file)))
-          (when (file-exists-p test)
-            (throw 'return test)))))))
+  (let* ((project-root (or (elpy-project-root) default-directory))
+         (filename (file-name-base (buffer-file-name)))
+         (impl-file (when (string-match "test_\\(.*\\)" filename)
+                      (match-string 1 filename)))
+         (files
+          (cond
+           ((fboundp 'projectile-find-file)
+            (let ((projectile-project-root project-root))
+              (projectile-current-project-files)))
+           ((fboundp 'find-file-in-project)
+            (cl-map 'list 'cdr (ffip-project-search nil nil project-root)))
+           (t '())))
+         (file (if impl-file
+                    (cl-remove-if (lambda (file)
+                                    (not (string=
+                                          impl-file
+                                          (file-name-base file))))
+                                  files)
+                  (cl-remove-if (lambda (file)
+                                  (not (string=
+                                        (format "test_%s" filename)
+                                        (file-name-base file))))
+                                files))))
+    (when file
+      (if (> (length file) 1)
+          (setq file (completing-read "Which file: " file))
+        (setq file (car file)))
+      (if (file-name-absolute-p file)
+          file
+        (concat (file-name-as-directory project-root) file)))))
 
 (defun elpy-find--module-path (module)
   "Return a directory path for MODULE.
@@ -1615,9 +1712,15 @@ with a prefix argument)."
   "Initial position before expanding to indentation.")
 (make-variable-buffer-local 'elpy-nav-expand--initial-position)
 
+(defun elpy-rpc-warn-if-jedi-not-available ()
+  "Display a warning if jedi is not available in the current RPC."
+  (unless elpy-rpc--jedi-available
+    (error "This feature requires the `jedi` package to be installed. Please check `elpy-config` for more information.")))
+
 (defun elpy-goto-definition ()
   "Go to the definition of the symbol at point, if found."
   (interactive)
+  (elpy-rpc-warn-if-jedi-not-available)
   (let ((location (elpy-rpc-get-definition)))
     (if location
         (elpy-goto-location (car location) (cadr location))
@@ -1626,6 +1729,7 @@ with a prefix argument)."
 (defun elpy-goto-assignment ()
   "Go to the assignment of the symbol at point, if found."
   (interactive)
+  (elpy-rpc-warn-if-jedi-not-available)
   (let ((location (elpy-rpc-get-assignment)))
     (if location
         (elpy-goto-location (car location) (cadr location))
@@ -1634,6 +1738,7 @@ with a prefix argument)."
 (defun elpy-goto-definition-other-window ()
   "Go to the definition of the symbol at point in other window, if found."
   (interactive)
+  (elpy-rpc-warn-if-jedi-not-available)
   (let ((location (elpy-rpc-get-definition)))
     (if location
         (elpy-goto-location (car location) (cadr location) 'other-window)
@@ -1642,6 +1747,7 @@ with a prefix argument)."
 (defun elpy-goto-assignment-other-window ()
   "Go to the assignment of the symbol at point in other window, if found."
   (interactive)
+  (elpy-rpc-warn-if-jedi-not-available)
   (let ((location (elpy-rpc-get-assignment)))
     (if location
         (elpy-goto-location (car location) (cadr location) 'other-window)
@@ -2175,10 +2281,13 @@ prefix argument is given, prompt for a symbol from the user."
   (interactive)
   (cond
    ((elpy-config--package-available-p "yapf")
+    (when (interactive-p) (message "Autoformatting code with yapf."))
     (elpy-yapf-fix-code))
    ((elpy-config--package-available-p "autopep8")
+    (when (interactive-p) (message "Autoformatting code with autopep8."))
     (elpy-autopep8-fix-code))
    ((elpy-config--package-available-p "black")
+    (when (interactive-p) (message "Autoformatting code with black."))
     (elpy-black-fix-code))
    (t
     (message "Install yapf/autopep8 to format code."))))
@@ -2441,7 +2550,7 @@ Also, switch to that buffer."
 
 (defvar elpy-xref--format-references
   (let ((str "%s:\t%s"))
-    (put-text-property 0 4 'face 'font-lock-comment-face str)
+    (put-text-property 0 4 'face 'compilation-line-number str)
     str)
   "String used to format references in xref buffers.")
 
@@ -3011,16 +3120,17 @@ display the current class and method instead."
   (let ((flymake-error (elpy-flymake-error-at-point)))
     (if flymake-error
         flymake-error
-      ;; Try getting calltip
-      (elpy-rpc-get-calltip
-       (lambda (calltip)
+      (elpy-rpc-get-calltip-or-oneline-docstring
+       (lambda (info)
          (cond
-          ((stringp calltip)
-           (eldoc-message calltip))
-          (calltip
-           (let ((name (cdr (assq 'name calltip)))
-                 (index (cdr (assq 'index calltip)))
-                 (params (cdr (assq 'params calltip))))
+          ;; INFO is a string, just display it
+          ((stringp info)
+           (eldoc-message info))
+          ;; INFO is a calltip
+          ((string= (cdr (assq 'kind info)) "calltip")
+           (let ((name (cdr (assq 'name info)))
+                 (index (cdr (assq 'index info)))
+                 (params (cdr (assq 'params info))))
              (when index
                (setf (nth index params)
                      (propertize (nth index params)
@@ -3033,30 +3143,451 @@ display the current class and method instead."
                 (if (version<= emacs-version "25")
                     (format "%s%s" prefix args)
                   (eldoc-docstring-format-sym-doc prefix args nil))))))
+          ;; INFO is a oneline docstring
+          ((string= (cdr (assq 'kind info)) "oneline_doc")
+           (let ((name (cdr (assq 'name info)))
+                 (docs (cdr (assq 'doc info))))
+             (let ((prefix (propertize (format "%s: " name)
+                                       'face
+                                       'font-lock-function-name-face)))
+               (eldoc-message
+                (if (version<= emacs-version "25")
+                    (format "%s%s" prefix docs)
+                  (let ((eldoc-echo-area-use-multiline-p nil))
+                    (eldoc-docstring-format-sym-doc prefix docs nil)))))))
+          ;; INFO is nil, maybe display the current function
           (t
-           ;; Try getting oneline docstring
-           (elpy-rpc-get-oneline-docstring
-            (lambda (doc)
-              (cond
-               (doc
-                (let ((name (cdr (assq 'name doc)))
-                      (doc (cdr (assq 'doc doc))))
-                  (let ((prefix (propertize (format "%s: " name)
-                                            'face
-                                            'font-lock-function-name-face)))
-                    (eldoc-message
-                     (if (version<= emacs-version "25")
-                         (format "%s%s" prefix doc)
-                       (let ((eldoc-echo-area-use-multiline-p nil))
-                         (eldoc-docstring-format-sym-doc prefix doc nil)))))))
-               ;; Give the current definition
-               (elpy-eldoc-show-current-function
-                (let ((current-defun (python-info-current-defun)))
-                  (when current-defun
-                    (eldoc-message
-                     (format "In: %s()" current-defun))))))))))))
+           (if elpy-eldoc-show-current-function
+               (let ((current-defun (python-info-current-defun)))
+                 (when current-defun
+                   (eldoc-message
+                    (concat "In: "
+                            (propertize
+                             (format "%s()" current-defun)
+                             'face 'font-lock-function-name-face)))))
+             (eldoc-message ""))))))
       ;; Return the last message until we're done
       eldoc-last-message)))
+
+
+;;;;;;;;;;;;;;;;;;;
+;;; Module: Folding
+
+(defun elpy-module-folding (command &rest _args)
+  "Module allowing code folding in Python."
+  (pcase command
+
+    (`global-init
+     (elpy-modules-remove-modeline-lighter 'hs-minor-mode))
+
+    (`buffer-init
+     (hs-minor-mode 1)
+     (setq-local hs-set-up-overlay 'elpy-folding--display-code-line-counts)
+     (setq-local hs-allow-nesting t)
+     (define-key elpy-mode-map [left-fringe mouse-1]
+       'elpy-folding--click-fringe)
+     (define-key elpy-mode-map (kbd "<mouse-1>") 'elpy-folding--click-text)
+     (elpy-folding--mark-foldable-lines)
+     (add-to-list 'after-change-functions 'elpy-folding--mark-foldable-lines))
+
+    (`buffer-stop
+     (hs-minor-mode -1)
+     (kill-local-variable 'hs-set-up-overlay)
+     (kill-local-variable 'hs-allow-nesting)
+     (define-key elpy-mode-map [left-fringe mouse-1] nil)
+     (define-key elpy-mode-map (kbd "<mouse-1>") nil)
+     (remove 'elpy-folding--mark-foldable-lines after-change-functions)
+     (cl-loop for prop in '(elpy-hs-folded elpy-hs-foldable elpy-hs-fringe)
+              do (remove-overlays (point-min) (point-max) prop t)))))
+
+;; Fringe and folding indicators
+(when (fboundp 'define-fringe-bitmap)
+  (define-fringe-bitmap 'elpy-folding-fringe-marker
+    (vector #b00000000
+            #b00000000
+            #b00000000
+            #b11000011
+            #b11100111
+            #b01111110
+            #b00111100
+            #b00011000))
+
+  (define-fringe-bitmap 'elpy-folding-fringe-foldable-marker
+    (vector #b00100000
+            #b00010000
+            #b00001000
+            #b00000100
+            #b00000100
+            #b00001000
+            #b00010000
+            #b00100000)))
+
+(defcustom elpy-folding-fringe-face 'elpy-folding-fringe-face
+  "Face for folding bitmaps appearing on the fringe."
+  :type 'face
+  :group 'elpy)
+
+(defface elpy-folding-fringe-face
+  '((t (:inherit 'font-lock-comment-face
+                 :box (:line-width 1 :style released-button))))
+  "Face for folding bitmaps appearing on the fringe."
+  :group 'elpy)
+
+(defcustom elpy-folding-face 'elpy-folding-face
+  "Face for the folded region indicator."
+  :type 'face
+  :group 'elpy)
+
+(defface elpy-folding-face
+  '((t (:inherit 'font-lock-comment-face :box t)))
+  "Face for the folded region indicator."
+  :group 'elpy)
+
+(defcustom elpy-folding-fringe-indicators t
+  "Non-nil if Elpy should display folding fringe indicators."
+  :set (lambda (var val)                ;
+         (set-default var val)
+         (dolist (buffer (buffer-list))
+           (when (and (with-current-buffer buffer elpy-mode)
+                      (member 'elpy-folding--mark-foldable-lines
+                              after-change-functions))
+             (elpy-folding--mark-foldable-lines)))))
+
+(defvar elpy-folding-docstring-regex "[uU]?[rR]?\"\"\""
+  "Regular expression matching docstrings openings and closings.")
+
+(defvar elpy-docstring-block-start-regexp
+  "^\\s-*[uU]?[rR]?\"\"\"\n?\\s-*"
+  "Version of `hs-block-start-regexp' for docstrings.")
+
+;; Herlpers
+(defun elpy-info-docstring-p (&optional syntax-ppss)
+  "Return non-nil if point is in a docstring."
+  (save-excursion
+    (and (progn (python-nav-beginning-of-statement)
+                (looking-at "\\(\"\\|'\\)"))
+         (progn (forward-line -1)
+                (beginning-of-line)
+                (python-info-looking-at-beginning-of-defun)))))
+;; Indicators
+(defun elpy-folding--display-code-line-counts (ov)
+  "Display a folded region indicator with the number of folded lines.
+
+Meant to be used as `hs-set-up-overlay'."
+  (let* ((marker-string "*fringe-dummy*")
+         (marker-length (length marker-string)))
+    (cond
+     ((eq 'code (overlay-get ov 'hs))
+      (let* ((nmb-line (count-lines (overlay-start ov) (overlay-end ov)))
+             (display-string (format "(%d)..." nmb-line)))
+        ;; fringe indicator
+        (when elpy-folding-fringe-indicators
+          (put-text-property 0 marker-length 'display
+                             (list 'left-fringe 'elpy-folding-fringe-marker
+                                   'elpy-folding-fringe-face)
+                             marker-string)
+          (overlay-put ov 'before-string marker-string)
+          (overlay-put ov 'elpy-hs-fringe t))
+        ;; folding indicator
+        (put-text-property 0 (length display-string)
+                           'face 'elpy-folding-face display-string)
+        (put-text-property 0 (length display-string)
+                           'mouse-face 'highlight display-string)
+        (overlay-put ov 'display display-string)
+        (overlay-put ov 'elpy-hs-folded t)))
+     ;; for docstring and comments, we don't display the number of line
+     ((or (eq 'docstring (overlay-get ov 'hs))
+          (eq 'comment (overlay-get ov 'hs)))
+      (let ((display-string "..."))
+        (put-text-property 0 (length display-string)
+                           'mouse-face 'highlight display-string)
+        (overlay-put ov 'display display-string)
+        (overlay-put ov 'elpy-hs-folded t))))))
+
+(defun elpy-folding--mark-foldable-lines (&optional beg end rm-text-len)
+  "Add a fringe indicator for foldable lines.
+
+Meant to be used as a hook to `after-change-functions'."
+  (when elpy-folding-fringe-indicators
+    (save-excursion
+      (save-restriction
+        (save-match-data
+          (when (and beg end)
+            (narrow-to-region (progn (goto-char beg)
+                                     (line-beginning-position))
+                              (progn (goto-char end)
+                                     (line-end-position))))
+          (remove-overlays (point-min) (point-max) 'elpy-hs-foldable t)
+          (goto-char (point-min))
+          (while (re-search-forward
+                  python-nav-beginning-of-defun-regexp nil t)
+            (let* ((beg (line-beginning-position))
+                   (end (line-end-position))
+                   (ov (make-overlay beg end))
+                   (marker-string "*fringe-dummy*")
+                   (marker-length (length marker-string)))
+              (when (version<= "25.2" emacs-version)
+                (put-text-property 0 marker-length
+                                   'display
+                                   (list
+                                    'left-fringe
+                                    'elpy-folding-fringe-foldable-marker
+                                    'elpy-folding-fringe-face)
+                                   marker-string)
+                (overlay-put ov 'before-string marker-string))
+              (overlay-put ov 'elpy-hs-foldable t))))))))
+
+;; Mouse interaction
+(defun elpy-folding--click-fringe (event)
+  "Hide or show block on fringe click."
+  (interactive "e")
+  (hs-life-goes-on
+   (when elpy-folding-fringe-indicators
+     (mouse-set-point event)
+     (let* ((folded (save-excursion
+                      (end-of-line)
+                      (cl-remove-if-not (lambda (ov)
+                                          (overlay-get ov 'elpy-hs-folded))
+                                        (overlays-at (point)))))
+            (foldable (cl-remove-if-not (lambda (ov)
+                                          (overlay-get ov 'elpy-hs-foldable))
+                                        (overlays-at (point)))))
+       (if folded
+           (hs-show-block)
+         (if foldable
+             (hs-hide-block)))))))
+
+(defun elpy-folding--click-text (event)
+  "Show block on click."
+  (interactive "e")
+  (hs-life-goes-on
+   (save-excursion
+     (let ((window (posn-window (event-end event)))
+           (pos (posn-point (event-end event))))
+       (with-current-buffer (window-buffer window)
+         (goto-char pos)
+         (when (hs-overlay-at (point))
+           (hs-show-block)
+           (deactivate-mark)))))))
+
+;; Hidding docstrings
+(defun elpy-folding--hide-docstring-region (beg end)
+  "Hide a region from BEG to END, marking it as a docstring.
+
+BEG and END have to be respectively on the first and last line
+of the docstring, their values are adapted to hide only the
+docstring body."
+  (hs-life-goes-on
+   ;; do not fold oneliners
+   (when (not (save-excursion
+                (goto-char beg)
+                (beginning-of-line)
+                (re-search-forward
+                 (concat elpy-folding-docstring-regex
+                         ".*"
+                         elpy-folding-docstring-regex)
+                 (line-end-position) t)))
+     ;; get begining position (do not fold first doc line)
+     (save-excursion
+       (goto-char beg)
+       (when (save-excursion
+               (beginning-of-line)
+               (re-search-forward
+                (concat elpy-folding-docstring-regex
+                        "[[:space:]]*$")
+                (line-end-position) t))
+         (forward-line 1))
+       (beginning-of-line)
+       (back-to-indentation)
+       (setq beg (point))
+       (setq ov-beg (line-end-position)))
+     ;; get end position
+     (save-excursion
+       (goto-char end)
+       (setq end (line-beginning-position))
+       (setq ov-end (line-end-position)))
+     (hs-discard-overlays ov-beg ov-end)
+     (hs-make-overlay ov-beg ov-end 'docstring (- beg ov-beg) (- end ov-end))
+     (run-hooks 'hs-hide-hook)
+     (goto-char beg))))
+
+(defun elpy-folding--hide-docstring-at-point ()
+  "Hide the docstring at point."
+  (hs-life-goes-on
+   (let ((hs-block-start-regexp elpy-docstring-block-start-regexp))
+     (when (and (elpy-info-docstring-p) (not (hs-already-hidden-p)))
+       (let (beg end line-beg line-end)
+         ;; Get first doc line
+         (if (not (save-excursion (forward-line -1)
+                                  (elpy-info-docstring-p)))
+             (setq beg (line-beginning-position))
+           (forward-line -1)
+           (end-of-line)
+           (re-search-backward (concat "^[[:space:]]*"
+                                       elpy-folding-docstring-regex)
+                               nil t)
+           (setq beg (line-beginning-position)))
+         ;; Go to docstring opening (to be sure to be inside the docstring)
+         (re-search-forward elpy-folding-docstring-regex nil t)
+         (setq line-beg (line-number-at-pos))
+         ;; Get last line
+         (if (not (save-excursion (forward-line 1)
+                                  (elpy-info-docstring-p)))
+             (progn
+               (setq end (line-end-position))
+               (setq line-end (line-number-at-pos)))
+           (re-search-forward elpy-folding-docstring-regex nil t)
+           (setq end (line-end-position))
+           (setq line-end (line-number-at-pos)))
+         ;; hide the docstring
+         (when (not (= line-end line-beg))
+           (elpy-folding--hide-docstring-region beg end)))))))
+
+(defun elpy-folding--show-docstring-at-point ()
+  "Show docstring at point."
+  (hs-life-goes-on
+   (let ((hs-block-start-regexp elpy-docstring-block-start-regexp))
+     (when (elpy-info-docstring-p)
+       (hs-show-block)))))
+
+(defvar-local elpy-folding-docstrings-hidden nil
+  "If docstrings are globally hidden or not.")
+
+(defun elpy-folding-toggle-docstrings ()
+  "Fold or unfold every docstrings in the current buffer."
+  (interactive)
+  (if (not hs-minor-mode)
+      (message "Please enable the 'Folding module' to use this functionality.")
+    (hs-life-goes-on
+     (save-excursion
+       (goto-char (point-min))
+       (while (python-nav-forward-defun)
+         (search-forward-regexp ")\\s-*:" nil t)
+         (forward-line)
+         (when (and (elpy-info-docstring-p)
+                    (progn
+                      (beginning-of-line)
+                      (search-forward-regexp elpy-folding-docstring-regex
+                                             nil t)))
+           (forward-char 2)
+           (back-to-indentation)
+           ;; be sure not to act on invisible docstrings
+           (unless (and (hs-overlay-at (point))
+                        (not (eq (overlay-get (hs-overlay-at (point)) 'hs)
+                                 'docstring)))
+             (if elpy-folding-docstrings-hidden
+                 (elpy-folding--show-docstring-at-point)
+               (elpy-folding--hide-docstring-at-point)))))))
+    (setq elpy-folding-docstrings-hidden (not elpy-folding-docstrings-hidden))))
+
+;; Hiding comments
+(defvar-local elpy-folding-comments-hidden nil
+  "If comments are globally hidden or not.")
+
+(defun elpy-folding-toggle-comments ()
+  "Fold or unfold every comment blocks in the current buffer."
+  (interactive)
+  (if (not hs-minor-mode)
+      (message "Please enable the 'Folding module' to use this functionality.")
+    (hs-life-goes-on
+     (save-excursion
+       (goto-char (point-min))
+       (while (comment-search-forward (point-max) t)
+         ;; be suse not to act on invisible comments
+         (unless (and (hs-overlay-at (point))
+                      (not (eq (overlay-get (hs-overlay-at (point)) 'hs)
+                               'comment)))
+           (if (not elpy-folding-comments-hidden)
+               ;; be sure to be on a multiline comment
+               (when (save-excursion (forward-line)
+                                     (comment-only-p (line-beginning-position)
+                                                     (line-end-position)))
+                 (hs-hide-block))
+             (hs-show-block)))
+         (python-util-forward-comment (buffer-size))))
+     (setq elpy-folding-comments-hidden (not elpy-folding-comments-hidden)))))
+
+;; Hiding leafs
+;;     taken from https://www.emacswiki.org/emacs/HideShow
+(defun elpy-folding--hide-leafs (beg end)
+  "Hide blocks that do not contain others blocks in region (BEG END)."
+  (hs-life-goes-on
+   (save-excursion
+     (goto-char beg)
+     ;; Find the current block beginning and end
+     (when (hs-find-block-beginning)
+       (setq beg (1+ (point)))
+       (funcall hs-forward-sexp-func 1)
+       (setq end (1- (point))))
+     ;; Show all branches if nesting not allowed
+     (unless hs-allow-nesting
+       (hs-discard-overlays beg end))
+     ;; recursively treat current block leafs
+     (let ((leaf t))
+       (while (progn
+                (forward-comment (buffer-size))
+                (and (< (point) end)
+                     (re-search-forward hs-block-start-regexp end t)))
+         (setq pos (match-beginning hs-block-start-mdata-select))
+         (if (elpy-folding--hide-leafs pos end)
+             (save-excursion
+               (goto-char pos)
+               (hs-hide-block-at-point t)))
+         (setq leaf nil))
+       (goto-char end)
+       (run-hooks 'hs-hide-hook)
+       leaf))))
+
+(defun elpy-folding-hide-leafs ()
+  "Hide all blocks that do not contain other blocks."
+  (interactive)
+  (if (not hs-minor-mode)
+      (message "Please enable the 'Folding module' to use this functionality.")
+    (hs-life-goes-on
+     (let ((beg (save-excursion
+                  (goto-char (if (use-region-p) (region-beginning) (point-min)))
+                  (line-beginning-position)))
+           (end (save-excursion
+                  (goto-char (if (use-region-p) (region-end) (point-max)))
+                  (1+ (line-end-position)))))
+       (elpy-folding--hide-leafs beg end)))))
+
+;; DWIM functions
+(defun elpy-folding--hide-region (beg end)
+  "Hide the region betwwen BEG and END."
+  (hs-life-goes-on
+   (save-excursion
+     (let ((beg-eol (progn (goto-char beg) (line-end-position)))
+           (end-eol (progn (goto-char end) (line-end-position))))
+       (hs-discard-overlays beg-eol end-eol)
+       (hs-make-overlay beg-eol end-eol 'code (- beg beg-eol) (- end end-eol))
+       (run-hooks 'hs-hide-hook)
+       (deactivate-mark)))))
+
+(defun elpy-folding-toggle-at-point ()
+  "Fold/Unfold the block, comment or docstring at point.
+
+If a region is selected, fold that region."
+  (interactive)
+  (if (not hs-minor-mode)
+      (message "Please enable the 'Folding module' to use this functionality.")
+    (hs-life-goes-on
+     ;; Use selected region
+     (if (use-region-p)
+         (elpy-folding--hide-region (region-beginning) (region-end))
+       ;; Adapt starting regexp if on a docstring
+       (let ((hs-block-start-regexp
+              (if (elpy-info-docstring-p)
+                  elpy-docstring-block-start-regexp
+                hs-block-start-regexp)))
+         ;; Hide or fold
+         (cond
+          ((hs-already-hidden-p)
+           (hs-show-block))
+          ((elpy-info-docstring-p)
+           (elpy-folding--hide-docstring-at-point))
+          (t
+           (hs-hide-block))))))))
 
 ;;;;;;;;;;;;;;;;;;;
 ;;; Module: Flymake
@@ -3075,6 +3606,11 @@ display the current class and method instead."
                     '("\\.py\\'" elpy-flymake-python-init))))
 
     (`buffer-init
+     ;; Avoid fringes clash between flymake and folding indicators
+     (if (and (member 'elpy-module-folding elpy-modules)
+              elpy-folding-fringe-indicators)
+         (setq-local flymake-fringe-indicator-position 'right-fringe)
+       (setq-local flymake-fringe-indicator-position 'left-fringe))
      ;; Set this for `elpy-check' command
      (setq-local python-check-command elpy-syntax-check-command)
      ;; For emacs > 26.1, python.el natively supports flymake,
@@ -3461,6 +3997,21 @@ which we're looking."
 (unless (fboundp 'python-info-encoding)
   (defun python-info-encoding ()
     'utf-8))
+
+;; first-prompt-hook has been added in emacs 25.
+;; for earlier versions, make sure Elpy's setup code is
+;; still send to the python shell.
+(unless (boundp 'python-shell-first-prompt-hook)
+  (add-hook 'inferior-python-mode-hook
+            (lambda ()
+              (when (elpy-project-root)
+                (let ((process (get-buffer-process (current-buffer))))
+                  (python-shell-send-string
+                   (format "import sys;sys.path.append('%s');del sys"
+                           (elpy-project-root))
+                   process))))))
+
+
 
 ;; Added in Emacs 25
 (unless (fboundp 'python-shell-comint-end-of-output-p)

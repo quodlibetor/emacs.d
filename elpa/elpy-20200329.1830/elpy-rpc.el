@@ -74,8 +74,12 @@ this to prevent this from happening."
                                      "python")
   "The Python interpreter for the RPC backend.
 
-This should be the same interpreter the project will be run with,
-and not an interactive shell like ipython."
+This should NOT be an interactive shell like ipython or jupyter.
+
+As the RPC should be independent of any virtual environment, Elpy
+will try to use the system interpreter if it exists. If you wish
+to use a specific python interpreter (from a virtual environment
+for example), set this to the full interpreter path."
   :type '(choice (const :tag "python" "python")
                  (const :tag "python2" "python2")
                  (const :tag "python3" "python3")
@@ -87,7 +91,8 @@ and not an interactive shell like ipython."
   ;; Make sure there is no obsolete rpc running
   :set (lambda (var val)                ;
          (set-default var val)
-         (when (fboundp 'elpy-rpc-restart)
+         (when (and (fboundp 'elpy-rpc-restart)
+                    (not (autoloadp #'elpy-rpc-restart)))
            (elpy-rpc-restart)))
   :group 'elpy)
 
@@ -261,7 +266,7 @@ During the execution of BODY the following variables are available:
                  current-environment-binaries)))))
             ;; No need to change of venv if they are the same
             (same-venv (or (string= current-environment
-                                     (elpy-rpc-get-virtualenv-path))
+                                    (elpy-rpc-get-virtualenv-path))
                            (file-equal-p current-environment
                                          (elpy-rpc-get-virtualenv-path))))
             current-environment-is-deactivated)
@@ -271,11 +276,15 @@ During the execution of BODY the following variables are available:
        (let (venv-err result)
          (condition-case err
              (setq result (progn ,@body))
-           (error (setq venv-err (format "%s" err))))
+           (error (setq venv-err
+                        (if (stringp err)
+                            err
+                          (car (cdr err)))))
+           ;; Make sure the rpc venv is deactivated on quit
+           (quit nil))
          (unless same-venv
            (if venv-was-activated
-               (pyvenv-activate (directory-file-name
-                                 current-environment))
+               (pyvenv-activate venv-was-activated)
              (pyvenv-deactivate)))
          (when venv-err
            (error venv-err))
@@ -328,37 +337,73 @@ binaries used to create the virtualenv."
                    (if venv-need-update "updating" "creating")
                    rpc-venv-path)
           (elpy-rpc--create-virtualenv rpc-venv-path)
-          (pyvenv-activate rpc-venv-path)
-          ;; Add a file to keep track of the `elpy-rpc-python-command` used
-          (with-temp-file venv-python-path-command-file
-            (insert elpy-rpc-python-command))
-          ;; safeguard to be sure we don't install stuff in the wrong venv
-          (when (file-equal-p pyvenv-virtual-env rpc-venv-path)
-            (elpy-rpc--install-dependencies))
-          (elpy-rpc-restart)
+          ;; Make sure the rpc venv is deacivated on quit
+          (condition-case nil
+              (progn
+                (pyvenv-activate rpc-venv-path)
+                ;; Add file to keep track of the `elpy-rpc-python-command` used
+                (with-temp-file venv-python-path-command-file
+                  (insert elpy-rpc-python-command))
+                ;; safeguard to be sure we don't install stuff in the wrong venv
+                (when (file-equal-p pyvenv-virtual-env rpc-venv-path)
+                  (elpy-rpc--install-dependencies))
+                (elpy-rpc-restart))
+            (quit nil))
           ;; Deactivate the rpc venv
           (if deact-venv
               (pyvenv-activate (directory-file-name deact-venv))
-            (pyvenv-deactivate)))))
+            (pyvenv-deactivate))
+          (message "Done"))))
     rpc-venv-path))
 
 (defun elpy-rpc--create-virtualenv (rpc-venv-path)
   "Create a virtualenv for the RPC in RPC-VENV-PATH."
   ;; venv cannot create a proper virtualenv from inside another virtualenv
-  (let ((elpy-rpc-virtualenv-path 'global))
+  (let* ((elpy-rpc-virtualenv-path 'global)
+         success
+         (elpy-venv-buffname-visible "*elpy-virtualenv*")
+         (elpy-venv-buffname (concat " " elpy-venv-buffname-visible)))
+    (when (get-buffer elpy-venv-buffname)
+      (kill-buffer elpy-venv-buffname))
+    (when (get-buffer elpy-venv-buffname-visible)
+      (kill-buffer elpy-venv-buffname-visible))
     (with-elpy-rpc-virtualenv-activated
      (cond
-      ((= 0 (call-process elpy-rpc-python-command nil nil nil
-                          "-m" "venv" "-h"))
-       (with-current-buffer (generate-new-buffer "*venv*")
-         (call-process elpy-rpc-python-command nil t t
-                       "-m" "venv" rpc-venv-path)))
+      ((and (= 0 (call-process elpy-rpc-python-command nil nil nil
+                              "-m" "venv" "-h"))
+           ;; see https://github.com/jorgenschaefer/elpy/issues/1756
+           (= 0 (call-process elpy-rpc-python-command nil nil nil
+                              "-m" "ensurepip" "-h")))
+       (with-current-buffer (get-buffer-create elpy-venv-buffname)
+         (insert (concat "Running '" elpy-rpc-python-command " -m venv "
+                         rpc-venv-path "':\n\n"))
+         (setq success (call-process elpy-rpc-python-command nil t t
+                                     "-m" "venv" rpc-venv-path))))
       ((executable-find "virtualenv")
-       (with-current-buffer (generate-new-buffer "*virtualenv*")
-         (call-process "virtualenv" nil t t
-                       "-p" elpy-rpc-python-command rpc-venv-path)))
+       (with-current-buffer (get-buffer-create elpy-venv-buffname)
+         (insert (concat "Running 'virtualenv -p "
+                         elpy-rpc-python-command " " rpc-venv-path
+                         "':\n\n"))
+         (setq success (call-process "virtualenv" nil t t "-p"
+                                     elpy-rpc-python-command rpc-venv-path))))
       (t
-       (error "Elpy necessitates the 'virtualenv' python package, please install it with `pip install virtualenv`"))))))
+       (error "Elpy needs the 'virtualenv' or 'venv' python packages to create its virtualenv. Please install one of them or disable the dedicated virtualenv with `(setq elpy-rpc-virtualenv-path 'current)`"))))
+    ;; warn us if something wrong happened
+    (unless (= 0 success)
+      (with-current-buffer elpy-venv-buffname
+        (rename-buffer elpy-venv-buffname-visible)
+        (goto-char (point-max))
+        (insert
+         (concat
+          "\n\n"
+          "Elpy failed to install its dedicated virtualenv due to the above\n"
+          "error. If the error details does not help you fixing it, You can\n"
+          "report this problem on Elpy repository on github.\n"
+          "In the meantime, setting the `elpy-rpc-virtualenv-path' option to\n"
+          "either `global' or `current' should temporarily fix the issue.")))
+      (error (concat "Elpy failed to create its dedicated virtualenv. "
+                     "Please check the `" elpy-venv-buffname-visible
+                     "' buffer.")))))
 
 (defun elpy-rpc--install-dependencies ()
   "Install the RPC dependencies in the current virtualenv."
@@ -388,6 +433,18 @@ binaries used to create the virtualenv."
           (y-or-n-p (format "Are you sure you want to reinstall the virtualenv in '%s' (every manual modifications will be lost) ? " rpc-venv-path))))
       (delete-directory rpc-venv-path t)
       (elpy-rpc-get-or-create-virtualenv))))
+
+(defun elpy-rpc--pip-missing ()
+  "Return t if pip is not installed in the RPC virtualenv."
+  (let* ((rpc-venv-path (file-name-as-directory
+                         (elpy-rpc-get-virtualenv-path))))
+    (not (or
+          (file-exists-p (concat rpc-venv-path
+                                 (file-name-as-directory "Scripts")
+                                 "pip"))
+          (file-exists-p (concat rpc-venv-path
+                                 (file-name-as-directory "bin")
+                                 "pip"))))))
 
 ;;;;;;;;;;;;;;;;;;;
 ;;; Promise objects
@@ -987,6 +1044,19 @@ able to respond to other calls.
 Returns a calltip string for the function call at point."
   (when (< (buffer-size) elpy-rpc-ignored-buffer-size)
     (elpy-rpc "get_calltip"
+              (list buffer-file-name
+                    (elpy-rpc--buffer-contents)
+                    (- (point)
+                       (point-min)))
+              success error)))
+
+
+(defun elpy-rpc-get-calltip-or-oneline-docstring (&optional success error)
+  "Call the get_calltip_or_oneline_doc API function.
+
+Returns a calltip string or a oneline docstring for the function call at point."
+  (when (< (buffer-size) elpy-rpc-ignored-buffer-size)
+    (elpy-rpc "get_calltip_or_oneline_docstring"
               (list buffer-file-name
                     (elpy-rpc--buffer-contents)
                     (- (point)

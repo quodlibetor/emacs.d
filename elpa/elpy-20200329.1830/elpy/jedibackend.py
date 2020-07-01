@@ -70,7 +70,13 @@ class JediBackend(object):
                                    source=source, line=line, column=column,
                                    path=filename, encoding='utf-8',
                                    environment=self.environment)
-        if locations and locations[-1].docstring():
+        if not locations:
+            return None
+        # Filter uninteresting things
+        if locations[-1].name in ["str", "int", "float", "bool", "tuple",
+                                  "list", "dict"]:
+            return None
+        if locations[-1].docstring():
             return ('Documentation for {0}:\n\n'.format(
                 locations[-1].full_name) + locations[-1].docstring())
         else:
@@ -157,13 +163,40 @@ class JediBackend(object):
             call = None
         if not call:
             return None
-        # Strip 'param' added by jedi at the beggining of
+        # Strip 'param' added by jedi at the beginning of
         # parameter names. Should be unecessary for jedi > 0.13.0
         params = [re.sub("^param ", '', param.description)
                   for param in call.params]
         return {"name": call.name,
                 "index": call.index,
                 "params": params}
+
+    def rpc_get_calltip_or_oneline_docstring(self, filename, source, offset):
+        """
+        Return the current function calltip or its oneline docstring.
+
+        Meant to be used with eldoc.
+        """
+        # Try to get a oneline docstring then
+        docs = self.rpc_get_oneline_docstring(filename=filename,
+                                              source=source,
+                                              offset=offset)
+        if docs is not None:
+            if docs['doc'] != "No documentation":
+                docs['kind'] = 'oneline_doc'
+                return docs
+        # Try to get a calltip
+        calltip = self.rpc_get_calltip(filename=filename, source=source,
+                                       offset=offset)
+        if calltip is not None:
+            calltip['kind'] = 'calltip'
+            return calltip
+        # Ok, no calltip, just display the function name
+        if docs is not None:
+            docs['kind'] = 'oneline_doc'
+            return docs
+        # Giving up...
+        return None
 
     def rpc_get_oneline_docstring(self, filename, source, offset):
         """Return a oneline docstring for the symbol at offset"""
@@ -172,6 +205,13 @@ class JediBackend(object):
                                      source=source, line=line, column=column,
                                      path=filename, encoding='utf-8',
                                      environment=self.environment)
+        # avoid unintersting stuff
+        try:
+            if definitions[0].name in ["str", "int", "float", "bool", "tuple",
+                                       "list", "dict"]:
+                return None
+        except:
+            pass
         assignments = run_with_debug(jedi, 'goto_assignments',
                                      source=source, line=line, column=column,
                                      path=filename, encoding='utf-8',
