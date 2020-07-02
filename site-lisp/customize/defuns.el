@@ -273,3 +273,9 @@ from https://www.emacswiki.org/emacs-test/UnfillParagraph"
   (let ((fill-column (point-max))
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
+
+(require 'ansi-color)
+(defun ansi-color-buffer ()
+  (interactive)
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
