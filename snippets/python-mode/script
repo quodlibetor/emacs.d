@@ -1,0 +1,23 @@
+# key: script
+# name: script
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#!/usr/bin/env python3
+
+import argparse
+import sys
+
+
+def main(args) -> None:
+    args = parse_args(args)
+    $0
+
+
+def parse_args(args) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="${1}")
+
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    main(sys.argv)
