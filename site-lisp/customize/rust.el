@@ -40,4 +40,8 @@
 (use-package rust-mode)
 (use-package rustic
   :init
-  (setq rustic-format-trigger 'on-save))
+  (setq rustic-format-trigger 'on-save)
+  :hook
+  (rust-mode . (lambda ()
+                 (local-set-key (kbd "M-n") 'flycheck-next-error)
+                 (local-set-key (kbd "M-p") 'flycheck-previous-error))))
