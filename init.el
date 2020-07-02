@@ -71,6 +71,19 @@
 (when (string-equal system-type "darwin")
   (load "customize/osx"))
 
+(require 'use-package)
+(use-package vterm
+  :ensure t
+  :hook
+  (vterm-mode . (lambda () (dont-show-trailing-whitespace)))
+  :custom
+  ; (vterm-clear-scrollback t "when true, don't clear scrollback?!")
+  (vterm-shell "zsh")
+  (term-prompt-regex "❯")
+  (vterm-kill-buffer-on-exit t)
+  (vterm-max-scrollback 100000)
+  )
+
 (prefer-coding-system 'utf-8)
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -315,7 +328,9 @@
  '(rst-level-2-face ((t (:background "grey13"))) t)
  '(rst-level-3-face ((t (:background "grey20"))) t)
  '(rst-level-4-face ((t (:background "grey25"))) t)
- '(rst-level-5-face ((t (:background "grey30"))) t))
+ '(rst-level-5-face ((t (:background "grey30"))) t)
+ '(vterm-color-blue ((t (:foreground "DeepSkyBlue"))))
+ '(vterm-color-red ((t (:foreground "firebrick1")))))
 
 (let ((local (expand-file-name "~/.emacs.d/local.el")))
   (when (file-exists-p local)
