@@ -41,7 +41,7 @@
 (use-package rustic
   :init
   (setq rustic-format-trigger 'on-save)
-  :hook
-  (rust-mode . (lambda ()
-                 (local-set-key (kbd "M-n") 'flycheck-next-error)
-                 (local-set-key (kbd "M-p") 'flycheck-previous-error))))
+  :bind (:map rustic-mode-map
+              ("M-n" . flycheck-next-error)
+              ("M-p" . flycheck-previous-error)
+              ("C-h f" . lsp-describe-thing-at-point)))
