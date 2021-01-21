@@ -42,5 +42,5 @@
               (venv-workon project-venv-name)
               (ansible-doc-mode))))
 
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))

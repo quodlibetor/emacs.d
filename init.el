@@ -84,6 +84,14 @@
   (vterm-max-scrollback 100000)
   )
 
+(use-package literate-calc-mode
+  :ensure t)
+
+(mz-testdrive-enable)
+(add-hook 'mz-testdrive-mode-hook
+    (lambda ()
+        (flymake-mode 0)))
+
 (prefer-coding-system 'utf-8)
 
 ;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -100,60 +108,42 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
- '(compilation-scroll-output (quote first-error))
+ '(compilation-scroll-output 'first-error)
  '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa")))
+   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"))
  '(dired-dwim-target t)
  '(fci-rule-color "#373b41")
  '(flycheck-yamllintrc ".yamllintrc.yml")
  '(helm-grep-ag-command "rg --smart-case --no-heading --line-number %s %s %s")
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
- '(magit-pull-arguments (quote "--rebase"))
- '(magit-tag-arguments (quote ("--annotate")))
+ '(magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
+ '(magit-pull-arguments '"--rebase")
+ '(magit-tag-arguments '("--annotate"))
  '(markdown-command "cmark")
- '(org-agenda-files (quote ("~/org/work.org")))
+ '(org-agenda-files '("~/org/work.org"))
  '(package-selected-packages
-   (quote
-    (flycheck-mypy flymake-mypy vterm deadgrep protobuf-mode cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized)))
+   '(helm-lsp literate-calc-mode mz-testdrive helm-fd flycheck-mypy flymake-mypy vterm deadgrep protobuf-mode cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized))
  '(paradox-automatically-star nil)
  '(rustic-ansi-faces
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])
  '(safe-local-variable-values
-   (quote
-    ((eval progn
-           (put
-            (quote defendpoint)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote defendpoint-async)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote api/defendpoint)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote api/defendpoint-async)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote defsetting)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote setting/defsetting)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote s/defn)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote p\.types/defprotocol+)
-            (quote clojure-doc-string-elt)
-            2)
+   '((lsp-rust-analyzer-import-merge-behaviour . "last")
+     (rustic-lsp-server . "rust-analyzer")
+     (lsp-rust-server . "rust-analyzer")
+     (lsp-rust-target-dir . "/Users/bwm/github/materialize/target/rls")
+     (rustic-format-on-save)
+     (flymake-shellcheck-args
+      ("-f" "gcc" "-x" "-P" "/Users/bwm/github/infra/"))
+     (flymake-shellcheck-args
+      ("-f" "gcc" "-P" "/Users/bwm/github/infra/" "--check-sourced"))
+     (eval progn
+           (put 'defendpoint 'clojure-doc-string-elt 3)
+           (put 'defendpoint-async 'clojure-doc-string-elt 3)
+           (put 'api/defendpoint 'clojure-doc-string-elt 3)
+           (put 'api/defendpoint-async 'clojure-doc-string-elt 3)
+           (put 'defsetting 'clojure-doc-string-elt 2)
+           (put 'setting/defsetting 'clojure-doc-string-elt 2)
+           (put 's/defn 'clojure-doc-string-elt 2)
+           (put 'p\.types/defprotocol+ 'clojure-doc-string-elt 2)
            (define-clojure-indent
              (assert 1)
              (ex-info 1)
@@ -162,58 +152,30 @@
              (match 1)
              (merge-with 1)
              (p\.types/defprotocol+
-              (quote
-               (1
-                (:defn))))
+              '(1
+                (:defn)))
              (p\.types/def-abstract-type
-              (quote
-               (1
-                (:defn))))
+              '(1
+                (:defn)))
              (p\.types/deftype+
-              (quote
-               (2 nil nil
-                  (:defn))))
+              '(2 nil nil
+                  (:defn)))
              (p\.types/defrecord+
-              (quote
-               (2 nil nil
-                  (:defn))))))
+              '(2 nil nil
+                  (:defn)))))
      (rustic-workspace-dir)
      (rustic-workspace-dir . "/Users/bwm/github/rust-postgres")
      (rustic-format-trigger)
      (cljr-favor-prefix-notation . t)
      (eval progn
-           (put
-            (quote defendpoint)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote defendpoint-async)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote api/defendpoint)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote api/defendpoint-async)
-            (quote clojure-doc-string-elt)
-            3)
-           (put
-            (quote defsetting)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote setting/defsetting)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote s/defn)
-            (quote clojure-doc-string-elt)
-            2)
-           (put
-            (quote p\.types/defprotocol+)
-            (quote clojure-doc-string-elt)
-            2)
+           (put 'defendpoint 'clojure-doc-string-elt 3)
+           (put 'defendpoint-async 'clojure-doc-string-elt 3)
+           (put 'api/defendpoint 'clojure-doc-string-elt 3)
+           (put 'api/defendpoint-async 'clojure-doc-string-elt 3)
+           (put 'defsetting 'clojure-doc-string-elt 2)
+           (put 'setting/defsetting 'clojure-doc-string-elt 2)
+           (put 's/defn 'clojure-doc-string-elt 2)
+           (put 'p\.types/defprotocol+ 'clojure-doc-string-elt 2)
            (define-clojure-indent
              (assert 1)
              (ex-info 1)
@@ -223,21 +185,17 @@
              (merge-with 1)
              (with-redefs-fn 1)
              (p\.types/defprotocol+
-              (quote
-               (1
-                (:defn))))
+              '(1
+                (:defn)))
              (p\.types/def-abstract-type
-              (quote
-               (1
-                (:defn))))
+              '(1
+                (:defn)))
              (p\.types/deftype+
-              (quote
-               (2 nil nil
-                  (:defn))))
+              '(2 nil nil
+                  (:defn)))
              (p\.types/defrecord+
-              (quote
-               (2 nil nil
-                  (:defn))))))
+              '(2 nil nil
+                  (:defn)))))
      (flycheck-checker . python-flake8-chain)
      (venv-name . "consumer")
      (venv-current-dir . "/Users/bwm/.virtualenvs/consumer")
@@ -258,29 +216,25 @@
                             (buffer-file-name)))
            (emacs-lisp-mode)
            (when
-               (fboundp
-                (quote flycheck-mode))
+               (fboundp 'flycheck-mode)
              (flycheck-mode -1))
            (unless
-               (featurep
-                (quote package-build))
+               (featurep 'package-build)
              (let
                  ((load-path
                    (cons ".." load-path)))
-               (require
-                (quote package-build))))
+               (require 'package-build)))
            (package-build-minor-mode))
      (pytest-compile-runner-format . nose)
      (pytest-compile-runner-format quote nose)
      (virtualenv-default-directory . "/home/bwm/projects/schedaddle/")
      (virtualenv-workon . "schedaddle3")
      (pytest-compile-test-runner . "nosetests")
-     (pytest-compile-runner-format . "nose"))))
+     (pytest-compile-runner-format . "nose")))
  '(term-buffer-maximum-size 50000)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
-   (quote
-    ((20 . "#cc6666")
+   '((20 . "#cc6666")
      (40 . "#de935f")
      (60 . "#f0c674")
      (80 . "#b5bd68")
@@ -297,7 +251,7 @@
      (300 . "#cc6666")
      (320 . "#de935f")
      (340 . "#f0c674")
-     (360 . "#b5bd68"))))
+     (360 . "#b5bd68")))
  '(vc-annotate-very-old-color nil))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
@@ -329,8 +283,9 @@
  '(rst-level-3-face ((t (:background "grey20"))) t)
  '(rst-level-4-face ((t (:background "grey25"))) t)
  '(rst-level-5-face ((t (:background "grey30"))) t)
- '(vterm-color-blue ((t (:foreground "DeepSkyBlue"))))
- '(vterm-color-red ((t (:foreground "firebrick1")))))
+ '(vterm-color-black ((t (:foreground "slate gray"))))
+ '(vterm-color-blue ((t (:foreground "deep sky blue"))))
+ '(vterm-color-red ((t (:foreground "light coral")))))
 
 (let ((local (expand-file-name "~/.emacs.d/local.el")))
   (when (file-exists-p local)

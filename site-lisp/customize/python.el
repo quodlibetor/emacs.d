@@ -3,7 +3,6 @@
 ; to customize it
 
 ;; (add-hook 'python-mode-hook 'lsp)
-
 (setq elpy-modules
       '(elpy-module-sane-defaults
         elpy-module-company
@@ -11,8 +10,17 @@
         elpy-module-pyvenv
         elpy-module-yasnippet))
 
-(require 'elpy)
-(elpy-enable)
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  :hook
+  (elpy-mode . (lambda ()
+                 (setq-local flycheck-checker 'python-mypy)
+                 (flycheck-mode)
+                 )
+             )
+  )
 
 (add-to-list 'auto-mode-alist
              '("pyflymakerc$" . python-mode))
@@ -28,10 +36,6 @@
 
 (global-set-key (kbd "C-j") 'bwm:sane-newline)
 
-(require 'pydoc)
-(eval-after-load 'python-mode
-  (define-key python-mode-map (kbd "C-h f") 'pydoc-at-point))
-
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 
@@ -40,11 +44,30 @@
             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
               (py-gnitset-mode))))
 
-;(require 'flycheck)
+;; (require 'flymake)
+
+;; (defun flymake-mypy-init ()
+;;   "Init mypy."
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace))
+;;          (local-file (file-relative-name
+;;                       temp-file
+;;                       (file-name-directory buffer-file-name))))
+;;     (message "mypy initialized")
+;;     (list "mypy" (list local-file "-s"))))
+
+
+;; (when (load "flymake" t)
+;;   (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-mypy-init))
+;;   )
+
+(require 'flycheck)
+;; (use-package flycheck-mypy
+;;   :ensure t)
 ;(require 'flycheck-mypy)
 
-;; (setq flycheck-python-mypy-args
-;;       '("--strict-optional" "--ignore-missing-imports"))
+(setq flycheck-python-mypy-args
+      '("--strict-optional"))
 
 ;; if possible, set this in dir-locals:
 ;; ((python-mode . ((flycheck-python-mypy-args . ("--disallow-untyped-defs"
@@ -67,6 +90,7 @@
 ;; ;; replace flake8 with new chaining one from above
 ;; ;(setq flycheck-checkers (cons 'python-flake8-chain (delq 'python-flake8 flycheck-checkers)))
 ;; (setq flycheck-checkers (cons 'python-my-chain flycheck-checkers))
+;(setq flycheck-checkers (cons 'python-mypy flycheck-checkers))
 
 (add-hook 'python-mode-hook
           (lambda ()

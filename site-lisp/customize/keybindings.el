@@ -1,5 +1,5 @@
 (when (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
-
+(require 'flymake)
 (global-set-key (kbd "<f2>") 'flycheck-next-error)
 (global-set-key (kbd "M-<f2>") 'flycheck-previous-error)
 (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)

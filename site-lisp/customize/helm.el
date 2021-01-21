@@ -40,6 +40,11 @@
                         :box nil
                         :height 0.1)))
 
+(use-package helm-fd
+  :ensure t
+  :bind (:map helm-command-map
+              ("/" . helm-fd)))
+
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work
 
@@ -58,35 +63,36 @@ Increasing prefixes expand the number of files to look at:
 based off of http://stackoverflow.com/a/19284509/25616"
   ;; just in case someone decides to pass an argument, helm-omni won't fail.
   (interactive "P")
-  (let* (;(helm-ff-transformer-show-only-basename nil)
-         (sources (append ;; projectile errors out if you're not in a project
-                          (if (projectile-project-p) ;; so look before you leap
-                              '(  ;helm-source-projectile-recentf-list
-                                  ;helm-source-projectile-buffers-list
-                                helm-source-projectile-files-list)
-                            '(helm-c-source-files-in-current-dir))
+  (let* (                   ;(helm-ff-transformer-show-only-basename nil)
+         (sources (append   ;; projectile errors out if you're not in a project
+                   (if (projectile-project-p) ;; so look before you leap
+                       '(               ;helm-source-projectile-recentf-list
+                                        ;helm-source-projectile-buffers-list
+                         helm-source-projectile-files-list)
+                     '(helm-c-source-files-in-current-dir))
 
-                          '(helm-source-buffers-list ;; list of all open buffers
-                            ;helm-source-buffer-not-found     ;; ask to create a buffer otherwise
-                            )))
+                   '(helm-source-buffers-list ;; list of all open buffers
+                                        ;helm-source-buffer-not-found     ;; ask to create a buffer otherwise
+                     )))
          (sources (if arg
-                      (append '(helm-c-source-recentf     ;; all recent files
-                                helm-source-locate        ;; file anywhere
+                      (append '(helm-c-source-recentf ;; all recent files
+                                helm-source-locate    ;; file anywhere
                                 )
                               sources
                               '(helm-c-source-bookmarks)) ;; bookmarks too
                     sources))
          (helm-boring-file-regexp-list (if (and arg (> (car arg) 4))
                                            (remove "/src/"
-                                                 (remove "virtualenvs"
-                                                       helm-boring-file-regexp-list))
+                                                   (remove "virtualenvs"
+                                                           helm-boring-file-regexp-list))
                                          helm-boring-file-regexp-list)))
     (helm-other-buffer (if (projectile-project-p) ;; so look before you leap
-                              '(  ;helm-source-projectile-recentf-list
-                                  ;helm-source-projectile-buffers-list
-                                helm-source-projectile-files-list)
-                            '(helm-c-source-files-in-current-dir)) ; sources
+                           '(           ;helm-source-projectile-recentf-list
+                                        ;helm-source-projectile-buffers-list
+                             helm-source-projectile-files-list)
+                         '(helm-c-source-files-in-current-dir)) ; sources
                        "*helm-find-files*")))
+
 (defun hgrep (arg)
   "Run helm-git-grep, defaulting to nothing
 
