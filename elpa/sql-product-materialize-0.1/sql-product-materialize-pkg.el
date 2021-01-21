@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/bwm/.emacs.d/elpa/sql-product-materialize-0.1/sql-product-materialize.el  -*- no-byte-compile: t -*-
+(define-package "sql-product-materialize" "0.1" "Product definition for materialize" '((sql "0")) :authors '(("Brandon W Maister" . "bwm@materialize.io")) :maintainer '("Brandon W Maister" . "bwm@materialize.io") :keywords '("database") :url "https://github.com/MaterializeInc/materialize/tree/main/misc/editor/emacs")

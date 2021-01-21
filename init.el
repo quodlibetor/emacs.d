@@ -16,6 +16,7 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
 (load "customize/package")
+(require 'bind-key) ; one of my packages depends on use-package, so use-package should happen first?
 (package-initialize)
 
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
@@ -121,7 +122,7 @@
  '(markdown-command "cmark")
  '(org-agenda-files '("~/org/work.org"))
  '(package-selected-packages
-   '(helm-lsp literate-calc-mode mz-testdrive helm-fd flycheck-mypy flymake-mypy vterm deadgrep protobuf-mode cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized))
+   '(lsp-ui helm-lsp literate-calc-mode mz-testdrive helm-fd flycheck-mypy flymake-mypy vterm deadgrep protobuf-mode cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized))
  '(paradox-automatically-star nil)
  '(rustic-ansi-faces
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])

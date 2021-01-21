@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/bwm/.emacs.d/elpa/mz-testdrive-0.1/mz-testdrive.el  -*- no-byte-compile: t -*-
+(define-package "mz-testdrive" "0.1" "Major Mode for testdrive files" '((polymode "0.2.2")) :authors '((nil . "Brandon W Maister <bwm@materialize.io")) :maintainer '(nil . "Brandon W Maister <bwm@materialize.io") :keywords '("testing") :url "https://github.com/MaterializeInc/materialize/tree/main/misc/editor/emacs")

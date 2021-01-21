@@ -13,7 +13,7 @@
 
 (require 'company)
 (require 'lsp)
-(require 'company-lsp)
+;(require 'company-lsp)
 
 (use-package string-inflection
   :ensure t)

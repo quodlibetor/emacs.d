@@ -1,0 +1,2 @@
+;;; Generated package description from /Users/bwm/.emacs.d/elpa/pydoc-20201030.1530/pydoc.el  -*- no-byte-compile: t -*-
+(define-package "pydoc" "20201030.1530" "functional, syntax highlighted pydoc navigation" 'nil :commit "4459aa1c2cc7648cb1b9c9fcf470d8809a9bc7b3" :authors '(("John Kitchin" . "jkitchin@andrew.cmu.edu")) :maintainer '("Brian J. Lopes" . "statmobile@gmail.com") :keywords '("pydoc" "python") :url "https://github.com/statmobile/pydoc")
