@@ -38,6 +38,8 @@
       dired-dwim-target t
       split-height-threshold 500)
 
+; line-wrapping is triggered by visual-line-mode and visual-fill-column-mode
+
 (autoload 'scratch "scratch" nil t)
 
 ;; highlight escape-sequences

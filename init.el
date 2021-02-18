@@ -73,6 +73,7 @@
 (load "customize/find-file")
 (load "customize/keybindings")
 (load "customize/ui")
+(load "customize/lsp")
 (when (string-equal system-type "darwin")
   (load "customize/osx"))
 

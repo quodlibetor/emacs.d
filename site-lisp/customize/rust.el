@@ -37,11 +37,34 @@
 ;;              '(cargo "thread '\\([^']+\\)' panicked at \\('[^']+'\\), \\([^:]+\\):\\([0-9]+\\)"
 ;;                     3 4 nil nil 2 (1 'compilation-info)))
 
+(defun bwm:rust-find-definition (prefix)
+  (interactive "p")
+  (if (eq prefix 1)
+      (lsp-find-definition)
+    (lsp-ui-peek-find-definitions)))
+
 (use-package rust-mode)
 (use-package rustic
-  :init
-  (setq rustic-format-trigger 'on-save)
+  :hook (rust-mode . rustic-mode)
   :bind (:map rustic-mode-map
               ("M-n" . flycheck-next-error)
               ("M-p" . flycheck-previous-error)
-              ("C-h f" . lsp-describe-thing-at-point)))
+              ("M-." . bwm:rust-find-definition)
+              ("C-." . lsp-ui-peek-find-references)
+              ("<C-return>" . helm-lsp-code-actions)
+              ("C-h f" . lsp-ui-doc-show))
+  :custom
+  (rustic-format-trigger nil "use lsp format")
+  (rustic-lsp-format t "use the lsp server instead of cargo fmt")
+  (lsp-ui-doc-show-with-cursor nil "Use `C-h f' for a doc view"))
+
+;; one of the two of these should be enabled
+(setq lsp-rust-analyzer-proc-macro-enable t)
+(setq lsp-rust-analyzer-import-merge-behaviour "last")
+(setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
+; (setq lsp-rust-analyzer-diagnostics-disabled '("unresolved-proc-macro"))
+
+(add-hook 'before-save-hook
+          (lambda ()
+            (when (eq major-mode 'rustic-mode)
+              (lsp-format-buffer))))
