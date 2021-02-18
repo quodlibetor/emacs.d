@@ -25,6 +25,10 @@
 (setenv "PATH" (concat (expand-file-name "~/.cargo/bin:") (getenv "PATH")))
 (setq load-prefer-newer t)
 
+(eval-when-compile
+  (require 'use-package))
+(require 'use-package)
+
 (load "customize/defuns")
 
 ;; language/file modes
