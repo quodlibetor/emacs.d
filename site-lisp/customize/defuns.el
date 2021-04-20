@@ -18,6 +18,13 @@
         (t
          (isearch-forward-regexp))))
 
+(defun url-unquote-region (beginning end)
+  (interactive "*r")
+  (let ((unhexed (url-unhex-string (buffer-substring-no-properties (region-beginning) (region-end)))))
+    (goto-char beginning)
+    (delete-region beginning end)
+    (insert unhexed)))
+
 (defun dont-show-trailing-whitespace ()
   (interactive)
   (set (make-local-variable 'show-trailing-whitespace) nil))
