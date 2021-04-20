@@ -18,6 +18,11 @@
 (use-package string-inflection
   :ensure t)
 
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 ;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 
 (global-company-mode 1)
@@ -142,7 +147,10 @@
     '(diminish 'flycheck-mode "F✓"))
   (eval-after-load "projectile"
     '(diminish 'projectile-mode ""))
+  (eval-after-load "editorconfig"
+    '(diminish 'editorconfig-mode "EC"))
   )
+
 ; auto-revert is loaded before this file
 (diminish 'auto-revert-mode "")
 ; fancy colorful modeline
