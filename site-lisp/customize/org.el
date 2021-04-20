@@ -113,12 +113,12 @@
       ;;                            ("linenos" ""))
       ;; org-latex-listings 'minted
 
-      org-capture-templates '(("t" "Todo" entry (file+headline "~/org/work.org" "Tasks")
+      org-capture-templates '(("t" "Todo" entry (file+headline "~/notes/work.org" "Tasks")
                                "* TODO %?\n  %i\n  %a")
-                              ("j" "Journal" entry (file+datetree "~/org/diary.org")
+                              ("j" "Journal" entry (file+datetree "~/notes/diary.org")
                                "* %?\n%U\n" :clock-in t :clock-resume t)
-                              ("a" "Alexandria" entry (file+headline "~/org/work.org" "Alexandria")
-                               "* %?    :alexandria:fixes:\n  %a")))
+                              ("a" "Upsert" entry (file+headline "~/notes/work.org" "Upsert")
+                               "* %?    :upsert:\n  %a")))
 
 (defun bwm:list-all-org (base)
   (delq nil
