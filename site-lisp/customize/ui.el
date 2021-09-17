@@ -18,11 +18,6 @@
 (use-package string-inflection
   :ensure t)
 
-(use-package editorconfig
-  :ensure t
-  :config
-  (editorconfig-mode 1))
-
 (use-package window-purpose
   :ensure t)
 
