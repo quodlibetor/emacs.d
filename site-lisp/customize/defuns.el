@@ -63,6 +63,54 @@
                          (buffer-file-name)))
   (revert-buffer nil t))
 
+;;;###autoload
+(defun dg (search-term)
+  "Start a ripgrep search for SEARCH-TERM in the current directory.
+
+If called with a prefix argument, create the results buffer but
+don't actually start the search."
+  (interactive (list (deadgrep--read-search-term)))
+  (let* ((dir (or default-directory (funcall deadgrep-project-root-function)))
+         (buf (deadgrep--buffer
+               search-term
+               dir
+               (or deadgrep--initial-filename
+                   (buffer-file-name))))
+         (last-results-buf (car-safe (deadgrep--buffers)))
+         prev-search-type
+         prev-search-case)
+    ;; Find out what search settings were used last time.
+    (when last-results-buf
+      (with-current-buffer last-results-buf
+        (setq prev-search-type deadgrep--search-type)
+        (setq prev-search-case deadgrep--search-case)))
+
+    (funcall deadgrep-display-buffer-function buf)
+
+    (with-current-buffer buf
+      (setq imenu-create-index-function #'deadgrep--create-imenu-index)
+      (setq next-error-function #'deadgrep-next-error)
+
+      ;; If we have previous search settings, apply them to our new
+      ;; search results buffer.
+      (when last-results-buf
+        (setq deadgrep--search-type prev-search-type)
+        (setq deadgrep--search-case prev-search-case))
+
+      (deadgrep--write-heading)
+
+      (if current-prefix-arg
+          ;; Don't start the search, just create the buffer and inform
+          ;; the user how to start when they're ready.
+          (progn
+            (setq deadgrep--postpone-start t)
+            (deadgrep--write-postponed))
+        ;; Start the search immediately.
+        (deadgrep--start
+         search-term
+         deadgrep--search-type
+         deadgrep--search-case)))))
+
 (defun endless/comment-line-or-region (n)
   "Comment or uncomment current line and leave point after it.
 With positive prefix, apply to N lines including current one.
