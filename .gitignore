@@ -34,3 +34,8 @@ recentf
 /.lsp*
 /forge-database.sqlite
 /elpy
+/elpa/vterm*/build
+/network-security.data
+/.dap-breakpoints
+# used by lsp
+/.extension
