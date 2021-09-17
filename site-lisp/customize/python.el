@@ -16,7 +16,9 @@
   (elpy-enable)
   :hook
   (elpy-mode . (lambda ()
-                 (setq-local flycheck-checker 'python-mypy)
+                 ; flake8 automatically runs mypy after it finishes
+                 (setq-local flycheck-checker 'python-flake8)
+                 ; (flycheck-add-next-checker 'python-mypy 'python-flake8)
                  (flycheck-mode)
                  )
              )
