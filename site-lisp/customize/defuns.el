@@ -63,7 +63,7 @@
                          (buffer-file-name)))
   (revert-buffer nil t))
 
-;;;###autoload
+(require 'deadgrep)
 (defun dg (search-term)
   "Start a ripgrep search for SEARCH-TERM in the current directory.
 
