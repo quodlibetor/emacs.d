@@ -1,8 +1,0 @@
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-create-new-buffer 'always)
-(setq ido-default-file-method 'selected-window)
-(setq ido-default-buffer-method 'selected-window)
-(setq ido-auto-merge-work-directories-length -1)
-(ido-mode 1)
