@@ -126,7 +126,7 @@
  '(markdown-command "cmark")
  '(mini-frame-ignore-commands
    '(eval-expression "edebug-eval-expression" debugger-eval-expression "helm" "bwm:arbitrary-search" projectile-switch-project))
- '(mini-frame-mode t)
+ '(mini-frame-mode nil)
  '(mini-frame-show-parameters '((top . 30) (width . 0.7) (left . 0.5)))
  '(org-agenda-files '("~/org/work.org"))
  '(package-selected-packages
