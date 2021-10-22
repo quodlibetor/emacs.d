@@ -39,3 +39,5 @@ recentf
 /.dap-breakpoints
 # used by lsp
 /.extension
+# compiled tree sitter language libs
+elpa/tree-sitter-langs-*/bin/*

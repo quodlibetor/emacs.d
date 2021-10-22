@@ -11,6 +11,9 @@
             (when (string-match "github.com" (buffer-name))
               (markdown-mode))))
 
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
 (require 'company)
 (require 'lsp)
 ;(require 'company-lsp)
