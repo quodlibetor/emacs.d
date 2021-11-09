@@ -8,10 +8,6 @@
 ;;; language-specific customization, they are in the special modes section
 ;;; below.
 
-;; This seems to undefined in emacs 24.4... somehow. Dumb.
-(defsubst package-desc-vers (desc)
-  "Extract version from a package description vector."
-  (aref desc 0))
 (setq custom-safe-themes '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
