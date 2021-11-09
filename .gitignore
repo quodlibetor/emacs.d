@@ -41,3 +41,4 @@ recentf
 /.extension
 # compiled tree sitter language libs
 elpa/tree-sitter-langs-*/bin/*
+/straight

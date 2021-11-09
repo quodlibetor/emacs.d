@@ -86,9 +86,8 @@
   (add-hook 'dap-stopped-hook
             (lambda (arg) (call-interactively #'dap-hydra))))
 
-(use-package rust-mode)
 (use-package rustic
-  :hook (rust-mode . rustic-mode)
+  ;:hook (rust-mode . rustic-mode)
   :bind (:map rustic-mode-map
               ("M-n" . flycheck-next-error)
               ("M-p" . flycheck-previous-error)
