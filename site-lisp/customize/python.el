@@ -38,9 +38,6 @@
 
 (global-set-key (kbd "C-j") 'bwm:sane-newline)
 
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-
 (add-hook 'python-mode-hook
           (lambda ()
             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))

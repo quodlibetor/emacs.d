@@ -1,7 +1,4 @@
-(eval-when-compile
-  (require 'cl))
 (require 'ibuffer)
-(require 'ibuffer-tramp)
 (require 'f)
 
 (defun bwm/list-app-dirs ()
@@ -27,7 +24,6 @@
                                        (name . "*nosetests*")
                                        (mode . grep-mode))))
                       (bwm/list-app-dirs)
-                      (ibuffer-tramp-generate-filter-groups-by-tramp-connection)
                       '((("Code" (mode . python-mode))
                          ("Wiki" (or (mode . confluence-edit-mode)
                                      (mode . confluence-mode)))

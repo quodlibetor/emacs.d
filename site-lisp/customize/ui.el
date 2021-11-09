@@ -21,9 +21,6 @@
 (use-package string-inflection
   :ensure t)
 
-(use-package window-purpose
-  :ensure t)
-
 ;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 
 (global-company-mode 1)
