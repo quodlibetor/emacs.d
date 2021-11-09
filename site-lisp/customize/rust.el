@@ -96,6 +96,7 @@
               ("C-." . lsp-ui-peek-find-references)
               ("<C-return>" . helm-lsp-code-actions)
               ("C-h f" . lsp-ui-doc-show)
+              ("C-c C-c j" . rust-check)
               ("C-c C-c d" . dap-hydra))
   :custom
   (rustic-format-trigger nil "use lsp format")
@@ -110,5 +111,5 @@
 ;; one of the two of these should be enabled
 (setq lsp-rust-analyzer-proc-macro-enable t)  ; get access to proc macros, will eventually be on by default
 (setq lsp-rust-analyzer-import-merge-behaviour "last") ; materialize import style
-(setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t) ; ensure coordinated compilation dirs
+(setq lsp-rust-analyzer-import-prefix "by_crate")
 ; (setq lsp-rust-analyzer-diagnostics-disabled '("unresolved-proc-macro"))
