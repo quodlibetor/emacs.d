@@ -43,6 +43,26 @@
       (lsp-find-definition)
     (lsp-ui-peek-find-definitions)))
 
+(defun bwm-rustic-cargo-materialize-check (prefix)
+  "Run 'cargo check' for the current project.
+
+Prefix arguments affect what is checked:
+
+* No arguments check the current crate
+* One prefix arg checks all of materialized
+* Two prefix args runs bin/check to trigger the materialized clippy lints
+"
+  (interactive "p")
+  (if (> prefix 4)
+      (let ((wdir (f-dirname (rustic-buffer-workspace))))
+        (rustic-run-cargo-command (concat wdir "/bin/check") (list :directory wdir)))
+    (let ((package (if (> prefix 1)
+                       "materialized"
+                     (file-name-nondirectory (string-trim-right (rustic-buffer-crate) "/")))))
+      (rustic-run-cargo-command
+       (format "cargo check -p %s" package)
+       (list :directory (string-trim-right (file-name-directory (rustic-buffer-workspace)) "/"))))))
+
 ;; Speed up rust compilation, using the same flags as elsewhere
 (setenv "CARGO_PROFILE_DEV_DEBUG" "1")
 (setenv "RUSTFLAGS" " -Csplit-debuginfo=unpacked -Clink-arg=-fuse-ld=lld")
@@ -96,6 +116,8 @@
               ("<C-return>" . helm-lsp-code-actions)
               ("C-h f" . lsp-ui-doc-show)
               ("C-c C-c j" . rust-check)
+              ("C-c C-c C-k" . bwm-rustic-cargo-materialize-check)
+              ("C-c C-k" . bwm-rustic-cargo-materialize-check)
               ("C-c C-c d" . dap-hydra))
   :custom
   (rustic-format-trigger nil "use lsp format")
