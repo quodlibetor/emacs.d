@@ -46,6 +46,7 @@
 ;(load "customize/confluence")
 (load "customize/csv")
 (load "customize/elisp")
+(load "customize/compilation")
 ;(load "customize/html")
 ;(load "customize/javascript")
 (load "customize/json")
