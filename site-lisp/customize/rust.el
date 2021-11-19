@@ -64,8 +64,10 @@ Prefix arguments affect what is checked:
        (list :directory (string-trim-right (file-name-directory (rustic-buffer-workspace)) "/"))))))
 
 ;; Speed up rust compilation, using the same flags as elsewhere
-(setenv "CARGO_PROFILE_DEV_DEBUG" "1")
-(setenv "RUSTFLAGS" " -Csplit-debuginfo=unpacked -Clink-arg=-fuse-ld=lld")
+;; enabling these causes trait-resolution compilation errors
+;; (setenv "CARGO_PROFILE_DEV_DEBUG" "1")
+;; (setenv "RUSTFLAGS" " -Csplit-debuginfo=unpacked -Clink-arg=-fuse-ld=lld")
+
 (setenv "PATH" (concat (getenv "HOME") "/.local/clang/bin" ":"
                        (getenv "PATH")))
 
