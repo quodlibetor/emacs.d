@@ -1,2 +1,0 @@
-;;; Generated package description from flymake-shellcheck.el  -*- no-byte-compile: t -*-
-(define-package "flymake-shellcheck" "20210314.2048" "A bash/sh Flymake backend powered by ShellCheck" '((emacs "26")) :commit "ac534e9ef15c82ac86ae65fe5004d29dbc8c92c7" :authors '(("Federico Tedin" . "federicotedin@gmail.com")) :maintainer '("Federico Tedin" . "federicotedin@gmail.com") :url "https://github.com/federicotdn/flymake-shellcheck")
