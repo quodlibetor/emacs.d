@@ -11,7 +11,6 @@
         elpy-module-yasnippet))
 
 (use-package elpy
-  :ensure t
   :init
   (elpy-enable)
   :hook

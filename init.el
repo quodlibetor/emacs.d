@@ -12,8 +12,7 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
 (load "customize/package")
-(require 'bind-key) ; one of my packages depends on use-package, so use-package should happen first?
-(package-initialize)
+;(package-initialize)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -28,7 +27,85 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'rustic)
+
+(dolist
+    (package
+     '(ansible-doc
+       avy
+       bind-key
+       cider
+       clojure-mode
+       company-go
+       company-terraform
+       crontab-mode
+       deadgrep
+       diminish
+       dockerfile-mode
+       edit-server
+       elpy
+       f
+       flycheck-mypy
+       flycheck-rust
+       flymake-shellcheck
+       forge
+       go-mode
+       helm-flycheck
+       helm-git-grep
+       helm-lsp
+       helm-projectile
+       helm-rg
+       helm-swoop
+       highlight
+       highlight-escape-sequences
+       htmlize
+       httpcode
+       json-mode
+       literate-calc-mode
+       lsp-ui
+       magit
+       markdown-mode
+       multiple-cursors
+       paredit
+       plantuml-mode
+       polymode
+       powerline
+       projectile
+       protobuf-mode
+       rainbow-delimiters
+       rainbow-mode
+       rust-mode
+       rustic
+       scratch
+       selectrum
+       selectrum-prescient
+       smart-mode-line
+       spaceline
+       string-inflection
+       terraform-mode
+       toml-mode
+       tree-sitter
+       tree-sitter-langs
+       use-package
+       virtualenvwrapper
+       visual-fill-column
+       vterm
+       web-mode
+       yaml-mode
+       yasnippet
+       ))
+  (straight-use-package package))
+
+(straight-use-package
+ '(mz-testdrive :type git :depth 1 :host github :repo "MaterializeInc/materialize"
+                :files ("misc/editor/emacs/mz-testdrive.el")))
+
+(require 'bind-key) ; one of my packages depends on use-package, so use-package should happen first?
+
+;; things that didn't install or seem unnecessary
+;; helm-fd org-plus-contrib jedi py-gnitset
+;; color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized
+;; gitconfig-mode git-rebase-mode git-commit-mode
+;; does this even exist flymake-mypy
 
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.local/bin:") (getenv "PATH")))
@@ -89,7 +166,6 @@
   (load "customize/osx"))
 
 (use-package vterm
-  :ensure t
   :hook
   (vterm-mode . (lambda () (dont-show-trailing-whitespace)))
   :custom
@@ -106,11 +182,6 @@
         (flymake-mode 0)))
 
 (prefer-coding-system 'utf-8)
-
-;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-;(require 'el-get)
-;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-;(el-get 'sync)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -138,8 +209,6 @@
  '(mini-frame-mode nil)
  '(mini-frame-show-parameters '((top . 30) (width . 0.7) (left . 0.5)))
  '(org-agenda-files '("~/org/work.org"))
- '(package-selected-packages
-   '(tree-sitter-langs tree-sitter mini-frame selectrum-prescient selectrum lsp-ui helm-lsp literate-calc-mode mz-testdrive helm-fd flycheck-mypy flymake-mypy vterm deadgrep protobuf-mode cider clojure-mode company-terraform terraform-mode rustic use-package helm-rg edit-server flymake-shellcheck projectile avy py-isort company-go powerline rainbow-mode plantuml-mode smart-mode-line visual-fill-column elpy polymode helm-flycheck scratch expand-region multiple-cursors virtualenvwrapper ansible-doc zencoding-mode yasnippet yaml-mode xml-rpc web-mode toml-mode rust-mode rainbow-delimiters py-gnitset puppet-mode paredit paradox org-plus-contrib markdown-mode lua-mode json-mode jedi ibuffer-tramp httpcode htmlize highlight-escape-sequences highlight helm-swoop helm-git-grep go-mode gitconfig-mode git-rebase-mode git-commit-mode flycheck-rust f dockerfile-mode diminish crontab-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized))
  '(paradox-automatically-star nil)
  '(rustic-ansi-faces
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])

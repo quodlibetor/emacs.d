@@ -79,34 +79,34 @@ Prefix arguments affect what is checked:
 ;; https://marketplace.visualstudio.com/items?itemName=webfreak.debug copy it into
 ;; ~/.emacs.d/.extension/vscode/webfreak.debug/ and unzip it
 
-(use-package dap-mode
-  :ensure
-  :config
-  (dap-auto-configure-mode)
+;; (use-package dap-mode
+;;   :ensure t
+;;   :config
+;;   (dap-auto-configure-mode)
 
-  (require 'dap-lldb)
-  (require 'dap-gdb-lldb)
-  ;; installs .extension/vscode
-  (dap-gdb-lldb-setup)
-  (setenv "MZ_DEV" "1")
-  (dap-register-debug-template
-   "Rust::LLDB Run Configuration"
-   (list :type "lldb"
-         :request "launch"
-         :name "LLDB::Run"
-	 :gdbpath "rust-lldb"
-         :target nil
-         :cwd nil))
-  (dap-register-debug-template
-   "materialize"
-   (list :type "lldb"
-         :request "launch"
-         :name "LLDB::Run"
-	 :gdbpath "rust-lldb"
-         :target nil
-         :cwd "/Users/bwm/github/materialize"))
-  (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'dap-hydra))))
+;;   (require 'dap-lldb)
+;;   (require 'dap-gdb-lldb)
+;;   ;; installs .extension/vscode
+;;   (dap-gdb-lldb-setup)
+;;   (setenv "MZ_DEV" "1")
+;;   (dap-register-debug-template
+;;    "Rust::LLDB Run Configuration"
+;;    (list :type "lldb"
+;;          :request "launch"
+;;          :name "LLDB::Run"
+;; 	 :gdbpath "rust-lldb"
+;;          :target nil
+;;          :cwd nil))
+;;   (dap-register-debug-template
+;;    "materialize"
+;;    (list :type "lldb"
+;;          :request "launch"
+;;          :name "LLDB::Run"
+;; 	 :gdbpath "rust-lldb"
+;;          :target nil
+;;          :cwd "/Users/bwm/github/materialize"))
+;;   (add-hook 'dap-stopped-hook
+;;             (lambda (arg) (call-interactively #'dap-hydra))))
 
 (use-package rustic
   ;:hook (rust-mode . rustic-mode)

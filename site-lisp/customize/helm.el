@@ -40,10 +40,7 @@
                         :box nil
                         :height 0.1)))
 
-(use-package helm-fd
-  :ensure t
-  :bind (:map helm-command-map
-              ("/" . helm-fd)))
+;(use-package helm-fd :bind (:map helm-command-map ("/" . helm-fd)))
 
 (defun bwm:helm-find-files (arg)
   "Find files kinda related to current work

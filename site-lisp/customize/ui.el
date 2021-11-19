@@ -18,8 +18,7 @@
 (require 'lsp)
 ;(require 'company-lsp)
 
-(use-package string-inflection
-  :ensure t)
+(use-package string-inflection)
 
 ;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 
