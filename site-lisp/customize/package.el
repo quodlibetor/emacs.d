@@ -19,7 +19,7 @@
   "Filter the *Packages* buffer by status."
   (interactive
    (list (completing-read
-          "Status: " '("new" "installed" "dependency" "obsolete"))))
+          "Status: " '("new" "installed" "dependency" "obsolete" "incompat"))))
   (package-menu-filter-by-keyword (concat "status:" status)))
 
 (define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
