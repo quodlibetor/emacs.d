@@ -48,6 +48,7 @@
        flycheck-rust
        flymake-shellcheck
        forge
+       git-modes
        go-mode
        helm-flycheck
        helm-git-grep
