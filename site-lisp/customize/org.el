@@ -138,11 +138,6 @@
   "make sure that all agenda files are included"
   (set-agenda-files))
 
-;(setq jiralib-url "https://jira2.advance.net/")
-
-;; (let ((load-path (cons ".emacs.d/packages/org-jira" load-path)))
-;;   (require 'org-jira "packages/org-jira/org-jira"))
-
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (set (make-local-variable 'fill-column) 80)))

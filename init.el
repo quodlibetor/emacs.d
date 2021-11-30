@@ -121,7 +121,6 @@
 (load "customize/defuns")
 
 ;; language/file modes
-;(load "customize/confluence")
 (load "customize/csv")
 (load "customize/elisp")
 (load "customize/compilation")

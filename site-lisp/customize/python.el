@@ -42,27 +42,7 @@
             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
               (py-gnitset-mode))))
 
-;; (require 'flymake)
-
-;; (defun flymake-mypy-init ()
-;;   "Init mypy."
-;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                      'flymake-create-temp-inplace))
-;;          (local-file (file-relative-name
-;;                       temp-file
-;;                       (file-name-directory buffer-file-name))))
-;;     (message "mypy initialized")
-;;     (list "mypy" (list local-file "-s"))))
-
-
-;; (when (load "flymake" t)
-;;   (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-mypy-init))
-;;   )
-
 (require 'flycheck)
-;; (use-package flycheck-mypy
-;;   :ensure t)
-;(require 'flycheck-mypy)
 
 (setq flycheck-python-mypy-args
       '("--strict-optional"))
