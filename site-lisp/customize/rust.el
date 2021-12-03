@@ -1,67 +1,34 @@
-;; (require 'racer)
-
-;; (define-key rust-mode-map (kbd "C-j") 'bwm:sane-newline)
-;; (define-key rust-mode-map (kbd "C-c h") 'racer-describe)
-;; (define-key rust-mode-map (kbd "C-h f") 'racer-describe)
-;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-;; (add-hook 'rust-mode-hook #'racer-mode)
-;; (add-hook 'racer-mode-hook #'eldoc-mode)
-;; (add-hook 'racer-mode-hook #'company-mode)
-;; (setq rust-format-on-save t)
-;; (add-hook 'rust-mode-hook
-;;           (lambda ()
-;;             ;; (setq-local company-minimum-prefix-length 0)
-;;             ;; (setq-local compile-command "cargo check")
-;;                                         ;(cargo-minor-mode 1)
-;;                                         ;(flycheck-mode)
-;;             (lsp)))
-
-;;(setenv "RUSTC_WRAPPER" "/Users/bwm/.cargo/bin/sccache")
-
-;; (add-hook 'before-save-hook
-;;           (lambda ()
-;;             ("rustup run nightly rustfmt")))
-;; (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
-;(setq racer-rust-src-path (concat (getenv "HOME") "/src/rust/src"))
-;; (setq racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
-;; (setq racer-rust-src-path
-;;       (concat (getenv "HOME")
-;;               "/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
-;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-;; (setq company-tooltip-align-annotations t)
-
-;; ;; override the cargo error message face to draw more attention to parts of the
-;; ;; buffer used for testing
-;; (require 'compile)
-;; (add-to-list 'compilation-error-regexp-alist-alist
-;;              '(cargo "thread '\\([^']+\\)' panicked at \\('[^']+'\\), \\([^:]+\\):\\([0-9]+\\)"
-;;                     3 4 nil nil 2 (1 'compilation-info)))
-
 (defun bwm:rust-find-definition (prefix)
   (interactive "p")
   (if (eq prefix 1)
-      (lsp-find-definition)
-    (lsp-ui-peek-find-definitions)))
+      (lsp-ui-peek-find-definitions)
+    (lsp-ui-peek-find-implementation)))
 
-(defun bwm-rustic-cargo-materialize-check (prefix)
+(defun bwm:rustic-cargo-materialize-check (prefix)
   "Run 'cargo check' for the current project.
 
 Prefix arguments affect what is checked:
 
 * No arguments check the current crate
 * One prefix arg checks all of materialized
-* Two prefix args runs bin/check to trigger the materialized clippy lints
+* Two prefix args runs bin/check to trigger the materialize clippy lints
+* Three prefix args runs `bin/check --fix' to auto-fix the materialize clippy lints
 "
   (interactive "p")
-  (if (> prefix 4)
-      (let ((wdir (f-dirname (rustic-buffer-workspace))))
-        (rustic-run-cargo-command (concat wdir "/bin/check") (list :directory wdir)))
-    (let ((package (if (> prefix 1)
-                       "materialized"
-                     (file-name-nondirectory (string-trim-right (rustic-buffer-crate) "/")))))
-      (rustic-run-cargo-command
-       (format "cargo check -p %s" package)
-       (list :directory (string-trim-right (file-name-directory (rustic-buffer-workspace)) "/"))))))
+  (let ((wdir (string-trim-right (rustic-buffer-workspace) "/"))
+        (current-crate (file-name-nondirectory (string-trim-right (rustic-buffer-crate) "/"))))
+    (cond
+     ((< prefix 16)
+      (let ((package (if (= prefix 1) current-crate
+                       "materialized")))
+        (rustic-run-cargo-command
+         (format "cargo check -p %s" package)
+         (list :directory wdir))))
+     ((= prefix 16)
+      (rustic-run-cargo-command (concat wdir "/bin/check") (list :directory wdir)))
+     ((= prefix 64)
+      (rustic-run-cargo-command (concat wdir "/bin/check --fix") (list :directory wdir)))
+     (t (message "at most 3 prefix calls are recognized. prefix: %s" prefix)))))
 
 ;; Speed up rust compilation, using the same flags as elsewhere
 ;; enabling these causes trait-resolution compilation errors
@@ -70,6 +37,32 @@ Prefix arguments affect what is checked:
 
 (setenv "PATH" (concat (getenv "HOME") "/.local/clang/bin" ":"
                        (getenv "PATH")))
+
+(defun bwm:configure-rust-before-save-hook ()
+  (add-hook 'before-save-hook
+            (defun bwm:rustfmt-on-save ()
+              (when (eq 'rustic-mode major-mode)
+                (lsp-format-buffer)))
+            nil t))
+
+(use-package rustic
+  :bind (:map rustic-mode-map
+              ("M-n" . flycheck-next-error)
+              ("M-p" . flycheck-previous-error)
+              ("M-." . bwm:rust-find-definition)
+              ("C-." . lsp-ui-peek-find-references)
+              ("<C-return>" . helm-lsp-code-actions)
+              ("C-h f" . lsp-ui-doc-show)
+              ("C-c C-c C-k" . bwm:rustic-cargo-materialize-check)
+              ("C-c C-k" . bwm:rustic-cargo-materialize-check)
+              ("C-c C-c d" . dap-hydra))
+  :hook (rustic-mode . bwm:configure-rust-before-save-hook)
+  :custom
+  (rustic-format-trigger nil "use lsp format")
+  (rustic-lsp-format t "use the lsp server instead of cargo fmt")
+  (lsp-ui-doc-show-with-cursor nil "Use `C-h f' for a doc view")
+  (lsp-rust-analyzer-import-merge-behaviour "last")
+  (lsp-rust-analyzer-import-prefix "by_crate"))
 
 ;; Debugging
 
@@ -107,32 +100,3 @@ Prefix arguments affect what is checked:
 ;;          :cwd "/Users/bwm/github/materialize"))
 ;;   (add-hook 'dap-stopped-hook
 ;;             (lambda (arg) (call-interactively #'dap-hydra))))
-
-(use-package rustic
-  ;:hook (rust-mode . rustic-mode)
-  :bind (:map rustic-mode-map
-              ("M-n" . flycheck-next-error)
-              ("M-p" . flycheck-previous-error)
-              ("M-." . bwm:rust-find-definition)
-              ("C-." . lsp-ui-peek-find-references)
-              ("<C-return>" . helm-lsp-code-actions)
-              ("C-h f" . lsp-ui-doc-show)
-              ("C-c C-c j" . rust-check)
-              ("C-c C-c C-k" . bwm-rustic-cargo-materialize-check)
-              ("C-c C-k" . bwm-rustic-cargo-materialize-check)
-              ("C-c C-c d" . dap-hydra))
-  :custom
-  (rustic-format-trigger nil "use lsp format")
-  (rustic-lsp-format t "use the lsp server instead of cargo fmt")
-  (lsp-ui-doc-show-with-cursor nil "Use `C-h f' for a doc view"))
-
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (eq major-mode 'rustic-mode)
-              (lsp-format-buffer))))
-
-;; one of the two of these should be enabled
-(setq lsp-rust-analyzer-proc-macro-enable t)  ; get access to proc macros, will eventually be on by default
-(setq lsp-rust-analyzer-import-merge-behaviour "last") ; materialize import style
-(setq lsp-rust-analyzer-import-prefix "by_crate")
-; (setq lsp-rust-analyzer-diagnostics-disabled '("unresolved-proc-macro"))
