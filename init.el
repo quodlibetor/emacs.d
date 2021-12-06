@@ -33,6 +33,7 @@
      '(ansible-doc
        avy
        bind-key
+       blacken
        cider
        clojure-mode
        company-go
