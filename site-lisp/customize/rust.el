@@ -61,6 +61,7 @@ Prefix arguments affect what is checked:
   (rustic-format-trigger nil "use lsp format")
   (rustic-lsp-format t "use the lsp server instead of cargo fmt")
   (lsp-ui-doc-show-with-cursor nil "Use `C-h f' for a doc view")
+  (lsp-rust-analyzer-proc-macro-enable t)
   (lsp-rust-analyzer-import-merge-behaviour "last")
   (lsp-rust-analyzer-import-prefix "by_crate"))
 
