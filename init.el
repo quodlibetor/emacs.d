@@ -34,6 +34,7 @@
        avy
        bind-key
        blacken
+       browse-at-remote                 ; open current file in github/bb
        cider
        clojure-mode
        company-go
