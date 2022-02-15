@@ -1,24 +1,21 @@
 ;(setq magit-auto-revert-mode-lighter ""
 ;      magit-gitk-executable "/usr/bin/gitk")
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
-(with-eval-after-load 'magit
-  (require 'forge))
-(require 'magit)
-;(require 'magit-gerrit)
-(setq magit-last-seen-setup-instructions "2.2.0"
-      magit-push-always-verify nil
-      magit-visit-ref-create t
-     ; magit-gerrit-ssh-creds "bwm@knewton.com"
-      )
+(use-package forge)
 
-(add-hook 'magit-commit-mode-hook
-          (lambda ()
-            (setq buffer-file-coding-system 'utf-8)))
+(use-package magit
+  :config
+  (require 'forge)
+  (transient-insert-suffix 'magit-file-dispatch "L" '("o" "Open line on github" git-link))
+  (transient-insert-suffix 'magit-commit "F" '("b" "Commit-absorb" magit-commit-absorb))
+  (add-hook 'magit-commit-mode-hook
+            (lambda ()
+              (setq buffer-file-coding-system 'utf-8)))
+  )
 
+(use-package git-link
+  :straight t
+  :config
+  (setq-default git-link-open-in-browser t
+                git-link-use-commit t))
 
-(define-key magit-mode-map "\t" 'magit-section-cycle)
-(define-key magit-mode-map [C-tab] 'magit-section-toggle)
-;; https://github.com/magit/ghub/issues/81
-;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=36017
-(setq ghub-use-workaround-for-emacs-bug 'force)
