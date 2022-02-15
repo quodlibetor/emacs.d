@@ -28,6 +28,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(setq inhibit-startup-screen t)
 (show-paren-mode 1)
 (column-number-mode 1)
 (electric-pair-mode 1)
