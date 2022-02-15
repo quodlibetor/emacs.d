@@ -15,7 +15,6 @@
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 (require 'company)
-(require 'lsp)
 ;(require 'company-lsp)
 
 (use-package string-inflection)
