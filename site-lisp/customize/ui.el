@@ -78,16 +78,37 @@
       (quote
        ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "7b4a6cbd00303fc53c2d486dfdbe76543e1491118eba6adc349205dbf0f7063a" default)))
 
-;(require 'moe-theme)
+
+(use-package doom-themes
+  :straight t
+  :init
+  (setq
+   doom-vibrant-brighter-comments t
+   doom-vibrant-brighter-modeline t
+   doom-vibrant-padded-modeline t)
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-vibrant t)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config)
+  )
 (require 'powerline)
 (require 'spaceline-config)
-;(setq moe-theme-highlight-buffer-id nil)
-;(moe-dark)
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
 (spaceline-toggle-projectile-root)
 
-;(global-flycheck-mode 1)
+(use-package flycheck
+  :bind (:map flycheck-mode-map
+              ("M-n" . flycheck-next-error)
+              ("M-p" . flycheck-previous-error)))
 
 (defadvice split-window-right (after split-and-rebalance-windows ())
   "I prefer windows to auto-balance when I open new ones"

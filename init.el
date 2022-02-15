@@ -355,26 +355,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cursor ((t (:background "dark cyan"))))
- '(ediff-current-diff-B ((t (:background "#222" :foreground "DarkOrchid"))))
- '(ediff-fine-diff-B ((t (:background "#01008c"))))
- '(font-lock-builtin-face ((t (:foreground "#ff83fa"))))
- '(helm-selection ((t (:background "ForestGreen" :foreground "SlateGray1" :underline t))))
- '(highlight ((t (:background "SteelBlue2" :foreground "black" :inverse-video nil))))
- '(hl-line ((t (:background "gray8"))))
- '(magit-item-highlight ((t (:inherit highlight :background "#0A2036" :foreground "deep sky blue"))))
- '(mc/region-face ((t (:inherit highlight))))
- '(org-column ((t (:background "grey10" :strike-through nil :underline nil :slant normal :weight normal :height 105 :family "Ubuntu Mono"))))
- '(org-scheduled ((t (:background "#232323" :foreground "light goldenrod"))))
- '(region ((t (:background "RoyalBlue4" :inverse-video nil))))
- '(rst-level-1-face ((t (:background "grey10"))) t)
- '(rst-level-2-face ((t (:background "grey13"))) t)
- '(rst-level-3-face ((t (:background "grey20"))) t)
- '(rst-level-4-face ((t (:background "grey25"))) t)
- '(rst-level-5-face ((t (:background "grey30"))) t)
- '(vterm-color-black ((t (:foreground "slate gray"))))
- '(vterm-color-blue ((t (:foreground "deep sky blue"))))
- '(vterm-color-red ((t (:foreground "light coral")))))
+
+ ;;; Things I still want to change
+ ;; '(ediff-current-diff-B ((t (:background "#222" :foreground "DarkOrchid"))))
+ ;; '(ediff-fine-diff-B ((t (:background "#01008c"))))
+ )
 
 (let ((local (expand-file-name "~/.emacs.d/local.el")))
   (when (file-exists-p local)
