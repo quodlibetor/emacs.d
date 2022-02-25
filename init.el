@@ -12,7 +12,6 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
 (load "customize/package")
-;(package-initialize)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -127,7 +126,7 @@
 (load "customize/elisp")
 (load "customize/compilation")
 ;(load "customize/html")
-;(load "customize/javascript")
+(load "customize/javascript")
 (load "customize/json")
 ;(load "customize/go")
 (load "customize/markdown")
@@ -169,7 +168,7 @@
 
 (use-package vterm
   :hook
-  (vterm-mode . (lambda () (dont-show-trailing-whitespace)))
+  (vterm-mode . dont-show-trailing-whitespace)
   :custom
   ; (vterm-clear-scrollback t "when true, don't clear scrollback?!")
   (vterm-shell "zsh")
@@ -216,6 +215,7 @@
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])
  '(safe-local-variable-values
    '((lsp-rust-analyzer-import-merge-behaviour . "last")
+     (lsp-rust-analyzer-import-merge-behaviour . "last")
      (rustic-lsp-server . "rust-analyzer")
      (lsp-rust-server . "rust-analyzer")
      (lsp-rust-target-dir . "/Users/bwm/github/materialize/target/rls")
