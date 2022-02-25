@@ -47,12 +47,7 @@ Prefix arguments affect what is checked:
 
 (use-package rustic
   :bind (:map rustic-mode-map
-              ("M-n" . flycheck-next-error)
-              ("M-p" . flycheck-previous-error)
               ("M-." . bwm:rust-find-definition)
-              ("C-." . lsp-ui-peek-find-references)
-              ("<C-return>" . helm-lsp-code-actions)
-              ("C-h f" . lsp-ui-doc-show)
               ("C-c C-c C-k" . bwm:rustic-cargo-materialize-check)
               ("C-c C-k" . bwm:rustic-cargo-materialize-check)
               ("C-c C-c d" . dap-hydra))
