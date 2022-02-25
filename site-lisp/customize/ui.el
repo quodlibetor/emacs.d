@@ -11,8 +11,13 @@
             (when (string-match "github.com" (buffer-name))
               (markdown-mode))))
 
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+(use-package tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  ;; (push '(web-mode . tsx) tree-sitter-major-mode-language-alist)
+  )
 
 (require 'company)
 ;(require 'company-lsp)
