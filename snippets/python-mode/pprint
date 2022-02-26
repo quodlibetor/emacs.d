@@ -2,5 +2,4 @@
 # name: pprint
 # key: pp
 # --
-from pprint import pprint
-pprint($0)
+__import__("pprint").pprint($0)  # DEBUG

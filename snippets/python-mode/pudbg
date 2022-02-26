@@ -2,4 +2,4 @@
 # name: pudbg
 # key: pudbg
 # --
-import pudb; pudb.set_trace()  # DEBUG
+__import__("pudb").set_trace()  # DEBUG

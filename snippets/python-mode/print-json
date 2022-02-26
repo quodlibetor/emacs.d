@@ -5,4 +5,4 @@
 `(save-excursion
     (previous-line)
     ())
-`json.dumps($0, indent=2)  # DEBUG
+`print(__import__("json").dumps($0, indent=2))  # DEBUG

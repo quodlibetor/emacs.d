@@ -1,6 +1,8 @@
 (require 'helm)
+(require 'helm-mode) ; required or helm-find-file to work
 (require 'helm-config)
 (require 'helm-swoop)
+(require 'compile)
 (require 'helm-git-grep)
 (require 'helm-projectile)
 (require 'recentf)
@@ -22,6 +24,14 @@
       helm-split-window-default-side 'below
       helm-autoresize-max-height 40
       helm-autoresize-min-height 40)
+
+(use-package helm-dash
+  :straight t
+  :config
+  (progn
+    (setq helm-dash-browser-func 'eww)
+    (setq helm-dash-common-docsets '("Python 3")))
+  )
 
 (setq helm-display-header-line nil)
 (defun helm-toggle-header-line ()

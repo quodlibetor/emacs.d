@@ -3,25 +3,58 @@
 ; to customize it
 
 ;; (add-hook 'python-mode-hook 'lsp)
-(setq elpy-modules
-      '(elpy-module-sane-defaults
-        elpy-module-company
-        elpy-module-eldoc
-        elpy-module-pyvenv
-        elpy-module-yasnippet))
+;; (setq elpy-modules
+;;       '(elpy-module-sane-defaults
+;;         elpy-module-company
+;;         elpy-module-eldoc
+;;         elpy-module-pyvenv
+;;         elpy-module-yasnippet))
 
-(use-package elpy
-  :init
-  (elpy-enable)
-  :hook
-  (elpy-mode . (lambda ()
-                 ; flake8 automatically runs mypy after it finishes
-                 (setq-local flycheck-checker 'python-flake8)
-                 ; (flycheck-add-next-checker 'python-mypy 'python-flake8)
-                 (flycheck-mode)
-                 )
-             )
+;; (use-package elpy
+;;   :init
+;;   (elpy-enable)
+;;   :hook
+;;   (elpy-mode . (lambda ()
+;;                  ; flake8 automatically runs mypy after it finishes
+;;                  (setq-local flycheck-checker 'python-flake8)
+;;                  ; (flycheck-add-next-checker 'python-mypy 'python-flake8)
+;;                  (flycheck-mode)
+;;                  )
+;;              )
+;;   )
+
+(use-package lsp-pyright
+  :straight t
+  :after lsp-mode
+  ;; :custom
+  ;; (lsp-pyright-auto-import-completions nil)
+  ;; (lsp-pyright-typechecking-mode "off")
+  ;; :config
+  ;; (fk/async-process
+  ;;  "npm outdated -g | grep pyright | wc -l" nil
+  ;;  (lambda (process output)
+  ;;    (pcase output
+  ;;      ("0\n" (message "Pyright is up to date."))
+  ;;      ("1\n" (message "A pyright update is available."))))
+  ;;  )
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                          (lsp))))
+
+(use-package buftra
+    :straight (:host github :repo "humitos/buftra.el"))
+
+;;;###autoload
+(defun py-isort-enable-on-save ()
+  (add-hook 'before-save-hook 'py-isort-before-save nil t))
+
+(use-package py-isort
+  :straight t
+  ;; :hook (python-mode . 'py-isort-enable-on-save)
+  ;; :config
+  ;; (setq py-isort-options '("--lines=88" "-m=3" "-tc" "-fgw=0" "-ca"))
   )
+
 
 (add-to-list 'auto-mode-alist
              '("pyflymakerc$" . python-mode))
@@ -37,10 +70,10 @@
 
 (global-set-key (kbd "C-j") 'bwm:sane-newline)
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
-              (py-gnitset-mode))))
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (when (and (buffer-file-name) (string-match "test_.*py" (buffer-file-name)))
+;;               (py-gnitset-mode))))
 
 (require 'flycheck)
 
@@ -74,7 +107,8 @@
           (lambda ()
             ;; (setq flycheck-checker 'python-my-chain)
             (blacken-mode 1)
-            (py-gnitset-mode)))
+            ;(py-gnitset-mode)
+            ))
 
 (put 'python-symbol 'end-op
      (lambda ()

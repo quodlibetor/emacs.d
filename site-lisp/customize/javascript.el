@@ -16,19 +16,19 @@
          (css-mode . prettier-mode)
          (scss-mode . prettier-mode)))
 
-(defun disable-tree-sitter-font-lock ()
-  (setq-local tree-sitter-hl-use-font-lock-keywords nil))
+;; (defun disable-tree-sitter-font-lock ()
+;;   (setq-local tree-sitter-hl-use-font-lock-keywords nil))
 
-(use-package web-mode
-  :straight t
-  :mode "\\.tsx?$"
-  :hook
-  (web-mode . lsp)
-  ;; https://github.com/emacs-tree-sitter/tree-sitter-langs/issues/23#issuecomment-832815710
-  (web-mode . disable-tree-sitter-font-lock)
-  :custom
-  (web-mode-markup-indent-offset 2)
-  (web-mode-code-indent-offset 2))
+;; (use-package web-mode
+;;   :straight t
+;;   :mode "\\.tsx?$"
+;;   :hook
+;;   (web-mode . lsp)
+;;   ;; https://github.com/emacs-tree-sitter/tree-sitter-langs/issues/23#issuecomment-832815710
+;;   (web-mode . disable-tree-sitter-font-lock)
+;;   :custom
+;;   (web-mode-markup-indent-offset 2)
+;;   (web-mode-code-indent-offset 2))
 
 ;; ;; use eslint with web-mode for jsx files
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
