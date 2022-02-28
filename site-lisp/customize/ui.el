@@ -22,6 +22,14 @@
 (require 'company)
 ;(require 'company-lsp)
 
+(use-package apheleia
+  :straight t
+  :config
+  (setf (alist-get 'isort apheleia-formatters)
+        '("isort" "--stdout" "-"))
+  (setf (alist-get 'python-mode apheleia-mode-alist)
+      '(black isort)))
+
 (use-package string-inflection)
 
 ;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
