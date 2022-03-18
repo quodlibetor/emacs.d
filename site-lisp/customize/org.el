@@ -22,11 +22,11 @@
 (require 'ox-md)
 (defun toggle-babel-evaluate ()
   (interactive)
-  (if org-export-babel-evaluate
+  (if org-export-use-babel
       (progn
-        (setq org-export-babel-evaluate nil)
+        (setq org-export-use-babel nil)
         (message "Babel evaluate set to nil"))
-    (setq org-export-babel-evaluate t)
+    (setq org-export-use-babel t)
     (message "Babel evaluate set to t")))
 
 ;; set plantuml jar path for linux or homebrew
@@ -52,6 +52,8 @@
 			  (sequence "BUG(b)" "|" "FIXED(f)" "WONTFIX(w)")
                           (sequence "TO-SCHEDULE(s)" "|" "JIRAd(j)")
                           )
+      org-image-actual-width '(600) ;; use #+ATTR_ORG :width N or fall back to 600
+      org-startup-with-inline-images t
       org-confirm-babel-evaluate nil
       org-log-done 'time
       org-use-speed-commands t
