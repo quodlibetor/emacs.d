@@ -16,6 +16,7 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (add-to-list 'tree-sitter-major-mode-language-alist '(terraform-mode . hcl))
   ;; (push '(web-mode . tsx) tree-sitter-major-mode-language-alist)
   )
 
@@ -32,7 +33,13 @@
 
 (use-package string-inflection)
 
-;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
+(use-package helpful
+  :straight t
+  :bind (("C-h f" . helpful-callable)
+         ("C-h v" . helpful-variable)
+         ("C-h k" . helpful-key)))
+
+;;(require 'flymake-cursor "packages/emacs-flymake-cursor/flymake-cursor")
 
 (global-company-mode 1)
 
@@ -117,6 +124,12 @@
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
 (spaceline-toggle-projectile-root)
+
+(when (member "FiraCode Nerd Font Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "FiraCode Nerd Font Mono" )
+  ;; height is pt * 10
+  (set-face-attribute 'default nil :height 130)
+  (set-frame-font "FiraCode Nerd Font Mono" nil t))
 
 (use-package flycheck
   :bind (:map flycheck-mode-map

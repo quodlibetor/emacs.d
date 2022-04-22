@@ -2,14 +2,17 @@
 (require 'f)
 
 (defun bwm/list-app-dirs ()
-  (let ((app-dirs nil))
-    (dolist (code-dir '("~/projects" "~/src" "~/github"))
+  (let ((app-dirs nil)
+        (code-dirs (list (expand-file-name "~/repos/boe") (expand-file-name "~/repos"))))
+    (dolist (code-dir code-dirs)
       (dolist (fname (directory-files code-dir nil "^[^.]"))
-        (setq app-dirs
-              (cons (list
-                     (concat fname " |" (f-base code-dir))
-                     (cons 'filename (concat (expand-file-name code-dir) "/" fname)))
-                    app-dirs))))
+        (let ((fullname (concat (file-name-as-directory code-dir) fname)))
+          (when (not (member fullname code-dirs))
+            (setq app-dirs
+                  (cons (list
+                         (concat fname " |" (f-base code-dir))
+                         (cons 'filename fullname))
+                        app-dirs))))))
     (sort app-dirs (lambda (l r) (string< (car l) (car r))))))
 
 (setq ibuffer-show-empty-filter-groups nil)

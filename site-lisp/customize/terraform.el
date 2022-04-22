@@ -1,3 +1,8 @@
-(add-hook 'terraform-mode-hook
-          (lambda ()
-            (terraform-format-on-save-mode t)))
+(defun bwm/configure-terraform ()
+            (terraform-format-on-save-mode t)
+            (lsp))
+
+(use-package terraform-mode
+  :straight t
+  :hook bwm/configure-terraform)
+

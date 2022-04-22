@@ -15,7 +15,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
-   (plantuml . t)
+   ;(plantuml . t)
    (dot . t)
    (shell . t)
    (python . t)))
@@ -30,17 +30,17 @@
     (message "Babel evaluate set to t")))
 
 ;; set plantuml jar path for linux or homebrew
-(let* ((maybe-jars (-map 'expand-file-name
-                         '("~/.local/lib/plantuml.jar"
-                           "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar"
-                           "/usr/local/Cellar/plantuml/7999/plantuml.7999.jar")))
-      (jars (-filter 'file-exists-p maybe-jars)))
-  (if jars
-      (setq org-plantuml-jar-path (car jars))
-    (warn "plantuml is not installed [%s do not exist]" maybe-jars)))
+;; (let* ((maybe-jars (-map 'expand-file-name
+;;                          '("~/.local/lib/plantuml.jar"
+;;                            "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar"
+;;                            "/usr/local/Cellar/plantuml/7999/plantuml.7999.jar")))
+;;       (jars (-filter 'file-exists-p maybe-jars)))
+;;   (if jars
+;;       (setq org-plantuml-jar-path (car jars))
+;;     (warn "plantuml is not installed [%s do not exist]" maybe-jars)))
 
-(add-to-list
- 'org-src-lang-modes '("plantuml" . puml))
+;; (add-to-list
+;;  'org-src-lang-modes '("plantuml" . puml))
 (add-to-list
  'org-src-lang-modes '("dot" . graphviz-dot))
 
@@ -57,6 +57,7 @@
       org-confirm-babel-evaluate nil
       org-log-done 'time
       org-use-speed-commands t
+      org-id-link-to-org-use-id t
       org-clock-out-remove-zero-time-clocks t
       org-src-fontify-natively t
       org-html-head "<style type=\"text/css\">
@@ -130,19 +131,23 @@
 
 (defun set-agenda-files ()
   (setq org-agenda-files
-        (append '("~/org")
+        (append '()
                 (bwm:list-all-org "~/org")
                 (bwm:list-all-org "~/projects")
-                (bwm:list-all-org "~/talks/sprints")))
+                (bwm:list-all-org "~/talks/sprints")
+                (bwm:list-all-org "~/repos")))
   (message "Agenda files set to %s" org-agenda-files))
 
 (defadvice org-agenda (before refresh-agenda-files activate)
   "make sure that all agenda files are included"
   (set-agenda-files))
 
+(require 'org-bullets)
 (add-hook 'org-mode-hook
-	  (lambda ()
-	    (set (make-local-variable 'fill-column) 80)))
+	  (defun bwm-org-hook ()
+	    (set (make-local-variable 'fill-column) 100)
+            (org-indent-mode)
+            (org-bullets-mode 1)))
 
 ;; (add-to-list 'org-latex-classes
 ;;              '("beamer"
@@ -152,6 +157,3 @@
 ;;                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
 ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
 ;; (require 'org-export-as-s5)
-
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))

@@ -29,8 +29,7 @@
 
 (dolist
     (package
-     '(ansible-doc
-       avy
+     '(avy
        bind-key
        blacken
        browse-at-remote                 ; open current file in github/bb
@@ -83,7 +82,6 @@
        smart-mode-line
        spaceline
        string-inflection
-       terraform-mode
        toml-mode
        tree-sitter
        tree-sitter-langs
@@ -122,7 +120,9 @@
 (load "customize/defuns")
 
 ;; language/file modes
+(load "customize/ansible")
 (load "customize/csv")
+(load "customize/dotenv")
 (load "customize/elisp")
 (load "customize/compilation")
 ;(load "customize/html")
@@ -143,7 +143,6 @@
 (load "customize/terraform")
 (load "customize/vc-annotate")
 (load "customize/yaml")
-(load "customize/prog")
 ;(load "customize/web")
 
 ;; special modes
@@ -165,6 +164,7 @@
 (load "customize/lsp")
 (when (string-equal system-type "darwin")
   (load "customize/osx"))
+(load "customize/prog")
 
 (use-package vterm
   :hook
@@ -209,12 +209,12 @@
    '(eval-expression "edebug-eval-expression" debugger-eval-expression "helm" "bwm:arbitrary-search" projectile-switch-project))
  '(mini-frame-mode nil)
  '(mini-frame-show-parameters '((top . 30) (width . 0.7) (left . 0.5)))
- '(org-agenda-files '("~/org/work.org"))
+ '(org-agenda-files nil)
  '(paradox-automatically-star nil)
  '(rustic-ansi-faces
    ["black" "OrangeRed1" "green3" "yellow2" "DodgerBlue1" "magenta2" "cyan3" "white"])
  '(safe-local-variable-values
-   '((lsp-rust-analyzer-import-merge-behaviour . "last")
+   '((eval setenv "HUSKY" "0")
      (lsp-rust-analyzer-import-merge-behaviour . "last")
      (rustic-lsp-server . "rust-analyzer")
      (lsp-rust-server . "rust-analyzer")
@@ -316,8 +316,6 @@
            (package-build-minor-mode))
      (pytest-compile-runner-format . nose)
      (pytest-compile-runner-format quote nose)
-     (virtualenv-default-directory . "/home/bwm/projects/schedaddle/")
-     (virtualenv-workon . "schedaddle3")
      (pytest-compile-test-runner . "nosetests")
      (pytest-compile-runner-format . "nose")))
  '(term-buffer-maximum-size 50000)

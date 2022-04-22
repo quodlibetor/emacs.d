@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: if name equals main
 # key: ifm
+# expand-env: ((yas-indent-line 'fixed)
 # --
 $0if __name__ == "__main__":
     main()

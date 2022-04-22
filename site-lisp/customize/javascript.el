@@ -2,6 +2,8 @@
   :straight t
   :mode "\\.tsx?$"
   :hook
+  ;; LSP will auto-install ts-ls mode, but it's worth also installing eslint
+  ;; lsp which will auto run in parallel
   (typescript-mode . lsp)
   :custom
   (typescript-indent-level 2))

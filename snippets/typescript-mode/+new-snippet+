@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: react-element
+# key: elem
+# --
+import React, { ReactElement } from "react"
+
+type $1Props = {}
+
+function ${1:Elem}(): ReactElement {
+  return $0<div />
+}
+
+export default $1

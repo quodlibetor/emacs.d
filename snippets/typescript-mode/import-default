@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: import default
+# key: imd
+# --
+import $0 from "$1"

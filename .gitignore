@@ -20,6 +20,7 @@ elpa/*-readme.txt
 /elpa/monky-20130513.1413/monky.el
 elpa/*-readme.txt
 /.cask
+/.cache
 session.*
 /ido.last
 recentf

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: pyscript
+# key: pyscript
+# --
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$(dirname "$0")$1/../bin/shlib"
+
+pyactivate $0 "$@"
