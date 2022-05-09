@@ -29,7 +29,12 @@
   (setf (alist-get 'isort apheleia-formatters)
         '("isort" "--stdout" "-"))
   (setf (alist-get 'python-mode apheleia-mode-alist)
-      '(black isort)))
+      '(black isort))
+  (setf (alist-get 'yq apheleia-formatters)
+        '("yq"))
+  (setf (alist-get 'yaml-mode apheleia-mode-alist)
+      '(yq))
+  :hook (yaml-mode . apheleia-mode))
 
 (use-package string-inflection)
 
