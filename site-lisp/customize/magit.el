@@ -10,11 +10,21 @@
 
 (use-package forge)
 
+(defun bwm/git-sync ()
+  "shells out to
+    default-branch = !\"git symbolic-ref refs/remotes/origin/HEAD | sed 's,^refs/remotes/origin/,,'\"
+    sync = !\"export branch=$(git default-branch) ; git fetch origin ${branch}:${branch}\"
+"
+  (interactive)
+  (magit-with-toplevel
+    (magit-run-git "sync")))
+
 (use-package magit
   :config
   (require 'forge)
   (transient-insert-suffix 'magit-file-dispatch "L" '("o" "Open line in forge" git-link))
   (transient-insert-suffix 'magit-commit "F" '("b" "Commit-absorb" magit-commit-absorb))
+  (transient-insert-suffix 'magit-fetch "o" '("s" "Sync default branch" bwm/git-sync))
   (add-hook 'magit-commit-mode-hook
             (lambda ()
               (setq buffer-file-coding-system 'utf-8)))
