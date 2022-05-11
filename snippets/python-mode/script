@@ -8,15 +8,16 @@ import argparse
 import sys
 
 
-def main(args) -> None:
-    args = parse_args(args)
+def main(argv: list[str]) -> None:
+    args = parse_args(argv)
     $0
 
 
-def parse_args(args) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="${1}")
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    prog, *argv = argv
+    parser = argparse.ArgumentParser(prog, description="$1")
 
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 if __name__ == "__main__":
