@@ -148,6 +148,10 @@ This is safe as a file and mode-local variable")
       (insert " "))
     (delete-char (- goal-column (current-column)))))
 
+(defun bwm/xml-format-buffer ()
+  (interactive)
+  (call-process-region (point-min) (point-max) "xmllint" t t t "--format" "-"))
+
 ; from http://blog.urth.org/2011/06/flymake-versus-the-catalyst-restarter.html
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking
