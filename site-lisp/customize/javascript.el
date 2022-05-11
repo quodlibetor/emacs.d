@@ -1,10 +1,14 @@
+(defun configure-typescript ()
+  (lsp)
+  (setq-local helm-dash-common-docsets '("React" "TypeScript" "Redux" "JavaScript" "AWS_JavaScript")))
+
 (use-package typescript-mode
   :straight t
   :mode "\\.tsx?$"
   :hook
   ;; LSP will auto-install ts-ls mode, but it's worth also installing eslint
   ;; lsp which will auto run in parallel
-  (typescript-mode . lsp)
+  (typescript-mode . configure-typescript)
   :custom
   (typescript-indent-level 2))
 

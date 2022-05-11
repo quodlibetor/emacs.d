@@ -30,7 +30,9 @@
   :config
   (progn
     (setq helm-dash-browser-func 'eww)
-    (setq helm-dash-common-docsets '("Python 3")))
+    ;; constantly says "cannot open ''"
+    (setq dash-docs-enable-debugging nil)
+    (setq helm-dash-common-docsets (dash-docs-installed-docsets)))
   )
 
 (setq helm-display-header-line nil)
