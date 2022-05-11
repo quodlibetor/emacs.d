@@ -36,6 +36,7 @@
 (global-set-key (kbd "C-h a") 'helm-apropos)
 (global-set-key (kbd "C-z") 'repeat)
 (global-set-key (kbd "C-c ! h") 'helm-flycheck)
+(global-set-key (kbd "C-x C-f") 'ffap)
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 
 
