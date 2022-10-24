@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: import structlog.get_logger
+# key: slog
+# --
+import structlog
+
+$0log = structlog.get_logger(__name__)

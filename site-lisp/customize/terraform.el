@@ -1,8 +1,8 @@
 (defun bwm/configure-terraform ()
             (terraform-format-on-save-mode t)
-            (lsp))
+            ;(lsp) ;; terraform lsp seems like it might ruin emacs
+            )
 
 (use-package terraform-mode
   :straight t
-  :hook bwm/configure-terraform)
-
+  :hook (terraform-mode . bwm/configure-terraform))

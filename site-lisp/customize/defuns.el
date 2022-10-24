@@ -263,6 +263,12 @@ CMD is the command to execute (interactively, `chmod')."
   (shell-command cmd))
 
 ;;;###autoload
+(defun mkexec ()
+  "Execute Unix command `chmod 755 current-buffer'"
+  (interactive)
+  (shell-command (concat "chmod 755 " (buffer-file-name))))
+
+;;;###autoload
 (defun chgrp (cmd)
   "Execute Unix command `chgrp'.  Current buffer's file is default arg.
 CMD is the command to execute (interactively, `chgrp')."

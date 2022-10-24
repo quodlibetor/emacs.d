@@ -1,2 +1,3 @@
 (use-package dotenv-mode
-  :straight t)
+  :straight t
+  :mode ("\\.env\\.sample\\'" . dotenv-mode))

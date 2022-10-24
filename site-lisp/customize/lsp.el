@@ -19,6 +19,8 @@
   ;; to not correctly ignore the given directories. So we need to :demand that
   ;; the rquire happens eagerly
   :demand
+  :custom
+  (lsp-enable-snippet t)
   :config
   (dolist (name '(".mypy_cache" "__pycache__" "venv"))
     (add-to-list 'lsp-file-watch-ignored-directories (format "[/\\\\]%s\\'" name)))
@@ -30,6 +32,18 @@
   (progn
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
     (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)))
+
+;; https://github.com/emacs-lsp/lsp-mode/issues/2681
+;; supposedly a fix for this has already been included in emacs 29 but it still seems necessary.
+(advice-add 'json-parse-string :around
+            (lambda (orig string &rest rest)
+              (apply orig (s-replace "\\u0000" "" string)
+                     rest)))
+(advice-add 'json-parse-buffer :around
+              (lambda (orig &rest rest)
+                (while (re-search-forward "\\u0000" nil t)
+                  (replace-match ""))
+                (apply orig rest)))
 
 (use-package dap-mode
   :straight t)

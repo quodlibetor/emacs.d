@@ -2,25 +2,36 @@
 ; $emacs/packages/flymake-python/flymake-customizations.el for a bunch of ways
 ; to customize it
 
-(defun bwm/pyright-configure-venv ()
-  (let ((venv-raw (locate-dominating-file (buffer-file-name) ".venv")))
+(defun bwm/configure-venv ()
+  (let* ((venv-raw (when (buffer-file-name)
+                     (locate-dominating-file (buffer-file-name) ".venv"))))
     (when venv-raw
       (let ((venv-dir (expand-file-name venv-raw)))
-        ;(setq-local lsp-pyright-venv-path (concat venv-dir ".venv"))
         (setq-local lsp-pyright-python-executable-cmd (concat venv-dir ".venv/bin/python"))
+        (setq-local flycheck-pycheckers-venv-root venv-dir)
+        (setq-local exec-path (add-to-list 'exec-path (concat venv-dir ".venv/bin")))
         (message "using venv %s" lsp-pyright-venv-path)))))
 
 (defun python-configure ()
   (apheleia-mode)
   (require 'lsp-pyright)
-  (bwm/pyright-configure-venv)
+  (bwm/configure-venv)
   (setq-local dash-docs-docsets '("Python 3" "Django"))
-  (lsp))
+  ;;(flycheck-checker-get)
+  (lsp)
+  (flycheck-pycheckers-setup)
+  (flycheck-mode)
+  )
+
+(use-package flycheck-pycheckers
+  :straight t)
 
 (use-package lsp-pyright
   :straight t
   :after lsp-mode
-  :hook (python-mode . python-configure))
+  :hook (python-mode . python-configure)
+  ; :config (flycheck-add-next-checker 'lsp 'python-mypy)
+  )
 
 (add-to-list 'auto-mode-alist
              '("pyflymakerc$" . python-mode))
@@ -54,3 +65,7 @@
      (lambda ()
        (re-search-backward "[[:alnum:]_.]*" nil t)
        (forward-char)))
+
+;; maybe this? https://github.com/flycheck/flycheck/issues/1762#issuecomment-749789589
+;; (flycheck-add-next-checker 'lsp 'python-flake8)
+

@@ -50,6 +50,7 @@
        forge
        git-modes
        go-mode
+       helm-dash
        helm-flycheck
        helm-git-grep
        helm-lsp
@@ -76,7 +77,6 @@
        rainbow-mode
        rust-mode
        rustic
-       scratch
        selectrum
        selectrum-prescient
        smart-mode-line
@@ -95,9 +95,14 @@
        ))
   (straight-use-package package))
 
-(straight-use-package
- '(mz-testdrive :type git :depth 1 :host github :repo "MaterializeInc/materialize"
-                :files ("misc/editor/emacs/mz-testdrive.el")))
+;; (straight-use-package
+;;  '(mz-testdrive :type git :depth 1 :host github :repo "MaterializeInc/materialize"
+;;                 :files ("misc/editor/emacs/mz-testdrive.el")))
+;; (mz-testdrive-enable)
+;; (add-hook 'mz-testdrive-mode-hook
+;;     (lambda ()
+;;         (flymake-mode 0)))
+
 
 (require 'bind-key) ; one of my packages depends on use-package, so use-package should happen first?
 
@@ -122,13 +127,16 @@
 ;; language/file modes
 (load "customize/ansible")
 (load "customize/csv")
+(load "customize/cue")
 (load "customize/dotenv")
 (load "customize/elisp")
+(load "customize/earthly")
+(load "customize/nginx")
 (load "customize/compilation")
 ;(load "customize/html")
 (load "customize/javascript")
 (load "customize/json")
-;(load "customize/go")
+(load "customize/go")
 (load "customize/markdown")
 ;(load "customize/ocaml")
 (load "customize/occur")
@@ -176,11 +184,6 @@
   (vterm-kill-buffer-on-exit t)
   (vterm-max-scrollback 100000)
   )
-
-(mz-testdrive-enable)
-(add-hook 'mz-testdrive-mode-hook
-    (lambda ()
-        (flymake-mode 0)))
 
 (prefer-coding-system 'utf-8)
 
@@ -339,7 +342,8 @@
      (320 . "#de935f")
      (340 . "#f0c674")
      (360 . "#b5bd68")))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(warning-suppress-types '((comp))))
  '(dired-dwim-target t)
  '(dired-omit-files "^\\.?#\\|^\\.")
 
@@ -352,10 +356,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
- ;;; Things I still want to change
- ;; '(ediff-current-diff-B ((t (:background "#222" :foreground "DarkOrchid"))))
- ;; '(ediff-fine-diff-B ((t (:background "#01008c"))))
  )
 
 (let ((local (expand-file-name "~/.emacs.d/local.el")))

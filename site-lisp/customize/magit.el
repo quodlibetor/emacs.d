@@ -8,7 +8,8 @@
 (require 'auth-source)
 (setq auth-sources '(macos-keychain-internet))
 
-(use-package forge)
+(use-package forge
+  :straight t)
 
 (defun bwm/git-sync ()
   "shells out to

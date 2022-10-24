@@ -4,6 +4,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+source "$(dirname "\$0")/shlib"
 
 usage() {
     echo "usage: \$0"
@@ -29,11 +30,6 @@ parse_args() {
                 ;;
         esac
     done
-}
-
-runv() {
-    echo "🚀$ $*"
-    "$@"
 }
 
 main "$@"

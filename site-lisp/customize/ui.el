@@ -16,7 +16,9 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (add-to-list 'tree-sitter-major-mode-language-alist '(terraform-mode . hcl))
+  ;; doesn't work better than the built-in
+  ;; https://github.com/emacs-tree-sitter/tree-sitter-langs/pull/97
+  ;; (add-to-list 'tree-sitter-major-mode-language-alist '(terraform-mode . hcl))
   ;; (push '(web-mode . tsx) tree-sitter-major-mode-language-alist)
   )
 
@@ -30,11 +32,12 @@
         '("isort" "--stdout" "-"))
   (setf (alist-get 'python-mode apheleia-mode-alist)
       '(black isort))
-  (setf (alist-get 'yq apheleia-formatters)
-        '("yq"))
-  (setf (alist-get 'yaml-mode apheleia-mode-alist)
-      '(yq))
-  :hook (yaml-mode . apheleia-mode))
+  (setf (alist-get 'cue apheleia-formatters)
+        '("cue" "fmt" "-"))
+  (setf (alist-get 'cue-mode apheleia-mode-alist)
+      '(cue))
+  :hook
+  (cue-mode . apheleia-mode))
 
 (use-package string-inflection)
 

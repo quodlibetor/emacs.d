@@ -39,6 +39,8 @@
 (global-set-key (kbd "C-x C-f") 'ffap)
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 
+(use-package hydra
+  :straight t)
 
 (defhydra bwm-multiple-cursors-hydra (:hint nil)
   "

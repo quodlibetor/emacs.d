@@ -19,6 +19,7 @@
          (web-mode . prettier-mode)
          (js-mode . prettier-mode)
          (json-mode . prettier-mode)
+         (yaml-mode . prettier-mode)
          (css-mode . prettier-mode)
          (scss-mode . prettier-mode)))
 
