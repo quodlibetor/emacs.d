@@ -3,7 +3,9 @@
 
 (defun bwm/list-app-dirs ()
   (let ((app-dirs nil)
-        (code-dirs (list (expand-file-name "~/repos/boe") (expand-file-name "~/repos"))))
+        (code-dirs (list
+		    (expand-file-name "~/repos")
+		    )))
     (dolist (code-dir code-dirs)
       (dolist (fname (directory-files code-dir nil "^[^.]"))
         (let ((fullname (concat (file-name-as-directory code-dir) fname)))

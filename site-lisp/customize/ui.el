@@ -133,11 +133,22 @@
 (spaceline-helm-mode)
 (spaceline-toggle-projectile-root)
 
-(when (member "FiraCode Nerd Font Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "FiraCode Nerd Font Mono" )
-  ;; height is pt * 10
-  (set-face-attribute 'default nil :height 130)
-  (set-frame-font "FiraCode Nerd Font Mono" nil t))
+; enable ligatures
+(mac-auto-operator-composition-mode t)
+(catch 'found
+  (dolist (font '("JetBrainsMono Nerd Font"
+                  "Hack Nerd Font"
+                  "Fira Code Retina Nerd Font Complete"
+                  "FiraCode Nerd Font"))
+    (if (member font (font-family-list))
+        (progn
+          (message "setting font %s" font)
+          (set-face-attribute 'default nil :font font)
+          ;; height is pt * 10
+          (set-face-attribute 'default nil :height 120)
+          (set-frame-font font nil t)
+          (throw 'found font))
+      (message "Unable to set up font %s" font))))
 
 (use-package flycheck
   :bind (:map flycheck-mode-map

@@ -111,6 +111,36 @@ With prefix arg, use the thing at point"
       (helm-git-grep-at-point)
     (helm-git-grep)))
 
+
+;; TODO: use ripgrep
+;; (defun helm-git-grep-rg-process ()
+;;   "Retrieve candidates from result of git grep."
+;;   (helm-aif (helm-attr 'base-directory)
+;;       (let ((default-directory it))
+;;         (apply 'start-process "git-grep-rg-process" nil "rg" (helm-git-grep-rg-args))) '()))
+
+;; (defun helm-git-grep-rg-args ()
+;;   "Create arguments of `helm-git-grep-process' in `helm-git-grep'."
+;;   (delq nil
+;;         (append
+;;          (list "--null" "--no-color"
+;;                (if helm-git-grep-ignore-case "-i" nil)
+;;                (if helm-git-grep-wordgrep "-w" nil)
+;;                (helm-git-grep-showing-leading-and-trailing-lines-option))
+;;          (nbutlast
+;;           (apply 'append
+;;                  (mapcar
+;;                   (lambda (x) (list "-e" x "--and"))
+;;                   (split-string helm-pattern " +" t))))
+;;          (helm-git-grep-pathspec-args))))
+
+;; (defvar helm-git-grep-rg-source
+;;   (helm-make-source "Git ripgrep" 'helm-git-grep-class
+;;     :candidates-process 'helm-git-grep-rg-process))
+
+;; (setq helm-git-grep-source '(helm-git-grep-source))
+
+
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
 (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)

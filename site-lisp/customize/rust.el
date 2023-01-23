@@ -1,3 +1,5 @@
+;; (use-package dap)
+
 (defun bwm:rust-find-definition (prefix)
   (interactive "p")
   (if (eq prefix 1)
@@ -50,7 +52,8 @@ Prefix arguments affect what is checked:
               ("M-." . bwm:rust-find-definition)
               ("C-c C-c C-k" . bwm:rustic-cargo-materialize-check)
               ("C-c C-k" . bwm:rustic-cargo-materialize-check)
-              ("C-c C-c d" . dap-hydra))
+              ;("C-c C-c d" . dap-hydra)
+              )
   :hook (rustic-mode . bwm:configure-rust-before-save-hook)
   :custom
   (rustic-format-trigger nil "use lsp format")
@@ -69,12 +72,14 @@ Prefix arguments affect what is checked:
 ;; ~/.emacs.d/.extension/vscode/webfreak.debug/ and unzip it
 
 ;; (use-package dap-mode
-;;   :ensure t
+;;   :straight t
 ;;   :config
 ;;   (dap-auto-configure-mode)
 
 ;;   (require 'dap-lldb)
 ;;   (require 'dap-gdb-lldb)
+;;   (require 'dap-cpptools)
+
 ;;   ;; installs .extension/vscode
 ;;   (dap-gdb-lldb-setup)
 ;;   (setenv "MZ_DEV" "1")
@@ -86,13 +91,6 @@ Prefix arguments affect what is checked:
 ;; 	 :gdbpath "rust-lldb"
 ;;          :target nil
 ;;          :cwd nil))
-;;   (dap-register-debug-template
-;;    "materialize"
-;;    (list :type "lldb"
-;;          :request "launch"
-;;          :name "LLDB::Run"
-;; 	 :gdbpath "rust-lldb"
-;;          :target nil
-;;          :cwd "/Users/bwm/github/materialize"))
+
 ;;   (add-hook 'dap-stopped-hook
 ;;             (lambda (arg) (call-interactively #'dap-hydra))))

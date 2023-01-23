@@ -45,8 +45,8 @@
                   (replace-match ""))
                 (apply orig rest)))
 
-(use-package dap-mode
-  :straight t)
+;; (use-package dap-mode
+;;   :straight t)
 
 ;; https://github.com/palantir/python-language-server/issues/431#issuecomment-442918906
 (defun pyenv-venv-wrapper-act (&optional ARG PRED)

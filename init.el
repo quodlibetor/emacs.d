@@ -144,6 +144,7 @@
 (load "customize/plantuml")  ; depends on vars from org
 ;(load "customize/puppet")
 (load "customize/python")
+(load "customize/tramp")
 ;(load "customize/ruby")
 (load "customize/rust")
 (load "customize/clojure")
@@ -203,7 +204,10 @@
  '(fci-rule-color "#373b41")
  '(flycheck-yamllintrc ".yamllintrc.yml")
  '(helm-grep-ag-command "rg --smart-case --no-heading --line-number %s %s %s")
+ '(lsp-go-env '((GOOS . "linux")))
  '(lsp-headerline-breadcrumb-segments '(project path-up-to-project file symbols))
+ '(lsp-rust-analyzer-import-granularity "module")
+ '(magit-diff-refine-hunk 'all)
  '(magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
  '(magit-pull-arguments '"--rebase")
  '(magit-tag-arguments '("--annotate"))

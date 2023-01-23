@@ -1,6 +1,10 @@
 (add-to-list 'auto-mode-alist
              '("\\.ya?ml\\(\.j2\\)?$" . yaml-mode))
 
+(use-package k8s-mode
+  :straight t
+  :hook (k8s-mode . yas-minor-mode))
+
 ;; TODO: make this go to the previous line with less indentation
 (defun ansible-next-field ()
   "Jump to next yaml field"
