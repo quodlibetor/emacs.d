@@ -134,21 +134,22 @@
 (spaceline-toggle-projectile-root)
 
 ; enable ligatures
-(mac-auto-operator-composition-mode t)
-(catch 'found
-  (dolist (font '("JetBrainsMono Nerd Font"
-                  "Hack Nerd Font"
-                  "Fira Code Retina Nerd Font Complete"
-                  "FiraCode Nerd Font"))
-    (if (member font (font-family-list))
-        (progn
-          (message "setting font %s" font)
-          (set-face-attribute 'default nil :font font)
-          ;; height is pt * 10
-          (set-face-attribute 'default nil :height 120)
-          (set-frame-font font nil t)
-          (throw 'found font))
-      (message "Unable to set up font %s" font))))
+(when (fboundp 'mac-auto-operator-composition-mode)
+      (mac-auto-operator-composition-mode t)
+      (catch 'found
+        (dolist (font '("JetBrainsMono Nerd Font"
+                        "Hack Nerd Font"
+                        "Fira Code Retina Nerd Font Complete"
+                        "FiraCode Nerd Font"))
+          (if (member font (font-family-list))
+              (progn
+                (message "setting font %s" font)
+                (set-face-attribute 'default nil :font font)
+                ;; height is pt * 10
+                (set-face-attribute 'default nil :height 120)
+                (set-frame-font font nil t)
+                (throw 'found font))
+            (message "Unable to set up font %s" font)))))
 
 (use-package flycheck
   :bind (:map flycheck-mode-map
