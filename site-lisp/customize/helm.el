@@ -1,6 +1,8 @@
+(use-package helm
+  :straight t)
 (require 'helm)
 (require 'helm-mode) ; required or helm-find-file to work
-(require 'helm-config)
+; (require 'helm-config)
 (require 'helm-swoop)
 (require 'compile)
 (require 'helm-git-grep)
@@ -24,6 +26,10 @@
       helm-split-window-default-side 'below
       helm-autoresize-max-height 40
       helm-autoresize-min-height 40)
+
+(let ((docsets-dir (expand-file-name "~/.docsets")))
+  (when (not (file-exists-p docsets-dir))
+    (make-directory docsets-dir)))
 
 (use-package helm-dash
   :straight t
